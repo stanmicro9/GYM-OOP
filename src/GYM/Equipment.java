@@ -1,3 +1,5 @@
+package GYM;
+
 public class Equipment {
     public String equipName;
     protected int equipCode;

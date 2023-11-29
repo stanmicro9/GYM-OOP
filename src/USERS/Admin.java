@@ -1,3 +1,7 @@
+package USERS;
+
+import GYM.Equipment;
+
 import java.util.*;
 public class Admin{
     private String username="mariam";
@@ -32,44 +36,48 @@ public class Admin{
 
     public void addCoach(){
         Scanner input=new Scanner(System.in);
-        System.out.println("Enter Coach's address: ");
+        System.out.println("Enter USERS.Coach's id: ");
+        int Cid=input.nextInt();
+        System.out.println("Enter USERS.Coach's address: ");
         String Caddress=input.next();
-        System.out.println("Enter Coach's email: ");
+        System.out.println("Enter USERS.Coach's email: ");
         String Cemail=input.next();
-        System.out.println("Enter Coach's pass: ");
+        System.out.println("Enter USERS.Coach's pass: ");
         String Cpass=input.next();
-        System.out.println("Enter Coach's name: ");
+        System.out.println("Enter USERS.Coach's name: ");
         String Cname=input.next();
-        System.out.println("Enter Coach's gender (F/M): ");
+        System.out.println("Enter USERS.Coach's gender (F/M): ");
         char Cgender=input.next().charAt(0);
-        System.out.println("Enter Coach's phone number: ");
+        System.out.println("Enter USERS.Coach's phone number: ");
         int CphoneNo=input.nextInt();
-        System.out.println("Enter Coach's working hours (max 10): ");
+        System.out.println("Enter USERS.Coach's working hours (max 10): ");
         int CworkingHours=input.nextInt();
         input.close();
 
-        Coach newCoach=new Coach(Caddress,Cemail,Cpass,Cname,Cgender,CphoneNo,CworkingHours);
+        Coach newCoach=new Coach(Cid,Caddress,Cemail,Cpass,Cname,Cgender,CphoneNo,CworkingHours);
         //f array wla files?
     }
     public void addCustomer(){
         Scanner input=new Scanner(System.in);
-        System.out.println("Enter Customer's address: ");
+        System.out.println("Enter Customer's id: ");
+        int CusId=input.nextInt();
+        System.out.println("Enter USERS.Customer's address: ");
         String CusAddress=input.next();
-        System.out.println("Enter Customer's email: ");
+        System.out.println("Enter USERS.Customer's email: ");
         String CusEmail=input.next();
-        System.out.println("Enter Customer's pass: ");
+        System.out.println("Enter USERS.Customer's pass: ");
         String CusPass=input.next();
-        System.out.println("Enter Customer's name: ");
+        System.out.println("Enter USERS.Customer's name: ");
         String CusName=input.next();
-        System.out.println("Enter Customer's gender (F/M): ");
+        System.out.println("Enter USERS.Customer's gender (F/M): ");
         char CusGender=input.next().charAt(0);
-        System.out.println("Enter Customer's phone number: ");
+        System.out.println("Enter USERS.Customer's phone number: ");
         int CusPhoneNo=input.nextInt();
-        System.out.println("Enter Customer's age: ");
+        System.out.println("Enter USERS.Customer's age: ");
         int CusAge=input.nextInt();
         input.close();
 
-        Customer newCustomer=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
+        Customer newCustomer=new Customer(CusId,CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
         //f array wla files?
     }
     public void addEquip(){

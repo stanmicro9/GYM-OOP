@@ -1,3 +1,5 @@
+package SERVICES;
+
 public class InBody {
     protected int heightM;
     protected int totalWeightKG;

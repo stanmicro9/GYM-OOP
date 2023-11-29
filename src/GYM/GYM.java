@@ -1,3 +1,5 @@
+package GYM;
+
 public class GYM {
     public String name;
     public String address;

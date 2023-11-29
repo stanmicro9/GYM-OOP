@@ -1,5 +1,7 @@
-import com.sun.jdi.event.StepEvent;
+package USERS;
 
+import com.sun.jdi.event.StepEvent;
+import java.util.*;
 public abstract class USER {
 
     private int ID;

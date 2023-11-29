@@ -6,11 +6,10 @@ import java.util.*;
 public class Admin{
     private String username="mariam";
     private String pass="mariam";
+
     public String getUsername() {
         return username;
     }
-
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -36,8 +35,6 @@ public class Admin{
 
     public void addCoach(){
         Scanner input=new Scanner(System.in);
-        System.out.println("Enter USERS.Coach's id: ");
-        int Cid=input.nextInt();
         System.out.println("Enter USERS.Coach's address: ");
         String Caddress=input.next();
         System.out.println("Enter USERS.Coach's email: ");
@@ -54,13 +51,11 @@ public class Admin{
         int CworkingHours=input.nextInt();
         input.close();
 
-        Coach newCoach=new Coach(Cid,Caddress,Cemail,Cpass,Cname,Cgender,CphoneNo,CworkingHours);
+        Coach newCoach=new Coach(Caddress,Cemail,Cpass,Cname,Cgender,CphoneNo,CworkingHours);
         //f array wla files?
     }
     public void addCustomer(){
         Scanner input=new Scanner(System.in);
-        System.out.println("Enter Customer's id: ");
-        int CusId=input.nextInt();
         System.out.println("Enter USERS.Customer's address: ");
         String CusAddress=input.next();
         System.out.println("Enter USERS.Customer's email: ");
@@ -77,7 +72,7 @@ public class Admin{
         int CusAge=input.nextInt();
         input.close();
 
-        Customer newCustomer=new Customer(CusId,CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
+        Customer newCustomer=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
         //f array wla files?
     }
     public void addEquip(){
@@ -95,8 +90,8 @@ public class Admin{
         Scanner input=new Scanner(System.in);
         System.out.println("Please enter your id: ");
         int id= input.nextInt();
-        Coach c=new Coach();
-        c.displayInfo(id);
+        //Coach c=new Coach();
+        //c.displayInfo(id);
 
 
     }

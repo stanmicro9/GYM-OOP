@@ -3,14 +3,12 @@ package USERS;
 import com.sun.jdi.event.StepEvent;
 import java.util.*;
 public abstract class USER {
-
-    private int ID;
     private String address;
     private String email;
     private String pass;
-    protected String name;
-    protected char gender;
-    protected int phoneNO;
+    String name;
+    char gender;
+    private int phoneNO;
 
 
 
@@ -23,12 +21,7 @@ public abstract class USER {
         this.phoneNO=phoneNO;
 
     }
-    public int getID() {
-        return ID;
-    }
-    public void setID(int ID) {
-        this.ID = ID;
-    }
+
     public String getAddress() {
         return address;
     }

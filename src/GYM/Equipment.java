@@ -2,12 +2,27 @@ package GYM;
 
 public class Equipment {
     public String equipName;
-    protected int equipCode;
-    protected int quantity=0;
+    private int equipCode;
+    private int quantity=0;
     public Equipment(String equipName, int equipCode){
         this.equipName=equipName;
         this.equipCode=equipCode;
         quantity++;
-        //quantity for each equip, ezay?
+    }
+
+    public int getEquipCode() {
+        return equipCode;
+    }
+
+    public void setEquipCode(int equipCode) {
+        this.equipCode = equipCode;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

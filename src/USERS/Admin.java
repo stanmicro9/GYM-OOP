@@ -1,5 +1,5 @@
 package USERS;
-
+import MAIN.*;
 import GYM.Equipment;
 
 import java.util.*;
@@ -72,7 +72,9 @@ public class Admin{
         int CusAge=input.nextInt();
         input.close();
 
-        Customer newCustomer=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
+
+
+        users[0]=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
         //f array wla files?
     }
     public void addEquip(){
@@ -92,7 +94,6 @@ public class Admin{
         int id= input.nextInt();
         //Coach c=new Coach();
         //c.displayInfo(id);
-
 
     }
     public void editCustomer(int customerID){

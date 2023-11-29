@@ -1,5 +1,5 @@
 package USERS;
-
+import MAIN.*;
 import GYM.Equipment;
 
 import java.util.*;
@@ -54,7 +54,7 @@ public class Admin{
         Coach newCoach=new Coach(Caddress,Cemail,Cpass,Cname,Cgender,CphoneNo,CworkingHours);
         //f array wla files?
     }
-    public void addCustomer(){
+    public void addCustomer(ArrayList<USER> UserList){
         Scanner input=new Scanner(System.in);
         System.out.println("Enter USERS.Customer's address: ");
         String CusAddress=input.next();
@@ -72,7 +72,9 @@ public class Admin{
         int CusAge=input.nextInt();
         input.close();
 
-        Customer newCustomer=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
+
+
+        UserList = new ArrayList<>();
         //f array wla files?
     }
     public void addEquip(){
@@ -92,7 +94,6 @@ public class Admin{
         int id= input.nextInt();
         //Coach c=new Coach();
         //c.displayInfo(id);
-
 
     }
     public void editCustomer(int customerID){

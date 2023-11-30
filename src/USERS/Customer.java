@@ -40,16 +40,15 @@ public class Customer extends USER {
         ArrayList<Customer> customerList = GymDataBase.loadData(fileName);
 
         for (Customer c : customerList) {
-            if (c.getName().equals(username) && c.getCustomerID().equals(password)) {
+            if (c.getName().equals(username) && c.getPass().equals(password)) {
                 System.out.println("Login successful!");
                 return true;
             }
         }
 
-
         System.out.println("Login failed. Invalid username or password.");
         return false;
     }
 
-    }
+}
 

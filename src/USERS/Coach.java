@@ -17,6 +17,14 @@ public class Coach extends USER {
     public int getCoachID() {
         return coachID;
     }
+    public static Coach getCoachByID(ArrayList<Coach> coachList, int coachId) {
+        for (Coach coach : coachList) {
+            if (coach.getCoachID() == coachId) {
+                return coach; // Return the coach if ID matches
+            }
+        }
+        return null; // Return null if coach with given ID is not found
+    }
 
     public void setCoachID(int coachID) {
         this.coachID = coachID;

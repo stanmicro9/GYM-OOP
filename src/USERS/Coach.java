@@ -23,7 +23,7 @@ public class Coach extends USER {
                 return coach; // Return the coach if ID matches
             }
         }
-        return null; // Return null if coach with given ID is not found
+        return null; // Return null if coach with given ID is not foun
     }
 
     public void setCoachID(int coachID) {

@@ -2,9 +2,11 @@ package USERS;
 import MAIN.*;
 import GYM.Equipment;
 import java.util.*;
-public class Admin{
-    private String username="mariam";
-    private String pass="mariam";
+import DATABASE.*;
+import java.io.Serializable;
+public class Admin  implements Serializable{
+    private String username="admin";
+    private String pass="admin";
 
     public String getUsername() {
         return username;
@@ -20,7 +22,7 @@ public class Admin{
     public String getPass() {
         return pass;
     }
-    public  void AdminMainMenu(Admin admin,ArrayList<USER>users, ArrayList<Equipment> equips) {
+    public  void AdminMainMenu(Admin admin,ArrayList<USER>users,GymDataBase db,ArrayList<Equipment> equips) {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -44,7 +46,7 @@ public class Admin{
                 case 1:
                     System.out.println();
                     System.out.println("Adding User...");
-                    admin.addCustomer(users);
+                    admin.addCustomer(users,db);
 
                     break;
                 case 2:
@@ -102,7 +104,7 @@ public class Admin{
         users.add(newCoach);
 
     }
-    public void addCustomer(ArrayList<USER>users){
+    public void addCustomer(ArrayList<USER>users,GymDataBase db){
         Scanner input=new Scanner(System.in);
         System.out.println("Enter USERS.Customer's address: ");
         String CusAddress=input.next();
@@ -122,6 +124,7 @@ public class Admin{
 
         Customer c=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
         users.add(c);
+       // db.saveData(c, "updated_customers_data.ser");
 
 
     }

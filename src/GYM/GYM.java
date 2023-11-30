@@ -3,7 +3,7 @@ import USERS.*;
 import SERVICES.*;
 
 public class GYM {
-    public String name;
+    public String name="";
     public String address;
     public int phoneNumber;
     public Equipment[] equips=new Equipment[50];

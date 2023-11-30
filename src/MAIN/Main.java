@@ -24,6 +24,8 @@ public class Main {
     }
     public static void main(String[] args) {
         ArrayList<USER> users = new ArrayList<>();
+        ArrayList<Equipment> equips=new ArrayList<>();
+
         Customer customer=new Customer("Tag Sultan","malakbatman@gmail.com","malak","shosho", 'f',011,20);
        Coach coach= new Coach("nozha","mariamsuperman@gmail.com","mariam","basbousa", 'f',010,8);
         users.add(coach);
@@ -97,7 +99,7 @@ public class Main {
                 } else if (CustomerStatus == false && CoachStatus == true && AdminStatus == false) {
                     //coachmenu();
                 } else if (CustomerStatus == false && CoachStatus == false && AdminStatus == true) {
-                    admin.AdminMainMenu(admin,users);
+                    admin.AdminMainMenu(admin,users,equips);
                 } else
                 {
                     System.out.println("Invaild Username,Try Again!\n");
@@ -123,5 +125,9 @@ public class Main {
         }
 
     }
+
+
+
+
 
     }

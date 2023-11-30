@@ -20,7 +20,7 @@ public class Admin{
     public String getPass() {
         return pass;
     }
-    public  void AdminMainMenu(Admin admin,ArrayList<USER>users) {
+    public  void AdminMainMenu(Admin admin,ArrayList<USER>users, ArrayList<Equipment> equips) {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -100,7 +100,7 @@ public class Admin{
 
         Coach newCoach=new Coach(Caddress,Cemail,Cpass,Cname,Cgender,CphoneNo,CworkingHours);
         users.add(newCoach);
-        //f array wla files?
+
     }
     public void addCustomer(ArrayList<USER>users){
         Scanner input=new Scanner(System.in);
@@ -125,7 +125,7 @@ public class Admin{
 
 
     }
-    public void addEquip(){
+    public void addEquip( ArrayList<Equipment> equips){
         Scanner input=new Scanner(System.in);
         System.out.println("Enter equipment's name: ");
         String newEquipName=input.next();
@@ -134,6 +134,7 @@ public class Admin{
         input.close();
 
         Equipment newEquipment=new Equipment(newEquipName,newEquipCode);
+        equips.add(newEquipment);
         //f array wla file?
     }
     public void editCoach(int coachID){

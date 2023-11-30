@@ -8,6 +8,7 @@ public class GymDataBase {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
             oos.writeObject(dataList);
             System.out.println("Data saved successfully to " + fileName);
+            oos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

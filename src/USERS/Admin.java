@@ -1,7 +1,6 @@
 package USERS;
-
+import MAIN.*;
 import GYM.Equipment;
-
 import java.util.*;
 public class Admin{
     private String username="mariam";
@@ -21,6 +20,54 @@ public class Admin{
     public String getPass() {
         return pass;
     }
+    public  void AdminMainMenu(Admin admin,ArrayList<USER>users) {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        do{
+            System.out.println("logged in !");
+            System.out.println("Admin Main Menu");
+            System.out.println("1. Add ");
+            System.out.println("2. Remove ");
+            System.out.println("3. edit ");
+            System.out.println("4. View Customers subscription"); //hya5od id el customer w ytl3 el subs bta3o
+            System.out.println("5. View subscriptions //in a day or month");
+            System.out.println("6. View a coach's customer"); //hayd5ol 3nd coach mo3yn yshof el customers bto3o
+            System.out.println("7. View gym's income"); //in a month
+            System.out.println("8. View coaches"); //sorted 3la 7sb 3adad el customers 3nd kol coach
+            System.out.println("9. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+
+            switch (choice) {
+                case 1:
+                    System.out.println();
+                    System.out.println("Adding User...");
+                    admin.addCustomer(users);
+
+                    break;
+                case 2:
+                    System.out.println("Removing User...");
+                    // Remove user logic goes here
+                    break;
+                case 3:
+                    System.out.println("Viewing Users...");
+                    // View users logic goes here
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+
+        } while (choice != 9);
+
+        // Close the scanner to prevent resource leak
+        scanner.close();
+    }
+
 
     public boolean adminLogin(String name, String password){
         boolean loginSuccessful = false;
@@ -33,7 +80,7 @@ public class Admin{
     }
 
 
-    public void addCoach(){
+    public void addCoach(ArrayList<USER>users){
         Scanner input=new Scanner(System.in);
         System.out.println("Enter USERS.Coach's address: ");
         String Caddress=input.next();
@@ -52,9 +99,10 @@ public class Admin{
         input.close();
 
         Coach newCoach=new Coach(Caddress,Cemail,Cpass,Cname,Cgender,CphoneNo,CworkingHours);
+        users.add(newCoach);
         //f array wla files?
     }
-    public void addCustomer(){
+    public void addCustomer(ArrayList<USER>users){
         Scanner input=new Scanner(System.in);
         System.out.println("Enter USERS.Customer's address: ");
         String CusAddress=input.next();
@@ -72,8 +120,10 @@ public class Admin{
         int CusAge=input.nextInt();
         input.close();
 
-        Customer newCustomer=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
-        //f array wla files?
+        Customer c=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
+        users.add(c);
+
+
     }
     public void addEquip(){
         Scanner input=new Scanner(System.in);

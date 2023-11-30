@@ -1,7 +1,5 @@
 package USERS;
 
-import com.sun.jdi.event.StepEvent;
-import java.util.*;
 public abstract class USER {
     private String address;
     private String email;
@@ -60,7 +58,7 @@ public abstract class USER {
         this.phoneNO = phoneNO;
     }
 
-    public abstract void login(String username, String password);
+    public abstract boolean login(String username, String password);
     public abstract void displayInfo(int ID);
 
 }

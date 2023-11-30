@@ -33,7 +33,8 @@ public class Customer extends USER {
         System.out.println("Customer's phone number: "+ getPhoneNO());
     }
     //overridden
-    public  void login(String username, String password){
+    public boolean login(String username, String password){
 
+        return false;
     }
 }

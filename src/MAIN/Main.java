@@ -124,24 +124,4 @@ public class Main {
 
     }
 
-
-
-
-
-        Scanner in=new Scanner(System.in);
-        ArrayList<USER> users = new ArrayList<>();
-        Admin admin = new Admin();
-        System.out.println("username :");
-        String user=in.next();
-        System.out.println("password :");
-        String pass=in.next();
-        if(admin.adminLogin(user,pass)){
-            admin.AdminMainMenu(admin,users);
-        }else{
-            System.out.println("Wrong data,please try again..");
-        }
-
-
-
-
     }

@@ -1,10 +1,11 @@
 package USERS;
 import SERVICES.*;
-
+import java.util.ArrayList;
 public class Customer extends USER {
 
-    InBody[] inbodies= new InBody[50];
-    Subscription[] subs=new Subscription[50];
+    ArrayList<InBody> inbodies;
+    ArrayList<Subscription> subscriptions;
+
     private int age;
     private static int counter=0;
     private int customerID;
@@ -34,6 +35,8 @@ public class Customer extends USER {
     }
     //overridden
     public  void login(String username, String password){
+
+
 
     }
 }

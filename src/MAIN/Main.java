@@ -59,7 +59,7 @@ public class Main {
                 }
                 else if (choice2.equals("M") || choice2.equals("m"))
                 {
-                    admin.addCoach(users);
+                    admin.addCoach(users,db);
                 }
                 else if (choice2 == "0")
                 {

@@ -82,7 +82,7 @@ public class Admin  implements Serializable{
     }
 
 
-    public void addCoach(ArrayList<USER>users){
+    public void addCoach(ArrayList<USER>users,GymDataBase db){
         Scanner input=new Scanner(System.in);
         System.out.println("Enter USERS.Coach's address: ");
         String Caddress=input.next();

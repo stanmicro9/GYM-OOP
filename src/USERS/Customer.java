@@ -25,28 +25,26 @@ public class Customer extends USER {
         this.customerID = customerID;
     }
 
-    public void displayInfo(int ID){
-        System.out.println("Customer's ID: "+getCustomerID());
-        System.out.println("Customer's address: "+ getAddress());
-        System.out.println("Customer's email: "+ getEmail());
-        System.out.println("Customer's name: "+ getName());
-        System.out.println("Customer's password: "+ getPass());
-        System.out.println("Customer's gender: "+ getGender());
-        System.out.println("Customer's phone number: "+ getPhoneNO());
+    //default 3shan de info lely f nfs el package bs
+    String displayInfo(int ID){
+        return "\n\t\tCoach's Details : " + "\n---------------------------------------------------------------\n"
+                + "\n\n> Id : " + getCustomerID() + "\n\n> Email : " + getEmail() + "\n\n> Name : " + getName() + "\n\n> Gender : " + getGender()
+                + "\n\n> Phone Number : " + getPhoneNO()  +"\n---------------------------------------------------------------\n" ;
     }
-    //overridden
+    @Override
     public boolean login(String username, String password){
         String fileName = "CUSTOMER";
         ArrayList<Customer> customerList = GymDataBase.loadData(fileName);
 
         for (Customer c : customerList) {
-            if (c.getName().equals(username) && c.getPass().equals(password)) {
-                System.out.println("Login successful!");
-                return true;
-            }
+            if (c.getName().equals(username))
+                if (c.getPass().equals(password)) {
+                    System.out.println("\nLogin successful!\n");
+                    return true;
+                }
         }
-
-        System.out.println("Login failed. Invalid username or password.");
+        //msh 3rfa a3ml system clear :(
+        System.out.println("\nLogin failed. Invalid username or password.\n");
         return false;
     }
 

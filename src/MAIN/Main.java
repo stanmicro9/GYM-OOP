@@ -2,24 +2,23 @@ package MAIN;
 import java.util.ArrayList;
 import java.util.*;
 import java.io.*;
-
+import javax.swing.*; //for GUI
 import DATABASE.GymDataBase;
 import GYM.Equipment;
 import USERS.*;
-public class Main {
+
+public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
     static Scanner in=new Scanner(System.in);
     public static int menu()
     {
         int choice;
-        System.out.println("WELCOME TO GYM SYSTEM!");
-        System.out.println("\n");
+        System.out.println("WELCOME TO GYM SYSTEM!\n");
         System.out.println("---------------------------\n");
         System.out.println("Main Menu\n");
         System.out.println("---------------------------\n");
         System.out.println("1-Register\n");
-        System.out.println("2-Login\n" );
-        System.out.println("\n");
-        System.out.println("Your choice:");
+        System.out.println("2-Login\n\n" );
+        System.out.println("Your choice: ");
         choice = in.nextInt();
 
         return choice;
@@ -28,13 +27,14 @@ public class Main {
         menu();
 
         ArrayList<Customer> customerList = new ArrayList<>();
-        ArrayList<Coach> coachlist = new ArrayList<>();
+        ArrayList<Coach> coachList = new ArrayList<>();
         ArrayList<Equipment> equips=new ArrayList<>();
+        Admin Admin=new Admin();
 
 
         Customer customer=new Customer("Tag Sultan","malakbatman@gmail.com","malak","shosho", 'f',011,20);
        Coach coach= new Coach("nozha","mariamsuperman@gmail.com","mariam","basbousa", 'f',010,8);
-        coachlist.add(coach);
+        coachList.add(coach);
         customerList.add(customer);
         Admin admin = new Admin();
         //-----------------------------------
@@ -45,7 +45,7 @@ public class Main {
         {
             choice = menu();
 
-            if (choice == 1) // lawo el user e5tar register
+            if (choice == 1) // law el user e5tar register
             {
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
@@ -57,13 +57,12 @@ public class Main {
                 if (choice2.equals("C") || choice2.equals("c"))
                 {
                     admin.addCustomer(customerList);
-
                 }
                 else if (choice2.equals("M") || choice2.equals("m"))
                 {
-                    admin.addCoach(coachlist);
+                    admin.addCoach(coachList);
                 }
-                else if (choice2 == "0")
+                else if (choice2.equals("0"))
                 {
                     System.out.print("\033[H\033[2J");
                     System.out.flush();
@@ -84,31 +83,32 @@ public class Main {
             else if (choice == 2) // el user e5tar login
             {
                 String username;
-                String passsword;
+                String password;
                 boolean CustomerStatus;
                 boolean CoachStatus;
                 boolean AdminStatus;
                 //--------------------------------------------
                 System.out.println("Login" + "\n-----------------------------\n");
-                System.out.println("Enter Your Username:");
+                System.out.println("Enter Your Username: ");
                 username = in.next();
-                System.out.println("Enter Your Password:");
-                passsword = in.next();
+                System.out.println("Enter Your Password: ");
+                password = in.next();
 
 
-                CustomerStatus = customer.login(username, passsword);
-                CoachStatus = coach.login(username, passsword);
-                AdminStatus = admin.adminLogin(username, passsword);
 
-                if (CustomerStatus == true && CoachStatus == false && AdminStatus == false) {
+                CustomerStatus = customer.login(username, password);
+                CoachStatus = coach.login(username, password);
+                AdminStatus = admin.adminLogin(username, password);
+
+                if (CustomerStatus && !CoachStatus && !AdminStatus) {
                     //customermenu();
-                } else if (CustomerStatus == false && CoachStatus == true && AdminStatus == false) {
+                } else if (!CustomerStatus && CoachStatus && !AdminStatus) {
                     //coachmenu();
-                } else if (CustomerStatus == false && CoachStatus == false && AdminStatus == true) {
-                    admin.AdminMainMenu(admin,customerList,coachlist,equips);
+                } else if (!CustomerStatus && !CoachStatus && AdminStatus) {
+                    admin.AdminMainMenu(admin,customerList,coachList,equips);
                 } else
                 {
-                    System.out.println("Invaild Username,Try Again!\n");
+                    System.out.println("Invalid Username,Try Again!\n");
 
                     System.out.print("\033[H\033[2J");
                     System.out.flush();
@@ -131,9 +131,5 @@ public class Main {
         }
 
     }
-
-
-
-
 
     }

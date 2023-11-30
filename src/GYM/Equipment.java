@@ -8,6 +8,5 @@ public class Equipment {
         this.equipName=equipName;
         this.equipCode=equipCode;
         quantity++;
-        //quantity for each equip, ezay?
     }
 }

@@ -32,7 +32,7 @@ public class Coach extends USER {
 
     //overridden login
     //method
-    public boolean login(String username, String password){
+    public boolean login(String username, int password){
 
         return false;
     }

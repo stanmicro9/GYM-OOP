@@ -26,14 +26,16 @@ public class Main {
     }
     public static void main(String[] args) {
         menu();
-        ArrayList<USER> users = new ArrayList<>();
+
+        ArrayList<Customer> customerList = new ArrayList<>();
+        ArrayList<Coach> coachlist = new ArrayList<>();
         ArrayList<Equipment> equips=new ArrayList<>();
-        GymDataBase db=new GymDataBase();
+
 
         Customer customer=new Customer("Tag Sultan","malakbatman@gmail.com","malak","shosho", 'f',011,20);
        Coach coach= new Coach("nozha","mariamsuperman@gmail.com","mariam","basbousa", 'f',010,8);
-        users.add(coach);
-        users.add(customer);
+        coachlist.add(coach);
+        customerList.add(customer);
         Admin admin = new Admin();
         //-----------------------------------
         int choice;
@@ -54,12 +56,12 @@ public class Main {
 
                 if (choice2.equals("C") || choice2.equals("c"))
                 {
-                    admin.addCustomer(users,db);
+                    admin.addCustomer(customerList);
 
                 }
                 else if (choice2.equals("M") || choice2.equals("m"))
                 {
-                    admin.addCoach(users,db);
+                    admin.addCoach(coachlist);
                 }
                 else if (choice2 == "0")
                 {
@@ -103,7 +105,7 @@ public class Main {
                 } else if (CustomerStatus == false && CoachStatus == true && AdminStatus == false) {
                     //coachmenu();
                 } else if (CustomerStatus == false && CoachStatus == false && AdminStatus == true) {
-                    admin.AdminMainMenu(admin,users,db,equips);
+                    admin.AdminMainMenu(admin,customerList,coachlist,equips);
                 } else
                 {
                     System.out.println("Invaild Username,Try Again!\n");

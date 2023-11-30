@@ -1,6 +1,8 @@
 package USERS;
-import SERVICES.*;
-
+import java.util.ArrayList;
+import DATABASE.*;
+import SERVICES.InBody;
+import SERVICES.Subscription;
 public class Customer extends USER {
 
     InBody[] inbodies= new InBody[50];
@@ -34,7 +36,20 @@ public class Customer extends USER {
     }
     //overridden
     public boolean login(String username, String password){
+        String fileName = "CUSTOMER";
+        ArrayList<Customer> customerList = GymDataBase.loadData(fileName);
 
+        for (Customer c : customerList) {
+            if (c.getName().equals(username) && c.getCustomerID().equals(password)) {
+                System.out.println("Login successful!");
+                return true;
+            }
+        }
+
+
+        System.out.println("Login failed. Invalid username or password.");
         return false;
     }
-}
+
+    }
+

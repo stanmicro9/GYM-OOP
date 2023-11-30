@@ -22,7 +22,7 @@ public class Admin  implements Serializable{
     public String getPass() {
         return pass;
     }
-    public  void AdminMainMenu(Admin admin,ArrayList<USER>users,GymDataBase db,ArrayList<Equipment> equips) {
+    public  void AdminMainMenu(Admin admin,ArrayList<Customer>customerList,ArrayList<Coach> coachlist,ArrayList<Equipment> equips) {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -46,7 +46,7 @@ public class Admin  implements Serializable{
                 case 1:
                     System.out.println();
                     System.out.println("Adding User...");
-                    admin.addCustomer(users,db);
+                    admin.addCustomer(customerList);
 
                     break;
                 case 2:
@@ -82,7 +82,7 @@ public class Admin  implements Serializable{
     }
 
 
-    public void addCoach(ArrayList<USER>users,GymDataBase db){
+    public void addCoach(ArrayList<Coach> coachlist){
         Scanner input=new Scanner(System.in);
         System.out.println("Enter USERS.Coach's address: ");
         String Caddress=input.next();
@@ -101,10 +101,11 @@ public class Admin  implements Serializable{
         input.close();
 
         Coach newCoach=new Coach(Caddress,Cemail,Cpass,Cname,Cgender,CphoneNo,CworkingHours);
-        users.add(newCoach);
+        coachlist.add(newCoach);
+        GymDataBase.saveData(coachlist, "COACHES");
 
     }
-    public void addCustomer(ArrayList<USER>users,GymDataBase db){
+    public void addCustomer(ArrayList<Customer>customerList){
         Scanner input=new Scanner(System.in);
         System.out.println("Enter USERS.Customer's address: ");
         String CusAddress=input.next();
@@ -123,8 +124,8 @@ public class Admin  implements Serializable{
         input.close();
 
         Customer c=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
-        users.add(c);
-       // db.saveData(c, "updated_customers_data.ser");
+        customerList.add(c);
+        GymDataBase.saveData(customerList, "CUSTOMERS");
 
 
     }

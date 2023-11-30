@@ -1,6 +1,6 @@
 package USERS;
-
-public abstract class USER {
+import java.io.Serializable;
+public abstract class USER implements Serializable{
     private String address;
     private String email;
     private String pass;

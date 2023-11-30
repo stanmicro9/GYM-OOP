@@ -142,13 +142,73 @@ public class Admin  implements Serializable{
         //f array wla file?
     }
     public void editCoach(int coachID){
-        Scanner input=new Scanner(System.in);
         System.out.println("Please enter your id: ");
+        Scanner input=new Scanner(System.in);
         int id= input.nextInt();
-        //Coach c=new Coach();
-        //c.displayInfo(id);
+        if(id != Coach.coachID) {
+            System.out.println("Invalid coach ID.");
+            return;
+        }
+        System.out.println("Choose an attribute to edit:");
+        System.out.println("1. Address");
+        System.out.println("2. E-mail");
+        System.out.println("3. Name");
+        System.out.println("4. Password");
+        System.out.println("5. Gender");
+        System.out.println("6. Phone number");
+        System.out.println("7. Working Hours");
+        System.out.println("Enter your choice:");
 
+        int choice = input.nextInt();
+        input.nextLine(); // Consume newline character
+        Coach c= new Coach("nozha","mariamsuperman@gmail.com","mariam","basbousa", 'f',010,8);
 
+        switch (choice) {
+            case 1:
+                System.out.println("Enter new address:");
+                String newAddress = input.nextLine();
+                c.setAddress(newAddress);
+                System.out.println("Address updated successfully.");
+                break;
+            case 2:
+                System.out.println("Enter new email:");
+                String newEmail = input.nextLine();
+                c.setEmail(newEmail);
+                System.out.println("Email updated successfully.");
+                break;
+            case 3:
+                System.out.println("Enter new name:");
+                String newName = input.nextLine();
+                c.setName(newName);
+                System.out.println("Name updated successfully.");
+                break;
+            case 4:
+                System.out.println("Enter new password:");
+                String newPassword = input.nextLine();
+                c.setPass(newPassword);
+                System.out.println("Password updated successfully.");
+                break;
+            case 5:
+                System.out.println("Enter new gender:");
+                char newGender = input.next().charAt(0);
+                c.setGender(newGender);
+                System.out.println("Gender updated successfully.");
+                break;
+            case 6:
+                System.out.println("Enter new phone number:");
+                int newPhonenum = input.nextInt();
+                c.setPhoneNO(newPhonenum);
+                System.out.println("Phone number updated successfully.");
+                break;
+            case 7:
+                System.out.println("Enter new working hours:");
+                int newWorkinghours = input.nextInt();
+                c.setWorkingHrs(newWorkinghours);
+                System.out.println("Phone number updated successfully.");
+                break;
+            default:
+                System.out.println("Invalid choice.");
+        }
     }
     public void editCustomer(int customerID){
 

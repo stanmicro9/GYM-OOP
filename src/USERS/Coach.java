@@ -1,15 +1,18 @@
 package USERS;
 
+import java.util.ArrayList;
+
 public class Coach extends USER {
     int workingHours;
     private static int counter=0;
-    private int coachID;
+    protected static int coachID;
     public Coach(String address, String email, String name, String pass, char gender, int phoneNO,int workingHours){
         super(address, email, name, pass, gender, phoneNO);
         counter++;
         coachID=counter;
         this.workingHours=workingHours;
     }
+
 
     public int getCoachID() {
         return coachID;
@@ -29,6 +32,10 @@ public class Coach extends USER {
         System.out.println("Coach's phone number: "+ getPhoneNO());
         System.out.println("Coach's working hours: "+workingHours);
     }
+    public int getWorkingHrs() {
+        return workingHours;
+    }
+    public void setWorkingHrs(int workingHours) { this.workingHours = workingHours; }
 
     //overridden login
     //method

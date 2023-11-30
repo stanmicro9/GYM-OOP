@@ -12,8 +12,8 @@ public class Admin  implements Serializable{
     private String pass;
     //ely hyghyrhum hdrbo
     public Admin() {
-        username="mariam";
-        pass="mariam";
+        username="admin";
+        pass="admin";
     }
 
     public String getUsername() {

@@ -30,7 +30,22 @@ public class Admin  implements Serializable{
     public String getPass() {
         return pass;
     }
-    public  void AdminMainMenu(Admin admin,ArrayList<Customer>customerList,ArrayList<Coach> coachlist,ArrayList<Equipment> equips) {
+
+
+
+
+    public boolean adminLogin(@NotNull String name, String password){
+        boolean loginSuccessful = false;
+        if(name.equals(username)){
+            if(password.equals(pass)){
+                loginSuccessful= true;
+            }
+        }
+        return loginSuccessful;
+    }
+
+
+    public  void AdminMainMenu(Admin admin,ArrayList<Customer>customerList,ArrayList<Coach> coachlist,ArrayList<Equipment> equipmentList) {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -52,18 +67,53 @@ public class Admin  implements Serializable{
 
             switch (choice) {
                 case 1:
-                    System.out.println();
-                    System.out.println("Adding User...");
-                    admin.addCustomer(customerList);
+                    System.out.println("1.Customer\n");
+                    System.out.println("2.Coach\n");
+                    System.out.println("3.Equipment\n");
+                    int ans = scanner.nextInt();
+                    if(ans==1){
+                        admin.addCustomer(customerList);
+                    }
+                    else if(ans==2){
+                        admin.addCoach(coachlist);
+                    }
+                    else{
+                        admin.addEquip(equipmentList);
+                    }
 
                     break;
                 case 2:
-                    System.out.println("Removing User...");
-                    // Remove user logic goes here
+                    System.out.println("1.Customer\n");
+                    System.out.println("2.Coach\n");
+                    System.out.println("3.Equipment\n");
+                    int ans2 = scanner.nextInt();
+                    if(ans2==1){
+                      //  admin.deleteCustomer(customerList);
+                    }
+                    else if(ans2==2){
+                       // admin.deleteCoach(coachlist);
+                    }
+                    else{
+                      //  admin.deleteEquip(equipmentList);
+                    }
+
                     break;
                 case 3:
-                    System.out.println("Viewing Users...");
-                    // View users logic goes here
+                    System.out.println("1.Customer\n");
+                    System.out.println("2.Coach\n");
+                    System.out.println("3.Equipment\n");
+                    int ans3 = scanner.nextInt();
+                    if(ans3==1){
+
+                         admin.editCustomer(customerList);
+                    }
+                    else if(ans3==2){
+                         admin.editCoach(coachlist);
+                    }
+                    else{
+                         admin.editEquip(equipmentList);
+                    }
+
                     break;
                 case 4:
                     System.out.println("Exiting...");
@@ -80,15 +130,6 @@ public class Admin  implements Serializable{
 
     //@NotNull to indicate that a parameter or return value of a method should not be null
     //it  is a way to provide additional information to tools and other developers about the expected behavior of our code
-    public boolean adminLogin(@NotNull String name, String password){
-        boolean loginSuccessful = false;
-        if(name.equals(username)){
-            if(password.equals(pass)){
-                loginSuccessful= true;
-            }
-        }
-        return loginSuccessful;
-    }
 
 
     public void addCoach(ArrayList<Coach> coachlist){
@@ -140,13 +181,14 @@ public class Admin  implements Serializable{
         if (!validPN) return;
         System.out.println("\nEnter Customer's age: "); //mmkn tb2a list of ages ranging from 12 to 100 and he chooses
         int CusAge=input.nextInt();
-        input.close();
+
 
         Customer c=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
         customerList.add(c);
         GymDataBase.saveData(customerList, "CUSTOMERS");
     }
-    public void addEquip(ArrayList<Equipment> equips){
+
+    public void addEquip(ArrayList<Equipment> equipmentList){
         Scanner input=new Scanner(System.in);
         System.out.println("Enter equipment's name: ");
         String newEquipName=input.next();
@@ -155,14 +197,16 @@ public class Admin  implements Serializable{
         input.close();
 
         Equipment newEquipment=new Equipment(newEquipName,newEquipCode);
-        equips.add(newEquipment);
-        GymDataBase.saveData(equips, "EQUIPMENTS");
+        equipmentList.add(newEquipment);
+        GymDataBase.saveData(equipmentList, "EQUIPMENTS");
     }
-    public void editCoach(ArrayList<Coach> coachlist,int coachID){
-        System.out.println("Please enter your id: ");
+
+
+    public void editCoach(ArrayList<Coach> coachlist){
+        System.out.println("Please the coach's id: ");
         Scanner input=new Scanner(System.in);
         int id= input.nextInt();
-        Coach specificCoach = Coach.getCoachByID(coachlist,coachID);
+        Coach specificCoach = Coach.getCoachByID(coachlist,id);
         if (specificCoach != null) {
             System.out.println("Choose an attribute to edit:");
             System.out.println("1. Address");
@@ -226,10 +270,12 @@ public class Admin  implements Serializable{
         }
         else System.out.println("Invalid email or password ");
     }
-    public void editCustomer(int customerID){
+
+    public void editCustomer( ArrayList<Customer> customerList){
+
 
     }
-    public void editEquip(int EquipCode){
+    public void editEquip(ArrayList<Equipment> equipmentList){
 
     }
     public void deleteCoach(){

@@ -14,10 +14,13 @@ public class Coach extends USER {
         this.workingHours=workingHours;
     }
 
-
+    public void setCoachID(int coachID) {
+        this.coachID = coachID;
+    }
     public int getCoachID() {
         return coachID;
     }
+
     public static Coach getCoachByID(ArrayList<Coach> coachList, int coachId) {
         for (Coach coach : coachList) {
             if (coach.getCoachID() == coachId) {
@@ -27,9 +30,6 @@ public class Coach extends USER {
         return null; // Return null if coach with given ID is not found
     }
 
-    public void setCoachID(int coachID) {
-        this.coachID = coachID;
-    }
 
     //default 3shan de info lely f nfs el package bs
     @Override

@@ -28,14 +28,9 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
 
         ArrayList<Customer> customerList = new ArrayList<>();
         ArrayList<Coach> coachList = new ArrayList<>();
-        ArrayList<Equipment> equips=new ArrayList<>();
-        Admin Admin=new Admin();
+        ArrayList<Equipment> equipmentList=new ArrayList<>();
 
 
-        Customer customer=new Customer("Tag Sultan","malakbatman@gmail.com","malak","shosho", 'f',011,20);
-       Coach coach= new Coach("nozha","mariamsuperman@gmail.com","mariam","basbousa", 'f',010,8);
-        coachList.add(coach);
-        customerList.add(customer);
         Admin admin = new Admin();
         //-----------------------------------
         int choice;
@@ -105,7 +100,7 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
                 } else if (!CustomerStatus && CoachStatus && !AdminStatus) {
                     //coachmenu();
                 } else if (!CustomerStatus && !CoachStatus && AdminStatus) {
-                    admin.AdminMainMenu(admin,customerList,coachList,equips);
+                    admin.AdminMainMenu(admin,customerList,coachList,equipmentList);
                 } else
                 {
                     System.out.println("Invalid Username,Try Again!\n");

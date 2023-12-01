@@ -31,6 +31,15 @@ public class Customer extends USER {
                 + "\n\n> Id : " + getCustomerID() + "\n\n> Email : " + getEmail() + "\n\n> Name : " + getName() + "\n\n> Gender : " + getGender()
                 + "\n\n> Phone Number : " + getPhoneNO()  +"\n---------------------------------------------------------------\n" ;
     }
+
+    public Customer getCustomerById( ArrayList<Customer> customerList,int id) {
+        for (Customer customer : customerList) {
+            if (customer.getCustomerID() == id) {
+                return customer;
+            }
+        }
+        return null;
+    }
     @Override
     public boolean login(String username, String password){
         String fileName = "CUSTOMER";

@@ -75,7 +75,7 @@ public abstract class USER implements Serializable{
         //to track invalid characters
         count = 0;
         for(int i =0; i < name.length(); i++)	{
-            if (!(Character.isLetter(name.charAt(i)) || name.charAt(i) == '.'  || name.charAt(i) == ' ')){
+            if (!(Character.isLetter(name.charAt(i)) || name.charAt(i) == '.')){
                 count++;
                 break;
             }

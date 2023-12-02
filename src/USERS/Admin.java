@@ -156,11 +156,12 @@ public class Admin  implements Serializable{
         GymDataBase.saveData(equips, "EQUIPMENTS");
     }
 
-    public void editCoach(ArrayList<Coach> coachList,int coachID){
-        System.out.println("Please enter your id: ");
+    //enter to skip bdal switch cases
+    public void editCoach(ArrayList<Coach> coachList){
+        System.out.println("\nPlease enter the coach's id: ");
         Scanner input=new Scanner(System.in);
         int id= input.nextInt();
-        Coach specificCoach = Coach.getCoachByID(coachList,coachID);
+        Coach specificCoach = Coach.getCoachByID(coachList,id);
         if (specificCoach != null) {
             System.out.println("Choose an attribute to edit:");
             System.out.println("1. Address");
@@ -177,7 +178,7 @@ public class Admin  implements Serializable{
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter new address:");
+                    System.out.println("Enter new address: ");
                     String newAddress = input.nextLine();
                     specificCoach.setAddress(newAddress);
                     System.out.println("Address updated successfully.");

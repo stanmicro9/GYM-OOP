@@ -4,7 +4,7 @@ public class Membership_plan {
     protected int startDate;
     protected int monthlyPlan;
     protected int numOfMonths;
-    protected int price;
+    protected int price=0;
 
 
     public int getStartDate() {

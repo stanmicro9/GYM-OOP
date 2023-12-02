@@ -12,5 +12,6 @@ public class Subscription {
         this.customerID=customerID;
         this.coachID=coachID;
         this.plan=plan;
+
     }
 }

@@ -34,9 +34,9 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
         Equipment newEquipment = new Equipment("Address",  123456789, equipmentList);
         equipmentList.add(newEquipment);
 
-/*
+
         Admin admin = new Admin();
-        //-----------------------------------
+  /*      //-----------------------------------
         int choice;
         String choice2;
 

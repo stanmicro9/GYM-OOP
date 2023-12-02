@@ -10,7 +10,6 @@ import java.io.Serializable;
 public class Admin  implements Serializable{
     private String username;
     private String pass;
-    //ely hyghyrhum hdrbo
     public Admin() {
         username="admin";
         pass="admin";

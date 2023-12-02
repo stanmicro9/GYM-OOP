@@ -5,8 +5,8 @@ import SERVICES.InBody;
 import SERVICES.Subscription;
 public class Customer extends USER {
 
-    InBody[] inbodies= new InBody[50];
-    Subscription[] subs=new Subscription[50];
+    InBody[] inbodies= new InBody[12];//12 nfs fkrt el subscription
+    Subscription[] subs=new Subscription[12]; //lih eshtrak sana, w b3d kda el admin hyfdy el array w ybda2 mn el awl, to calculate income properly
     private int age;
     private int customerID;
     public Customer(String address, String email, String name, String pass, char gender, int phoneNO,int age,ArrayList<Customer> customerList){

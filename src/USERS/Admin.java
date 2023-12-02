@@ -4,12 +4,13 @@ import MAIN.*;
 import GYM.Equipment;
 import java.util.*;
 import DATABASE.*;
+import java.time.LocalDate;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 public class Admin  implements Serializable{
-    private String username;
-    private String pass;
+    private final String username;
+    private final String pass;
     public Admin() {
         username="admin";
         pass="admin";
@@ -17,12 +18,6 @@ public class Admin  implements Serializable{
 
     public String getUsername() {
         return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public void setPass(String pass) {
-        this.pass = pass;
     }
     public String getPass() {
         return pass;
@@ -250,7 +245,6 @@ public class Admin  implements Serializable{
         }
         return "\n\nCustomer with ID " + customerID + " was not found in gym.\n\n";
     }
-
     public String  deleteEquip(@NotNull ArrayList<Equipment> equipmentList, int equipCode){
         for(Equipment e: equipmentList){
             if(equipCode == e.getEquipCode()){
@@ -259,6 +253,16 @@ public class Admin  implements Serializable{
             }
         }
         return "\n\nEquipment with code " + equipCode + " was not found in gym.\n\n";
+    }
+
+    private String gymIncome(@NotNull ArrayList<Customer> customerList, int month){
+        LocalDate currentDate = LocalDate.now();
+        String lines = "--------------------------------";
+        StringBuilder Income = new StringBuilder("\n Date : " + currentDate + "\n"+lines+ "\n");
+        for(Customer C : customerList){
+            Income.append(C.subs[month].plan.getPrice());
+        }
+        return Income.toString();
     }
 
 }

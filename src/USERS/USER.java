@@ -128,6 +128,6 @@ public abstract class USER implements Serializable{
 
 
     //default 3shan de info visible lely f nfs el package bs
-    abstract String displayInfo(int ID);
+    abstract String displayInfo(String name);
 
 }

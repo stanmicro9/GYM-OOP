@@ -8,13 +8,28 @@ public class Customer extends USER {
     InBody[] inbodies= new InBody[50];
     Subscription[] subs=new Subscription[50];
     private int age;
-    private static int counter=0;
     private int customerID;
-    public Customer(String address, String email, String name, String pass, char gender, int phoneNO,int age){
+    public Customer(String address, String email, String name, String pass, char gender, int phoneNO,int age,ArrayList<Customer> customerList){
         super(address, email, name, pass, gender, phoneNO);
-        counter++;
-        customerID=counter;
+        customerID=generateAutoIdForCustomer(customerList);
         this.age=age;
+    }
+    public int generateAutoIdForCustomer(ArrayList<Customer> customerlist) {
+        while (true) {
+            int autoCusId = (int)(10000 + Math.random() * 11000);
+
+            boolean idExists = false;
+            for (Customer C : customerlist) {
+                if (C.getCustomerID() == autoCusId) {
+                    idExists = true;
+                    break; //exit the loop since the ID already exists w yrg3 y-generate bc it's a while(true) loop
+                }
+            }
+
+            if (!idExists) {
+                return autoCusId; //return the ID if it doesn't exist in the list
+            }
+        }
     }
 
     public int getCustomerID() {
@@ -26,15 +41,24 @@ public class Customer extends USER {
     }
 
     //default 3shan de info lely f nfs el package bs
-    String displayInfo(int ID){
-        return "\n\t\tCoach's Details : " + "\n---------------------------------------------------------------\n"
+    String displayInfo(String name){
+        return "\n\t\tCustomer's Details : " + "\n---------------------------------------------------------------\n"
                 + "\n\n> Id : " + getCustomerID() + "\n\n> Email : " + getEmail() + "\n\n> Name : " + getName() + "\n\n> Gender : " + getGender()
                 + "\n\n> Phone Number : " + getPhoneNO()  +"\n---------------------------------------------------------------\n" ;
     }
 
+    //by ID de bta3t eh?
     public Customer getCustomerById( ArrayList<Customer> customerList,int id) {
         for (Customer customer : customerList) {
             if (customer.getCustomerID() == id) {
+                return customer;
+            }
+        }
+        return null;
+    }
+    public static Customer getCustomerByName(ArrayList<Customer> customerList,String name) {
+        for (Customer customer : customerList) {
+            if (customer.getName().equals(name)) {
                 return customer;
             }
         }

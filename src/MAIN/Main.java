@@ -24,13 +24,17 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
         return choice;
     }
     public static void main(String[] args) {
-        menu();
-
         ArrayList<Customer> customerList = new ArrayList<>();
         ArrayList<Coach> coachList = new ArrayList<>();
         ArrayList<Equipment> equipmentList=new ArrayList<>();
+        Coach newCoach = new Coach("Address", "Email", "Name", "Password", 'M', 123456789, 40, coachList);
+        coachList.add(newCoach);
+        Customer newCustomer = new Customer("Address2", "Email2", "Name2", "Password2", 'M', 123456789, 40, customerList);
+        customerList.add(newCustomer);
+        Equipment newEquipment = new Equipment("Address",  123456789, equipmentList);
+        equipmentList.add(newEquipment);
 
-
+/*
         Admin admin = new Admin();
         //-----------------------------------
         int choice;
@@ -91,8 +95,8 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
 
 
 
-                CustomerStatus = customer.login(username, password);
-                CoachStatus = coach.login(username, password);
+                CustomerStatus = Customer.login(username, password);
+                CoachStatus = Coach.login(username, password);
                 AdminStatus = admin.adminLogin(username, password);
 
                 if (CustomerStatus && !CoachStatus && !AdminStatus) {
@@ -123,7 +127,7 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
                 System.out.flush();
                 menu();
             }
-        }
+        }*/
 
     }
 

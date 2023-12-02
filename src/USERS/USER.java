@@ -120,7 +120,7 @@ public abstract class USER implements Serializable{
     //to validate a non-spaces password
     public static boolean validatePassword(@NotNull String password) {
         if (password.contains(" ")) {
-            System.out.println("Password should not contain spaces.");
+            System.out.println("\n\nPassword should not contain spaces.\n\n");
             return false;
         }
         return true;

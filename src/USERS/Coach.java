@@ -18,12 +18,12 @@ public class Coach extends USER {
         return coachID;
     }
 
-    public Coach(String address, String email, String name, String pass, char gender, int phoneNO,int workingHours,ArrayList<Coach> coachlist){
+    public Coach(String address, String email, String name, String pass, char gender, int phoneNO,int workingHours, ArrayList<Coach> coachlist){
         super(address, email, name, pass, gender, phoneNO);
-        coachID=generateAutoIdForCoach(coachlist);
         this.workingHours=workingHours;
+        coachID=generateAutoIdForCoach(coachlist);
     }
-    public int generateAutoIdForCoach(ArrayList<Coach> coachlist) {
+    public static int generateAutoIdForCoach(ArrayList<Coach> coachlist) {
         while (true) {
             int autoCoachId = (int)(100 + Math.random() * 110);
 
@@ -64,7 +64,7 @@ public class Coach extends USER {
                 if (customer != null) {
                     return customer.displayInfo(customerName);
                 }
-                else return "\n\nMember with name " + customerName + " was not found in gym, please enter correct name\n\n";
+                else return "\n\nCustomer with name " + customerName + " was not found in gym, please enter correct name\n\n";
             }
         }
         return "\n\nThis Customer is not a listed one of yours.\n\n";

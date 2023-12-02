@@ -6,13 +6,13 @@ import java.util.ArrayList;
 public class Equipment {
     public String equipName;
     protected int equipCode;
-    protected int quantity=0;
-    public Equipment(String equipName, int equipCode, ArrayList<Equipment> equipmentList){
+    protected int quantity=1;
+    public Equipment(String equipName,int quantity, ArrayList<Equipment> equipmentList){
         this.equipName=equipName;
-        this.equipCode=equipCode;
-        quantity++;
+        equipCode=generateAutoEquipsCode(equipmentList);
+        this.quantity=quantity;
     }
-    public int generateAutoEquipsCode(ArrayList<Equipment> equipmentlist) {
+    public static int generateAutoEquipsCode(ArrayList<Equipment> equipmentlist) {
         while (true) {
             int autoECode = (int)(0 + Math.random() * 100);
 

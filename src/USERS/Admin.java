@@ -75,9 +75,13 @@ public class Admin  implements Serializable{
     //it  is a way to provide additional information to tools and other developers about the expected behavior of our code
     public boolean adminLogin(@NotNull String name, String password){
         boolean loginSuccessful = false;
-        if(name.equals(username)){
-            if(password.equals(pass)){
-                loginSuccessful= true;
+        boolean validateName=USER.validateName(name);
+        boolean validatePass=USER.validatePassword(password);
+        if(validateName && validatePass){
+            if(name.equals(username)){
+                if(password.equals(pass)){
+                    loginSuccessful= true;
+                }
             }
         }
         return loginSuccessful;
@@ -143,11 +147,11 @@ public class Admin  implements Serializable{
         Scanner input=new Scanner(System.in);
         System.out.println("Enter equipment's name: ");
         String newEquipName=input.next();
-        System.out.println("Enter equipment's code: ");
-        int newEquipCode=input.nextInt();
+        System.out.println("Enter equipment's quantity: ");
+        int newEquipQuantity=input.nextInt();
         input.close();
 
-        Equipment newEquipment=new Equipment(newEquipName,newEquipCode,equips);
+        Equipment newEquipment=new Equipment(newEquipName,newEquipQuantity,equips);
         equips.add(newEquipment);
         GymDataBase.saveData(equips, "EQUIPMENTS");
     }

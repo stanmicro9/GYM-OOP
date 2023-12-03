@@ -10,6 +10,7 @@ public class Coach extends USER {
     public int getWorkingHrs() {
         return workingHours;
     }
+
     public void setWorkingHrs(int workingHours) { this.workingHours = workingHours; }
     public void setCoachID(int coachID) {
         this.coachID = coachID;

@@ -156,75 +156,134 @@ public class Admin  implements Serializable{
         GymDataBase.saveData(equips, "EQUIPMENTS");
     }
 
-    public void editCoach(ArrayList<Coach> coachList,int coachID){
-        System.out.println("Please enter your id: ");
-        Scanner input=new Scanner(System.in);
-        int id= input.nextInt();
-        Coach specificCoach = Coach.getCoachByID(coachList,coachID);
+    //enter to skip bdal switch cases
+    public static void editCoach(ArrayList<Coach> coachList) {
+        System.out.println("\nPlease enter the coach's id: ");
+        Scanner input = new Scanner(System.in);
+        int id = input.nextInt();
+        Coach specificCoach = Coach.getCoachByID(coachList, id);
         if (specificCoach != null) {
-            System.out.println("Choose an attribute to edit:");
-            System.out.println("1. Address");
-            System.out.println("2. E-mail");
-            System.out.println("3. Name");
-            System.out.println("4. Password");
-            System.out.println("5. Gender");
-            System.out.println("6. Phone number");
-            System.out.println("7. Working Hours");
-            System.out.println("Enter your choice:");
+            System.out.println("Enter new address (press Enter to skip): ");
+            String newAddress = input.nextLine();
 
-            int choice = input.nextInt();
-            input.nextLine(); // Consume newline character
+            System.out.println("Enter new email (press Enter to skip): ");
+            String newEmail = input.nextLine();
 
-            switch (choice) {
-                case 1:
-                    System.out.println("Enter new address:");
-                    String newAddress = input.nextLine();
-                    specificCoach.setAddress(newAddress);
-                    System.out.println("Address updated successfully.");
-                    break;
-                case 2:
-                    System.out.println("Enter new email:");
-                    String newEmail = input.nextLine();
-                    specificCoach.setEmail(newEmail);
-                    System.out.println("Email updated successfully.");
-                    break;
-                case 3:
-                    System.out.println("Enter new name:");
-                    String newName = input.nextLine();
-                    specificCoach.setName(newName);
-                    System.out.println("Name updated successfully.");
-                    break;
-                case 4:
-                    System.out.println("Enter new password:");
-                    String newPassword = input.nextLine();
-                    specificCoach.setPass(newPassword);
-                    System.out.println("Password updated successfully.");
-                    break;
-                case 5:
-                    System.out.println("Enter new gender:");
-                    char newGender = input.next().charAt(0);
-                    specificCoach.setGender(newGender);
-                    System.out.println("Gender updated successfully.");
-                    break;
-                case 6:
-                    System.out.println("Enter new phone number:");
-                    int newPhonenum = input.nextInt();
-                    specificCoach.setPhoneNO(newPhonenum);
-                    System.out.println("Phone number updated successfully.");
-                    break;
-                case 7:
-                    System.out.println("Enter new working hours:");
-                    int newWorkinghours = input.nextInt();
-                    specificCoach.setWorkingHrs(newWorkinghours);
-                    System.out.println("Phone number updated successfully.");
-                    break;
-                default:
-                    System.out.println("Invalid choice.");
+            System.out.println("Enter new name (press Enter to skip): ");
+            String newName = input.nextLine();
+
+            System.out.println("Enter new password (press Enter to skip): ");
+            String newPassword = input.nextLine();
+
+            System.out.println("Enter new gender (press Enter to skip): ");
+            String genderInput = input.nextLine();
+            char newGender = genderInput.isEmpty() ? specificCoach.getGender() : genderInput.charAt(0);
+
+            System.out.println("Enter new phone number (press Enter to skip): ");
+            String phoneInput = input.nextLine();
+            int newPhonenum = phoneInput.isEmpty() ? specificCoach.getPhoneNO() : Integer.parseInt(phoneInput);
+
+            System.out.println("Enter new working hours (press Enter to skip): ");
+            String workingHoursInput = input.nextLine();
+            int newWorkinghours = workingHoursInput.isEmpty() ? specificCoach.getWorkingHrs() : Integer.parseInt(workingHoursInput);
+
+            // Update attributes if values were provided
+            if (!newAddress.isEmpty()) {
+                specificCoach.setAddress(newAddress);
+                System.out.println("Address updated successfully.");
             }
+            if (!newEmail.isEmpty()) {
+                specificCoach.setEmail(newEmail);
+                System.out.println("Email updated successfully.");
+            }
+            if (!newName.isEmpty()) {
+                specificCoach.setName(newName);
+                System.out.println("Name updated successfully.");
+            }
+            if (!newPassword.isEmpty()) {
+                specificCoach.setPass(newPassword);
+                System.out.println("Password updated successfully.");
+            }
+            if (!genderInput.isEmpty()) {
+                specificCoach.setGender(newGender);
+                System.out.println("Gender updated successfully.");
+            }
+            if(!phoneInput.isEmpty()) {
+                specificCoach.setPhoneNO(newPhonenum);
+                System.out.println("Phone number updated successfully.");
+            }
+            if(!workingHoursInput.isEmpty()){
+                specificCoach.setWorkingHrs(newWorkinghours);
+                System.out.println("Working Hours updated successfully.");
+            }
+        } else {
+            System.out.println("Invalid coach ID.");
         }
-        else System.out.println("Invalid email or password ");
     }
-    public void editCustomer(int customerID){
+
+    public void editCustomer(ArrayList<Customer> customerList){
+        System.out.println("\nPlease enter the customer's id: ");
+        Scanner input = new Scanner(System.in);
+        int id = input.nextInt();
+        Customer specificCustomer = Customer.getCustomerById(customerList, id);
+        if (specificCustomer != null) {
+            System.out.println("Enter new address (press Enter to skip): ");
+            String newAddress = input.nextLine();
+
+            System.out.println("Enter new email (press Enter to skip): ");
+            String newEmail = input.nextLine();
+
+            System.out.println("Enter new name (press Enter to skip): ");
+            String newName = input.nextLine();
+
+            System.out.println("Enter new password (press Enter to skip): ");
+            String newPassword = input.nextLine();
+
+            System.out.println("Enter new gender (press Enter to skip): ");
+            String genderInput = input.nextLine();
+            char newGender = genderInput.isEmpty() ? specificCustomer.getGender() : genderInput.charAt(0);
+
+            System.out.println("Enter new phone number (press Enter to skip): ");
+            String phoneInput = input.nextLine();
+            int newPhonenum = phoneInput.isEmpty() ? specificCustomer.getPhoneNO() : Integer.parseInt(phoneInput);
+
+            System.out.println("Enter new working hours (press Enter to skip): ");
+            String ageInput = input.nextLine();
+            int newAge = ageInput.isEmpty() ? specificCustomer.getAge() : Integer.parseInt(ageInput);
+
+            // Update attributes if values were provided
+            if (!newAddress.isEmpty()) {
+                specificCustomer.setAddress(newAddress);
+                System.out.println("Address updated successfully.");
+            }
+            if (!newEmail.isEmpty()) {
+                specificCustomer.setEmail(newEmail);
+                System.out.println("Email updated successfully.");
+            }
+            if (!newName.isEmpty()) {
+                specificCustomer.setName(newName);
+                System.out.println("Name updated successfully.");
+            }
+            if (!newPassword.isEmpty()) {
+                specificCustomer.setPass(newPassword);
+                System.out.println("Password updated successfully.");
+            }
+            if (!genderInput.isEmpty()) {
+                specificCustomer.setGender(newGender);
+                System.out.println("Gender updated successfully.");
+            }
+            if(!phoneInput.isEmpty()) {
+                specificCustomer.setPhoneNO(newPhonenum);
+                System.out.println("Phone number updated successfully.");
+            }
+            if(!ageInput.isEmpty()){
+                specificCustomer.setAge(newAge);
+                System.out.println("Age updated successfully.");
+            }
+        } else {
+            System.out.println("Invalid customer ID.");
+        }
+
 
     }
     public void editEquip(int EquipCode){

@@ -7,6 +7,19 @@ public class Coach extends USER {
     int coachID;
     Customer[] customersArray=new Customer[10];
 
+    public void displayFMCustomer(ArrayList<Customer>customerList){
+        for(Customer customer : customerList){
+            if(customer.getGender()=='F'){
+                System.out.println("Here's the coach's female customers list:");
+                System.out.println(customer.getName());
+            }
+            else if(customer.getGender()=='M'){
+                System.out.println("Here's the coach's male customers list:");
+                System.out.println(customer.getName());
+            }
+        }
+    }
+
     public int getWorkingHrs() {
         return workingHours;
     }

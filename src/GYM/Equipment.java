@@ -38,13 +38,17 @@ public class Equipment {
         return quantity;
     }
 
-    String displayInfo(int ID){
-        return "\n\t\tEQUIPMENTS DETAILS : " + "\n---------------------------------------------------------------\n"
-                + "\n\n> Name : " + equipName + "\n\n> Code : " + getEquipCode() + "\n\n> Quantity : " + getQuantity() +
-                 "\n---------------------------------------------------------------\n" ;
+    //for admin
+    void displayInfo(ArrayList<Equipment> equipmentList){
+        for (Equipment equips: equipmentList){
+            System.out.println("\n\t\tEQUIPMENTS DETAILS : " + "\n---------------------------------------------------------------\n"
+                    + "\n> Name : " + equips.equipName +"\n> Code : " + equips.getEquipCode()+ "\n> Quantity : " + equips.getQuantity() +
+                    "\n---------------------------------------------------------------\n");
+        }
     }
+    //for customer
     public void displayEquipmentNames(ArrayList<Equipment> equipmentList) {
-        System.out.println("Equipment list for " + equipName + ":");
+        System.out.println("\n\t\tEQUIPMENTS LIST : " + "\n---------------------------------------------------------------\n");
         for (Equipment equipment : equipmentList) {
             System.out.println(equipment.equipName);
         }

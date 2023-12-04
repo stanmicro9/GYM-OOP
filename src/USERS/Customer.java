@@ -40,6 +40,23 @@ public class Customer extends USER {
             }
         }
     }
+    @Override
+    public boolean login(String username, String password){
+        String fileName = "CUSTOMER";
+        ArrayList<Customer> customerList = GymDataBase.loadData(fileName);
+
+        for (Customer c : customerList) {
+            if (c.getName().equals(username))
+                if (c.getPass().equals(password)) {
+                    System.out.println("\nLogin successful!\n");
+                    return true;
+                }
+        }
+        //msh 3rfa a3ml system clear :(
+        System.out.println("\nLogin failed. Invalid username or password.\n");
+        return false;
+    }
+
 
     public int getCustomerID() {
         return customerID;
@@ -73,22 +90,8 @@ public class Customer extends USER {
         }
         return null;
     }
-    @Override
-    public boolean login(String username, String password){
-        String fileName = "CUSTOMER";
-        ArrayList<Customer> customerList = GymDataBase.loadData(fileName);
 
-        for (Customer c : customerList) {
-            if (c.getName().equals(username))
-                if (c.getPass().equals(password)) {
-                    System.out.println("\nLogin successful!\n");
-                    return true;
-                }
-        }
-        //msh 3rfa a3ml system clear :(
-        System.out.println("\nLogin failed. Invalid username or password.\n");
-        return false;
-    }
+
 
 }
 

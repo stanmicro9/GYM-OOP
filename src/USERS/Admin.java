@@ -102,7 +102,8 @@ public class Admin  implements Serializable{
         char Cgender=input.next().charAt(0);
         System.out.println("\nEnter Coach's phone number: ");
         int CphoneNo=input.nextInt();
-        System.out.println("\nEnter Coach's working hours (max 10): ");
+        System.out.println("\nEnter Coach's working hours (max 10): "); //check 3al hour enha msh akbr mn 10 w msh 0
+        //nfs el check fl reg
         int CworkingHours=input.nextInt();
         input.close();
 

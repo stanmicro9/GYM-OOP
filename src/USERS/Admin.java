@@ -144,6 +144,7 @@ public class Admin  implements Serializable{
         customerList.add(c);
         GymDataBase.saveData(customerList, "CUSTOMERS");
     }
+    //checker 3al name gwa add w edit equip eno msh mwgud abl kda
     public void addEquip(ArrayList<Equipment> equips){ //equipmentList
         Scanner input=new Scanner(System.in);
         System.out.println("Enter equipment's name: ");

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Equipment {
     public String equipName;
     protected int equipCode;
-    protected int quantity=1;
+    protected int quantity;
     public Equipment(String equipName,int quantity, ArrayList<Equipment> equipmentList){
         this.equipName=equipName;
         equipCode=generateAutoEquipsCode(equipmentList);

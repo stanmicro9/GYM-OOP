@@ -43,4 +43,10 @@ public class Equipment {
                 + "\n\n> Name : " + equipName + "\n\n> Code : " + getEquipCode() + "\n\n> Quantity : " + getQuantity() +
                  "\n---------------------------------------------------------------\n" ;
     }
+    public void displayEquipmentNames(ArrayList<Equipment> equipmentList) {
+        System.out.println("Equipment list for " + equipName + ":");
+        for (Equipment equipment : equipmentList) {
+            System.out.println(equipment.equipName);
+        }
+    }
 }

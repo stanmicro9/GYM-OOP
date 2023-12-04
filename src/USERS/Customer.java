@@ -1,8 +1,10 @@
 package USERS;
-import java.util.ArrayList;
-import DATABASE.*;
+
+import DATABASE.GymDataBase;
 import SERVICES.InBody;
 import SERVICES.Subscription;
+
+import java.util.ArrayList;
 public class Customer extends USER {
 
     InBody[] inbodies= new InBody[12];//12 nfs fkrt el subscription
@@ -12,6 +14,13 @@ public class Customer extends USER {
     public Customer(String address, String email, String name, String pass, char gender, int phoneNO,int age,ArrayList<Customer> customerList){
         super(address, email, name, pass, gender, phoneNO);
         customerID=generateAutoIdForCustomer(customerList);
+        this.age=age;
+    }
+
+    public int getAge(){
+        return age;
+    }
+    public void setAge(int age){
         this.age=age;
     }
     public int generateAutoIdForCustomer(ArrayList<Customer> customerlist) {
@@ -31,6 +40,23 @@ public class Customer extends USER {
             }
         }
     }
+    @Override
+    public boolean login(String username, String password){
+        String fileName = "CUSTOMER";
+        ArrayList<Customer> customerList = GymDataBase.loadData(fileName);
+
+        for (Customer c : customerList) {
+            if (c.getName().equals(username))
+                if (c.getPass().equals(password)) {
+                    System.out.println("\nLogin successful!\n");
+                    return true;
+                }
+        }
+        //msh 3rfa a3ml system clear :(
+        System.out.println("\nLogin failed. Invalid username or password.\n");
+        return false;
+    }
+
 
     public int getCustomerID() {
         return customerID;
@@ -48,7 +74,7 @@ public class Customer extends USER {
     }
 
     //by ID de bta3t eh?
-    public Customer getCustomerById( ArrayList<Customer> customerList,int id) {
+    public static Customer getCustomerById( ArrayList<Customer> customerList,int id) {
         for (Customer customer : customerList) {
             if (customer.getCustomerID() == id) {
                 return customer;
@@ -64,22 +90,8 @@ public class Customer extends USER {
         }
         return null;
     }
-    @Override
-    public boolean login(String username, String password){
-        String fileName = "CUSTOMER";
-        ArrayList<Customer> customerList = GymDataBase.loadData(fileName);
 
-        for (Customer c : customerList) {
-            if (c.getName().equals(username))
-                if (c.getPass().equals(password)) {
-                    System.out.println("\nLogin successful!\n");
-                    return true;
-                }
-        }
-        //msh 3rfa a3ml system clear :(
-        System.out.println("\nLogin failed. Invalid username or password.\n");
-        return false;
-    }
+
 
 }
 

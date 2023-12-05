@@ -27,23 +27,23 @@ public class Coach extends USER {
             switch (choice) {
                 case 1:
                     System.out.println("Your customers: \n");
-                    //
+                    //method
 
 
                     break;
                 case 2:
                     System.out.println("Inbody history for this customer: \n");
-                    //
+                    //method
 
                     break;
                 case 3:
                     System.out.println("Details of customer: \n");
-                    //
+                    //method
 
                     break;
                 case 4:
                     System.out.println("The list of female/male customers: \n");
-                    //
+                    //method
 
                     break;
 

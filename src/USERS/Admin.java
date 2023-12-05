@@ -329,4 +329,17 @@ public class Admin  implements Serializable{
         return Income.toString();
     }
 
+    public void displayCustomersForCoach(String coachName, ArrayList<Coach> coaches) {
+        for (Coach coach : coaches) {
+            if (coach.getName().equals(coachName)) {
+                coach.ListOfCustomers();
+            } else {
+                System.out.println("Coach " + coachName + " not found.");
+            }
+        }
+
+    }
+
+
+
 }

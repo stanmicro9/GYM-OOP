@@ -3,23 +3,19 @@ package SERVICES;
 import java.util.Scanner;
 
 public class Membership_plan {
-    protected int startDate;
+    protected String startDate;
     protected int monthlyPlan;
     protected int numOfMonths;
     protected int price = 0;
 
-    public Membership_plan(int startDate, int monthlyPlan, int numOfMonths) {
+    public Membership_plan(String startDate, int monthlyPlan, int numOfMonths) {
         this.startDate = startDate;
         this.monthlyPlan = monthlyPlan;
         this.numOfMonths = numOfMonths;
     }
 
-    public int getStartDate() {
+    public String  getStartDate() {
         return startDate;
-    }
-
-    public void setStartDate(int startDate) {
-        this.startDate = startDate;
     }
 
     public int getMonthlyPlan() {
@@ -61,7 +57,7 @@ public class Membership_plan {
     }
 
     public static void main(String[] args) {
-        Membership_plan plan = new Membership_plan(1, 0, 0);
+        Membership_plan plan = new Membership_plan("1 december", 0, 0);
         Scanner scanner = new Scanner(System.in);
 
         plan.displayPlanOptions();
@@ -84,3 +80,4 @@ public class Membership_plan {
 }
 //ana katba el main hena 3shan khoft ahotaha hnak ma3 el zahma//
 //seboha f halha law smahto//
+//okay babe enty bra7tek <3

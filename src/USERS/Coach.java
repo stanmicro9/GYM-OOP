@@ -1,5 +1,7 @@
 package USERS;
 
+import DATABASE.GymDataBase;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,94 +9,9 @@ public class Coach extends USER {
     int workingHours;
     int coachID;
     Customer[] customersArray=new Customer[10];
-
-    public void CoachMainMenu(){
-        Scanner scanner = new Scanner(System.in);
-        int choice;
-
-        do{
-            System.out.println(" You logged in successfully !");
-            System.out.println(" Main Menu");
-            System.out.println("1. List of your customers ");
-            System.out.println("2. Inbody history for a customer  ");
-            System.out.println("3. Details of a specific customer ");
-            System.out.println("4. list of female/male customers");
-            System.out.println("5. Exit");
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-
-
-            switch (choice) {
-                case 1:
-                    System.out.println("Your customers: \n");
-                    //method
-
-
-                    break;
-                case 2:
-                    System.out.println("Inbody history for this customer: \n");
-                    //method
-
-                    break;
-                case 3:
-                    System.out.println("Details of customer: \n");
-                    //method
-
-                    break;
-                case 4:
-                    System.out.println("The list of female/male customers: \n");
-                    //method
-
-                    break;
-
-                case 5:
-                    System.out.println("Exiting...");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please enter a valid option.");
-            }
-
-        } while (choice != 5);
-
-        scanner.close();
-
-    }
-
-
-    public void ListOfCustomers() {
-        System.out.println("Customers for Coach " + name + ":");
-        for (int i = 0; i < 10; i++) {
-            System.out.println("- " + customersArray[i].getName());
-        }
-    }
-
-    public void displayFMCustomer(Customer[] customersArray,ArrayList<Coach> coachList) {
-        System.out.println("\nPlease enter the coach's id: ");
-        Scanner input = new Scanner(System.in);
-        int id = input.nextInt();
-        Coach specificCoach = Coach.getCoachByID(coachList, id);
-        if (specificCoach != null) {
-            for (int i=0;i<10;i++) {
-                if (specificCoach.customersArray[i].getGender() == 'F') {
-                    System.out.println("Here's the coach's female customers list:");
-                    System.out.println(customersArray[i].getName());
-                }
-                else continue;
-            }
-            for (int i=0;i<10;i++) {
-                if (specificCoach.customersArray[i].getGender() == 'M') {
-                    System.out.println("Here's the coach's male customers list:");
-                    System.out.println(customersArray[i].getName());
-                }
-                else continue;
-            }
-
-        }
-    }
     public int getWorkingHrs() {
         return workingHours;
     }
-
     public void setWorkingHrs(int workingHours) { this.workingHours = workingHours; }
     public void setCoachID(int coachID) {
         this.coachID = coachID;
@@ -126,7 +43,12 @@ public class Coach extends USER {
         }
     }
 
-
+    public void ListOfCustomers() {
+        System.out.println("\nCustomers for Coach " + name + " :\n");
+        for (int i = 0; i < 10; i++) {
+            System.out.println("- " + customersArray[i].getName() + "\t" + customersArray[i].getCustomerID() + "\n");
+        }
+    } /*checked*/
     public static Coach getCoachByID(ArrayList<Coach> coachList, int coachId) {
         for (Coach coach : coachList) {
             if (coach.getCoachID() == coachId) {
@@ -137,27 +59,136 @@ public class Coach extends USER {
     }
     //default 3shan de info lely f nfs el package bs
     @Override
-    String displayInfo(String name){
+    String displayInfo(){
         return "\n\t\tCoach's Details : " + "\n---------------------------------------------------------------\n"
                 + "\n\n> Id : " + getCoachID() + "\n\n> Email : " + getEmail() + "\n\n> Name : " + getName() + "\n\n> Gender : " + getGender()
                 + "\n\n> Phone Number : " + getPhoneNO() + "\n\n> Working Hours : " + workingHours +"\n---------------------------------------------------------------\n" ;
-    }
+    } /*checked*/
     public String searchCustomerByName(ArrayList<Customer> customerList,String customerName){
         for (int i=0; i<10;i++){ //to check if the typed name is HIS customer or not
             if(customersArray[i].getName().equals(customerName)) {
                 Customer customer = Customer.getCustomerByName(customerList, customerName);
                 if (customer != null) {
-                    return customer.displayInfo(customerName);
+                    return customer.displayInfo();
                 }
                 else return "\n\nCustomer with name " + customerName + " was not found in gym, please enter correct name\n\n";
             }
         }
         return "\n\nThis Customer is not a listed one of yours.\n\n";
-    }
+    } /*checked*/
+    public void displayFMCustomer() {
+        if (customersArray[0]!=null){
+            System.out.println("\nHere's your female customers list:\n\n");
+            for (int i=0;i<10;i++) {
+                if (customersArray[i].getGender() == 'F') {
+                    System.out.println(customersArray[i].getName() + "\n");
+                }
+                else continue;
+            }
+            System.out.println("Here's your male customers list:\n\n");
+            for (int i=0;i<10;i++) {
+                if (customersArray[i].getGender() == 'M') {
+                    System.out.println(customersArray[i].getName() + "\n");
+                }
+                else continue;
+            }
+        }
+        else System.out.println("\nYou don't have customer's registered to your account.\n");
+    } /*checked*/
+
+    //for one of HIS customerS
+    public void displayCustomersInbodyHistory(int customerID) {
+        if (customersArray[0]!=null){ //exception handling?
+            for (int i=0; i<10; i++) {
+                if (customersArray[i].getCustomerID()==(customerID)){
+                    System.out.println("Inbody History of Customer: " + customersArray[i].getName() + "\n\n");
+                    if (customersArray[i].inbodies[0] != null) {
+                        for (int j = 0; customersArray[i].inbodies[j] != null; j++) {
+                            customersArray[i].inbodies[j].displayInbody();
+                        }
+                    } else System.out.println("This customer hasn't done any inbodies yet.");
+                }
+            }
+        }
+        else System.out.println("\nThere are no customers registered to your account.\n");
+    } /*checked*/
 
     @Override
     public boolean login(String username, String password){
+        String fileName = "COACH";
+        ArrayList<Coach> coachList = GymDataBase.loadData(fileName); //da msh mkanha
 
+        for (Coach c : coachList) {
+            if (c.getName().equals(username))
+                if (c.getPass().equals(password)) {
+                    System.out.println("\nLogin successful!\n");
+                    return true;
+                }
+        }
+        //msh 3rfa a3ml system clear :(
+        System.out.println("\nLogin failed. Invalid username or password.\n");
         return false;
-    }
+    } /*checked*/
+
+    public void CoachMainMenu(){
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        do{
+            System.out.println("\n\t You logged in successfully !\t\n\n");
+            System.out.println("Main Menu\n\n");
+            System.out.println("1. List of your customers\n");
+            System.out.println("2. Inbody history for a customer\n");
+            System.out.println("3. Details of a specific customer\n");
+            System.out.println("4. list of your female/male customers\n");
+            System.out.println("5. Exit\n\n");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            Scanner input = new Scanner(System.in);
+
+
+            switch (choice) {
+                case 1:
+                    System.out.println("\nYour customers: \n");
+                    ListOfCustomers();
+                    //method to get back ely hwa press kaza to go back
+
+
+                    break;
+                case 2:
+                    System.out.println("\nInbody history for a customer: \n");
+                    ListOfCustomers();
+                    System.out.println("Enter the customer ID for an InBody history: ");
+                    int chosenCustomerID = input.nextInt();
+                    displayCustomersInbodyHistory(chosenCustomerID);
+                    //method
+
+                    break;
+                case 3:
+                    System.out.println("Details of customer: \n");
+                    System.out.println("Please enter the customer name: "); //+validate
+                    String chosenCustomerName=input.next();
+                   // searchCustomerByName(customerList,chosenCustomerName); //hnsheel el list asln
+                    //method
+
+                    break;
+                case 4:
+                    System.out.println("The list of female/male customers: \n");
+                    displayFMCustomer();
+                    //method
+
+                    break;
+
+                case 5:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+
+        } while (choice != 5); //y3ni eh?
+
+        scanner.close();
+
+    } /*checked*/
 }

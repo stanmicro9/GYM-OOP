@@ -33,9 +33,18 @@ public class Equipment {
     public int getEquipCode() {
         return equipCode;
     }
-
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setEquipName(String equipName) {
+        this.equipName = equipName;
+    }
+    public void setEquipCode(int equipCode) {
+        this.equipCode = equipCode;
+    }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     //for admin
@@ -52,5 +61,13 @@ public class Equipment {
         for (Equipment equipment : equipmentList) {
             System.out.println(equipment.equipName);
         }
+    }
+
+    public static Equipment getEquipByCode(ArrayList<Equipment> equipmentList, int equcode){
+        for (Equipment equips: equipmentList){
+            if (equips.getEquipCode()==equcode)
+                return equips;
+        }
+        return null;
     }
 }

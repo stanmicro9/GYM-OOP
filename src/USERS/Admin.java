@@ -1,6 +1,5 @@
 package USERS;
-import GYM.GYM;
-import MAIN.*;
+import GYM.*;
 import GYM.Equipment;
 import java.util.*;
 import DATABASE.*;
@@ -15,7 +14,6 @@ public class Admin  implements Serializable{
         username="admin";
         pass="admin";
     }
-
     public String getUsername() {
         return username;
     }
@@ -185,7 +183,6 @@ public class Admin  implements Serializable{
 
         Coach newCoach=new Coach(Caddress,Cemail,Cpass,Cname,Cgender,CphoneNo,CworkingHours,coachlist);
         coachlist.add(newCoach);
-        GymDataBase.saveData(coachlist, "COACHES");
 
     }
     //lesa 3leha shwyt updates 3shan 7war el return
@@ -218,7 +215,6 @@ public class Admin  implements Serializable{
 
         Customer c=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge,customerList);
         customerList.add(c);
-        GymDataBase.saveData(customerList, "CUSTOMERS");
     }
     //checker 3al name gwa add w edit equip eno msh mwgud abl kda
     public void addEquip(ArrayList<Equipment> equips){ //equipmentList
@@ -231,7 +227,6 @@ public class Admin  implements Serializable{
 
         Equipment newEquipment=new Equipment(newEquipName,newEquipQuantity,equips);
         equips.add(newEquipment);
-        GymDataBase.saveData(equips, "EQUIPMENTS");
     }
 
     //enter to skip bdal switch cases
@@ -364,10 +359,10 @@ public class Admin  implements Serializable{
 
     }
     public void editEquip(ArrayList<Equipment> equipmentList) {
-        System.out.println(" Enter the equipment code:\n ");
+        System.out.println("\nEnter the equipment code you want to edit: ");
         Scanner input = new Scanner(System.in);
         int equcode = input.nextInt();
-        Equipment specificequ = Equipment.getequipmentbycode(equipmentList, equcode);
+        Equipment specificequ = Equipment.getEquipByCode(equipmentList, equcode);
         if (specificequ != null) {
             System.out.println("Enter new Name (press Enter to skip) ");
             String newName = input.nextLine();
@@ -431,18 +426,31 @@ public class Admin  implements Serializable{
         }
         return Income.toString();
     }
-
-    public void displayCustomersForCoach( ArrayList<Coach> coachList) {
-        System.out.println("\nPlease enter the coach's id: ");
+    public void displayCustomersForCoach(ArrayList<Coach> coachList) {
+        System.out.println("\nPlease enter the coach's ID you want to view his customers: ");
         Scanner input = new Scanner(System.in);
         int id = input.nextInt();
         Coach specificCoach = Coach.getCoachByID(coachList, id);
-        specificCoach.ListOfCustomers();
 
-    }
+        if (specificCoach!=null){
+            specificCoach.ListOfCustomers(); //exception handling?
+        }
+        else System.out.println("\nThis coach doesn't exist! Please enter a valid ID.\n");
+    } /*checked*/
+    public void customersSubscribedInGivenDate(ArrayList<Customer>customerList){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Please enter specific date:");
+        String date = input.next();
+        System.out.println("\nCustomers who subscribed on " + date + " :\n\n");
 
-
-
-
-
+        for(Customer customer:customerList) {
+            ArrayList<String> subscriptionSD = customer.getSubscriptionsStartDate();
+            for (String startDate : subscriptionSD) {
+                if (startDate.equals(date)) {
+                    System.out.println(customer.getName() + "\n");
+                    break;
+                }
+            }
+        }
+    } /*checked*/
 }

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Customer extends USER {
-
     InBody[] inbodies= new InBody[12];//12 nfs fkrt el subscription
     Subscription[] subs=new Subscription[12]; //lih eshtrak sana, w b3d kda el admin hyfdy el array w ybda2 mn el awl, to calculate income properly
     private int age;
@@ -84,6 +83,17 @@ public class Customer extends USER {
         this.customerID = customerID;
     }
 
+    //for admin, btgm3 start date for that customer in the iteration
+    public ArrayList<String> getSubscriptionsStartDate(){
+        ArrayList<String> startDates = new ArrayList<>();
+        for(int i=0;i<12;i++){
+            if(subs[i]!=null){
+                startDates.add(subs[i].plan.getStartDate());
+            }
+        }
+        return startDates;
+    }
+
     public int generateAutoIdForCustomer(ArrayList<Customer> customerlist) {
         while (true) {
             int autoCusId = (int)(10000 + Math.random() * 11000);
@@ -101,10 +111,53 @@ public class Customer extends USER {
             }
         }
     }
+
+    //default 3shan de info lely f nfs el package bs
+    String displayInfo(){
+        return "\n\t\tCustomer's Details : " + "\n---------------------------------------------------------------\n"
+                + "\n\n> Id : " + getCustomerID() + "\n\n> Email : " + getEmail() + "\n\n> Name : " + getName() + "\n\n> Gender : " + getGender()
+                + "\n\n> Phone Number : " + getPhoneNO()  +"\n---------------------------------------------------------------\n" ;
+    }
+
+    //for admin to edit customer
+    public static Customer getCustomerById( ArrayList<Customer> customerList,int id) {
+        for (Customer customer : customerList) {
+            if (customer.getCustomerID() == id) {
+                return customer;
+            }
+        }
+        return null;
+    }
+    //for coach
+    public static Customer getCustomerByName(ArrayList<Customer> customerList,String name) {
+        for (Customer customer : customerList) {
+            if (customer.getName().equals(name)) {
+                return customer;
+            }
+        }
+        return null;
+    }
+    public void displayEquips(ArrayList<Equipment> equipmentList){
+        Equipment.displayEquipmentNames(equipmentList);
+    } //asheel el list mn el parameters
+
+    //customer displaying his own history at a specific date
+    public void displayInbodyByDate(String date) {
+        System.out.println("\nYour InBody history for " + date + "\n------------------------------------\n\n");
+        boolean exist=false;
+        for (int i=0;i<12;i++){
+            if (inbodies[i].getDate().equals(date)){
+                inbodies[i].displayInbody();
+                exist=true;
+            }
+        }
+        if (!exist) System.out.println("There is no InBody history for such date\n\n");
+    } /*checked*/
+
     @Override
     public boolean login(String username, String password){
         String fileName = "CUSTOMER";
-        ArrayList<Customer> customerList = GymDataBase.loadData(fileName);
+        ArrayList<Customer> customerList = GymDataBase.loadData(fileName); //da msh mkanha
 
         for (Customer c : customerList) {
             if (c.getName().equals(username))
@@ -116,40 +169,6 @@ public class Customer extends USER {
         //msh 3rfa a3ml system clear :(
         System.out.println("\nLogin failed. Invalid username or password.\n");
         return false;
-    }
-
-    //default 3shan de info lely f nfs el package bs
-    String displayInfo(){
-        return "\n\t\tCustomer's Details : " + "\n---------------------------------------------------------------\n"
-                + "\n\n> Id : " + getCustomerID() + "\n\n> Email : " + getEmail() + "\n\n> Name : " + getName() + "\n\n> Gender : " + getGender()
-                + "\n\n> Phone Number : " + getPhoneNO()  +"\n---------------------------------------------------------------\n" ;
-    }
-
-    //by ID de bta3t eh?
-    public static Customer getCustomerById( ArrayList<Customer> customerList,int id) {
-        for (Customer customer : customerList) {
-            if (customer.getCustomerID() == id) {
-                return customer;
-            }
-        }
-        return null;
-    }
-    public static Customer getCustomerByName(ArrayList<Customer> customerList,String name) {
-        for (Customer customer : customerList) {
-            if (customer.getName().equals(name)) {
-                return customer;
-            }
-        }
-        return null;
-    }
-    public void displayEquips(ArrayList<Equipment> equipmentList){
-        Equipment.displayEquipmentNames(equipmentList);
-    }
-
-    //customer displaying his own history at a specific date
-    public void displayInbodyByDate(int date,Customer customer) {
-        System.out.println("\nYour InBody history for month " + date + "\n------------------------------------\n\n");
-        customer.inbodies[date].displayInbody();
-    }
+    } /*checked*/
 }
 

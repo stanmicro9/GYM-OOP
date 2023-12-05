@@ -27,15 +27,46 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
         ArrayList<Customer> customerList = new ArrayList<>();
         ArrayList<Coach> coachList = new ArrayList<>();
         ArrayList<Equipment> equipmentList=new ArrayList<>();
-        Coach newCoach = new Coach("Address", "Email", "Name", "Password", 'M', 123456789, 40, coachList);
+        Admin admin = new Admin();
+      /*  Coach newCoach = new Coach("Address", "Email", "Name", "Password", 'M', 123456789, 40, coachList);
         coachList.add(newCoach);
         Customer newCustomer = new Customer("Address2", "Email2", "Name2", "Password2", 'M', 123456789, 40, customerList);
         customerList.add(newCustomer);
         Equipment newEquipment = new Equipment("Address",  123456789, equipmentList);
         equipmentList.add(newEquipment);
+*/
 
 
-        Admin admin = new Admin();
+      int choice= menu();
+        switch (choice){
+            case 1:
+                System.out.println("1. REGISTER AS COACH\n");
+                System.out.println("2. REGISTER AS CUSTOMER\n");
+                int choice2=in.nextInt();
+                if(choice2==1){
+                    //call l register as coach
+                }
+                else if (choice2==2){
+                    //call  register customer
+                }
+                else{
+                    System.out.println("INVALID CHOICE....\n please try again");
+                    //3ayza arg3o y5tar tanyy
+                }
+                break;
+
+            case 2:
+                System.out.println("");
+
+        }
+
+
+
+
+
+
+
+
   /*      //-----------------------------------
         int choice;
         String choice2;

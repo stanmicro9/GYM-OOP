@@ -68,19 +68,29 @@ public class Coach extends USER {
         }
     }
 
-    public void displayFMCustomer(ArrayList<Customer>customerList){
-        for(Customer customer : customerList){
-            if(customer.getGender()=='F'){
-                System.out.println("Here's the coach's female customers list:");
-                System.out.println(customer.getName());
+    public void displayFMCustomer(Customer[] customersArray,ArrayList<Coach> coachList) {
+        System.out.println("\nPlease enter the coach's id: ");
+        Scanner input = new Scanner(System.in);
+        int id = input.nextInt();
+        Coach specificCoach = Coach.getCoachByID(coachList, id);
+        if (specificCoach != null) {
+            for (int i=0;i<10;i++) {
+                if (specificCoach.customersArray[i].getGender() == 'F') {
+                    System.out.println("Here's the coach's female customers list:");
+                    System.out.println(customersArray[i].getName());
+                }
+                else continue;
             }
-            else if(customer.getGender()=='M'){
-                System.out.println("Here's the coach's male customers list:");
-                System.out.println(customer.getName());
+            for (int i=0;i<10;i++) {
+                if (specificCoach.customersArray[i].getGender() == 'M') {
+                    System.out.println("Here's the coach's male customers list:");
+                    System.out.println(customersArray[i].getName());
+                }
+                else continue;
             }
+
         }
     }
-
     public int getWorkingHrs() {
         return workingHours;
     }

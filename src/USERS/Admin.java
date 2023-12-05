@@ -23,9 +23,11 @@ public class Admin  implements Serializable{
         return pass;
     }
 
+
+    Scanner scanner = new Scanner(System.in);
     public  void AdminMainMenu(Admin admin,ArrayList<Customer>customerList,ArrayList<Coach> coachlist,ArrayList<Equipment> equips) {
         Scanner scanner = new Scanner(System.in);
-        int choice;
+        int c;
 
         do{
             System.out.println("logged in !");
@@ -40,32 +42,106 @@ public class Admin  implements Serializable{
             System.out.println("8. View coaches"); //sorted 3la 7sb 3adad el customers 3nd kol coach
             System.out.println("9. Exit");
             System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
+            c = scanner.nextInt();
 
 
-            switch (choice) {
+            switch (c) {
                 case 1:
-                    System.out.println();
-                    System.out.println("Adding User...");
-                    admin.addCustomer(customerList);
-
+                    System.out.println("1.Add Customer\n");
+                    System.out.println("2.Add Coach\n");
+                    System.out.println("3.Add Equipment\n");
+                    int c2=scanner.nextInt();
+                    if(c2==1){
+                        admin.addCustomer(customerList);
+                    } else if (c2==2) {
+                        admin.addCoach(coachlist);
+                    }
+                    else if(c2==3){
+                        admin.addEquip(equips);
+                    }
+                    else
+                    {
+                        System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
+                        AdminMainMenu(admin,customerList,coachlist,equips);
+                    }
                     break;
                 case 2:
-                    System.out.println("Removing User...");
-                    // Remove user logic goes here
+                    System.out.println("1.Remove Customer\n");
+                    System.out.println("2.Remove Coach\n");
+                    System.out.println("3.Remove Equipment\n");
+                    int c3=scanner.nextInt();
+                    if(c3==1){
+                        int id=scanner.nextInt();
+                        admin.deleteCustomer(customerList,id);
+                    } else if (c3==2) {
+                        int id=scanner.nextInt();
+                        admin.deleteCoach(coachlist,id);
+                    }
+                    else if(c3==3){
+                        int code=scanner.nextInt();
+                        admin.deleteEquip(equips,code);
+                    }
+                    else
+                    {
+                        System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
+                        AdminMainMenu(admin,customerList,coachlist,equips);
+                    }
                     break;
                 case 3:
-                    System.out.println("Viewing Users...");
-                    // View users logic goes here
+                    System.out.println("1.Edit Customer\n");
+                    System.out.println("2.Edit Coach\n");
+                    System.out.println("3.Edit Equipment\n");
+                    int c4=scanner.nextInt();
+
+                    if(c4==1){
+
+                        int id=scanner.nextInt();
+                        admin.editCustomer(customerList);
+
+                    } else if (c4==2) {
+
+                        int id=scanner.nextInt();
+                        admin.editCoach(coachlist);
+
+                    }
+                    else if(c4==3){
+
+                        int code=scanner.nextInt();
+                        admin.editEquip(equips);
+                    }
+                    else
+                    {
+                        System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
+                        AdminMainMenu(admin,customerList,coachlist,equips);
+                    }
                     break;
                 case 4:
-                    System.out.println("Exiting...");
+
+                    System.out.println("ENTER CUSTOMER'S ID");
+                    int id=scanner.nextInt();
+                    // call method el view subs
                     break;
+                case 5:
+
+                    //call method el subs in day/month
+                    break;
+
+                case 6:
+
+                    int m=scanner.nextInt();
+                    admin.gymIncome(customerList,m);
+                    break;
+
+                case 7:
+
+                    //sorted insah'allah yehia hy3mlha
+                    break;
+
                 default:
                     System.out.println("Invalid choice. Please enter a valid option.");
             }
 
-        } while (choice != 9);
+        } while (c != 9);
 
         // Close the scanner to prevent resource leak
         scanner.close();
@@ -357,14 +433,12 @@ public class Admin  implements Serializable{
         return Income.toString();
     }
 
-    public void displayCustomersForCoach(String coachName, ArrayList<Coach> coaches) {
-        for (Coach coach : coaches) {
-            if (coach.getName().equals(coachName)) {
-                coach.ListOfCustomers();
-            } else {
-                System.out.println("Coach " + coachName + " not found.");
-            }
-        }
+    public void displayCustomersForCoach( ArrayList<Coach> coachList) {
+        System.out.println("\nPlease enter the coach's id: ");
+        Scanner input = new Scanner(System.in);
+        int id = input.nextInt();
+        Coach specificCoach = Coach.getCoachByID(coachList, id);
+        specificCoach.ListOfCustomers();
 
     }
 

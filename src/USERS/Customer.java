@@ -144,7 +144,31 @@ public class Customer extends USER {
         return null;
     }
 
+    public void displayCustomersInbodyHistory(ArrayList<Customer> customerList) {
+        System.out.println("\nPlease enter the customer's id: ");
+        Scanner input = new Scanner(System.in);
+        int id = input.nextInt();
+        Customer specificCustomer = Customer.getCustomerById(customerList, id);
+        System.out.println("Inbody History of Customers:");
 
+        for (Customer customer : customerList) {
+            if (customer != null && customer.getCoachID() == coachID) {
+                System.out.println("Customer ID: " + customer.getCustomerId());
+                System.out.println("Inbody History: " + customer.getInbodyHistory());
+                System.out.println("------------------------------------");
+            }
+}
+}
 
+    public void displayInbodyBYDate(InBody[] inBody,String Date) {
+        for (int i = 0; i < 12; i++) {
+            if (inBody[i].equals(Date)) {
+                inBody[i].displayInbody();
+            } else {
+                System.out.println("Invalid Date");
+            }
+        }
+
+    }
 }
 

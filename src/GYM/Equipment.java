@@ -29,26 +29,34 @@ public class Equipment {
             }
         }
     }
+    public  static Equipment getequipmentbycode(ArrayList<Equipment> equipmentList,int code) {
+        for (Equipment equipment : equipmentList) {
+            if (equipment.getEquipCode() == code) {
+                return equipment;
+            }
+        }
+        return null;
+    }
 
     public int getEquipCode() {
         return equipCode;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    //for admin
-    void displayInfo(ArrayList<Equipment> equipmentList){
-        for (Equipment equips: equipmentList){
-            System.out.println("\n\t\tEQUIPMENTS DETAILS : " + "\n---------------------------------------------------------------\n"
-                    + "\n> Name : " + equips.equipName +"\n> Code : " + equips.getEquipCode()+ "\n> Quantity : " + equips.getQuantity() +
-                    "\n---------------------------------------------------------------\n");
-        }
+    String displayInfo(int ID){
+        return "\n\t\tEQUIPMENTS DETAILS : " + "\n---------------------------------------------------------------\n"
+                + "\n\n> Name : " + equipName + "\n\n> Code : " + getEquipCode() + "\n\n> Quantity : " + getQuantity() +
+                 "\n---------------------------------------------------------------\n" ;
     }
-    //for customer
     public void displayEquipmentNames(ArrayList<Equipment> equipmentList) {
-        System.out.println("\n\t\tEQUIPMENTS LIST : " + "\n---------------------------------------------------------------\n");
+        System.out.println("Equipment list for " + equipName + ":");
         for (Equipment equipment : equipmentList) {
             System.out.println(equipment.equipName);
         }

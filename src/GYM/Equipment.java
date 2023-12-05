@@ -2,11 +2,12 @@ package GYM;
 
 import USERS.Customer;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Equipment {
     public String equipName;
     protected int equipCode;
-    protected int quantity=1;
+    protected int quantity;
     public Equipment(String equipName,int quantity, ArrayList<Equipment> equipmentList){
         this.equipName=equipName;
         equipCode=generateAutoEquipsCode(equipmentList);
@@ -36,6 +37,17 @@ public class Equipment {
 
     public int getQuantity() {
         return quantity;
+    }
+    public void setQuantity(int quantity){
+        this.quantity=quantity;
+    }
+    public static Equipment getequipmentbycode(ArrayList<Equipment> equipmentList,int code) {
+        for (Equipment equipment : equipmentList) {
+            if (equipment.getEquipCode() == code) {
+                return equipment;
+            }
+        }
+        return null;
     }
 
     //for admin

@@ -144,6 +144,7 @@ public class Admin  implements Serializable{
         customerList.add(c);
         GymDataBase.saveData(customerList, "CUSTOMERS");
     }
+    //checker 3al name gwa add w edit equip eno msh mwgud abl kda
     public void addEquip(ArrayList<Equipment> equips){ //equipmentList
         Scanner input=new Scanner(System.in);
         System.out.println("Enter equipment's name: ");
@@ -287,8 +288,35 @@ public class Admin  implements Serializable{
 
 
     }
-    public void editEquip(int EquipCode){
-
+    public void editEquip(ArrayList<Equipment> equipmentList) {
+        System.out.println(" Enter the equipment code:\n ");
+        Scanner input = new Scanner(System.in);
+        int equcode = input.nextInt();
+        Equipment specificequ = Equipment.getequipmentbycode(equipmentList, equcode);
+        if (specificequ != null) {
+            System.out.println("Enter new Name (press Enter to skip) ");
+            String newName = input.nextLine();
+            System.out.println("Enter new quantity  (press Enter to skip) ");
+            String inputQuantity = input.nextLine();
+            int newQuantity = inputQuantity.isEmpty() ? specificequ.getQuantity() : Integer.parseInt(inputQuantity);
+            if (!newName.isEmpty()) {
+                for (Equipment equipment : equipmentList) {
+                    if (equipment.equipName.equals(newName)) {
+                        System.out.println("THE EQUIPMENT IS ALREADY EXIST ");
+                    } else {
+                        specificequ.equipName = newName;
+                    }
+                }
+                System.out.println(" Equipment name updated successfully.");
+            }
+            if(!inputQuantity.isEmpty()){
+                specificequ.setQuantity(newQuantity);
+                System.out.println( "Equipment Quantity updated successfully.");
+            }
+        }
+        else {
+            System.out.println("Invalid Equipment code .");
+        }
     }
 
     public String deleteCoach(@NotNull ArrayList<Coach> coachlist, int coachID){

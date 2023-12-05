@@ -44,7 +44,7 @@ public class Equipment {
                  "\n---------------------------------------------------------------\n" ;
     }
     public void displayEquipmentNames(ArrayList<Equipment> equipmentList) {
-        System.out.println("EQUIPMENT LIST : ");
+        System.out.println("Equipment list for " + equipName + ":");
         for (Equipment equipment : equipmentList) {
             System.out.println(equipment.equipName);
         }

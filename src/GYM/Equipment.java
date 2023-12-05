@@ -29,9 +29,21 @@ public class Equipment {
             }
         }
     }
+    public  static Equipment getequipmentbycode(ArrayList<Equipment> equipmentList,int code) {
+        for (Equipment equipment : equipmentList) {
+            if (equipment.getEquipCode() == code) {
+                return equipment;
+            }
+        }
+        return null;
+    }
 
     public int getEquipCode() {
         return equipCode;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public int getQuantity() {

@@ -298,7 +298,6 @@ public class Admin  implements Serializable{
             System.out.println("Invalid coach ID.");
         }
     }
-
     public void editCustomer(ArrayList<Customer> customerList){
         System.out.println("\nPlease enter the customer's id: ");
         Scanner input = new Scanner(System.in);

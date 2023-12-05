@@ -1,6 +1,7 @@
 package USERS;
 
 import DATABASE.GymDataBase;
+import GYM.Equipment;
 import SERVICES.InBody;
 import SERVICES.Subscription;
 
@@ -76,6 +77,13 @@ public class Customer extends USER {
     public void setAge(int age){
         this.age=age;
     }
+    public int getCustomerID() {
+        return customerID;
+    }
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
+    }
+
     public int generateAutoIdForCustomer(ArrayList<Customer> customerlist) {
         while (true) {
             int autoCusId = (int)(10000 + Math.random() * 11000);
@@ -110,17 +118,8 @@ public class Customer extends USER {
         return false;
     }
 
-
-    public int getCustomerID() {
-        return customerID;
-    }
-
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
-    }
-
     //default 3shan de info lely f nfs el package bs
-    String displayInfo(String name){
+    String displayInfo(){
         return "\n\t\tCustomer's Details : " + "\n---------------------------------------------------------------\n"
                 + "\n\n> Id : " + getCustomerID() + "\n\n> Email : " + getEmail() + "\n\n> Name : " + getName() + "\n\n> Gender : " + getGender()
                 + "\n\n> Phone Number : " + getPhoneNO()  +"\n---------------------------------------------------------------\n" ;
@@ -143,32 +142,14 @@ public class Customer extends USER {
         }
         return null;
     }
+    public void displayEquips(ArrayList<Equipment> equipmentList){
+        Equipment.displayEquipmentNames(equipmentList);
+    }
 
-    public void displayCustomersInbodyHistory(ArrayList<Customer> customerList) {
-        System.out.println("\nPlease enter the customer's id: ");
-        Scanner input = new Scanner(System.in);
-        int id = input.nextInt();
-        Customer specificCustomer = Customer.getCustomerById(customerList, id);
-        System.out.println("Inbody History of Customers:");
-
-        for (Customer customer : customerList) {
-            if (customer != null && customer.getCoachID() == coachID) {
-                System.out.println("Customer ID: " + customer.getCustomerId());
-                System.out.println("Inbody History: " + customer.getInbodyHistory());
-                System.out.println("------------------------------------");
-            }
-}
-}
-
-    public void displayInbodyBYDate(InBody[] inBody,String Date) {
-        for (int i = 0; i < 12; i++) {
-            if (inBody[i].equals(Date)) {
-                inBody[i].displayInbody();
-            } else {
-                System.out.println("Invalid Date");
-            }
-        }
-
+    //customer displaying his own history at a specific date
+    public void displayInbodyByDate(int date,Customer customer) {
+        System.out.println("\nYour InBody history for month " + date + "\n------------------------------------\n\n");
+        customer.inbodies[date].displayInbody();
     }
 }
 

@@ -12,6 +12,9 @@ public class Subscription {
         this.customerID=customerID;
         this.coachID=coachID;
         this.plan=plan;
+    }
 
+    public int getCoachID() {
+        return coachID;
     }
 }

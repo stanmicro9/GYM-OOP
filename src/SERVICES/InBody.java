@@ -1,6 +1,7 @@
 package SERVICES;
 
-public class InBody {
+public class
+InBody {
     protected int heightM;
     protected int totalWeightKG;
     protected int bodyFatMassKG;
@@ -65,10 +66,10 @@ public class InBody {
         this.proteinKG = proteinKG;
     }
 
-    public String displayInbody() {
-        return "\n\t\tInbody's Details : " + "\n---------------------------------------------------------------\n"
-                + "\n\n> Hight : " + getHeightM() + "\n\n> TotalWeightKG : " + getTotalWeightKG() + "\n\n> BodyFatMassKG : " + getBodyFatMassKG() + "\n\n> Minerals : " + getMineralsKG()
-                + "\n\n> TotalBodyWater : " + getTotalBodyWater() + "\n\n> ProteinKG : " + "\n\n> Date : " + getDate() + "\n---------------------------------------------------------------\n";
+    public void displayInbody() {
+        System.out.println("\n\t\tInbody's Details : " + "\n---------------------------------------------------------------\n"
+                + "\n> Date : " + getDate() + "\n> Height (m) : " + getHeightM() + "\n> Total Weight (KG) : " + getTotalWeightKG() + "\n> Body Fat Mass (KG) : " + getBodyFatMassKG() + "\n> Minerals (KG): " + getMineralsKG()
+                + "\n> Total Body Water : " + getTotalBodyWater() + "\n> Protein (KG) : " + "\n---------------------------------------------------------------\n");
     }
 
 }

@@ -1,5 +1,7 @@
 package USERS;
 
+import SERVICES.InBody;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -68,18 +70,6 @@ public class Coach extends USER {
         }
     }
 
-    public void displayFMCustomer(ArrayList<Customer>customerList){
-        for(Customer customer : customerList){
-            if(customer.getGender()=='F'){
-                System.out.println("Here's the coach's female customers list:");
-                System.out.println(customer.getName());
-            }
-            else if(customer.getGender()=='M'){
-                System.out.println("Here's the coach's male customers list:");
-                System.out.println(customer.getName());
-            }
-        }
-    }
 
     public int getWorkingHrs() {
         return workingHours;
@@ -125,24 +115,61 @@ public class Coach extends USER {
         }
         return null; // Return null if coach with given ID is not found
     }
-    //default 3shan de info lely f nfs el package bs
+
+    //default 3shan de info lely f nfs el package bs, for admin
     @Override
-    String displayInfo(String name){
+    String displayInfo(){
         return "\n\t\tCoach's Details : " + "\n---------------------------------------------------------------\n"
                 + "\n\n> Id : " + getCoachID() + "\n\n> Email : " + getEmail() + "\n\n> Name : " + getName() + "\n\n> Gender : " + getGender()
                 + "\n\n> Phone Number : " + getPhoneNO() + "\n\n> Working Hours : " + workingHours +"\n---------------------------------------------------------------\n" ;
     }
+
     public String searchCustomerByName(ArrayList<Customer> customerList,String customerName){
         for (int i=0; i<10;i++){ //to check if the typed name is HIS customer or not
             if(customersArray[i].getName().equals(customerName)) {
                 Customer customer = Customer.getCustomerByName(customerList, customerName);
                 if (customer != null) {
-                    return customer.displayInfo(customerName);
+                    return customer.displayInfo();
                 }
                 else return "\n\nCustomer with name " + customerName + " was not found in gym, please enter correct name\n\n";
             }
         }
         return "\n\nThis Customer is not a listed one of yours.\n\n";
+    }
+
+    public void displayFMCustomer(Coach coach) {
+        StringBuilder femaleList = new StringBuilder("Here's the coach's female customers list:\n");
+        StringBuilder maleList = new StringBuilder("Here's the coach's male customers list:\n");
+        for (int i=0; i<10; i++) {
+            if (coach.customersArray[i] == null){
+                break;
+            }
+            else {
+                if (coach.customersArray[i].getGender() == 'F') {
+                    femaleList.append(customersArray[i].getName()).append("\n");
+                }
+                else if (coach.customersArray[i].getGender() == 'M') {
+                    maleList.append(customersArray[i].getName()).append("\n");
+                }
+            }
+        }
+        System.out.println(femaleList.toString());
+        System.out.println(maleList.toString());
+    }
+
+    //inbody history of HIS customerS
+    public void displayCustomersInbodyHistory(Coach coach) { //asheel el calling mn el parameters wla la?? ig ashelo
+        for (int i=0;i<10;i++) {
+            if (coach.customersArray[i] != null) {
+                System.out.println("\nInbody History of Customer " + coach.customersArray[i].getName() + "\n\n");
+                for (int j=0;j<12;j++){
+                    //String customerName=coach.customersArray[i].getName();
+                    customersArray[i].inbodies[i].displayInbody(); //hasheel customerName mn el parameters
+                    //elmfrud tshtaghal mn ghero bsbb tare2t el calling
+                }
+            }
+            else break;
+        }
     }
 
     @Override

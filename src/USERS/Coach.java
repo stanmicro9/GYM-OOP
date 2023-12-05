@@ -1,11 +1,64 @@
 package USERS;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Coach extends USER {
     int workingHours;
     int coachID;
     Customer[] customersArray=new Customer[10];
+
+    public void CoachMainMenu(){
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        do{
+            System.out.println(" You logged in successfully !");
+            System.out.println(" Main Menu");
+            System.out.println("1. List of your customers ");
+            System.out.println("2. Inbody history for a customer  ");
+            System.out.println("3. Details of a specific customer ");
+            System.out.println("4. list of female/male customers");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Your customers: \n");
+                    //
+
+
+                    break;
+                case 2:
+                    System.out.println("Inbody history for this customer: \n");
+                    //
+
+                    break;
+                case 3:
+                    System.out.println("Details of customer: \n");
+                    //
+
+                    break;
+                case 4:
+                    System.out.println("The list of female/male customers: \n");
+                    //
+
+                    break;
+
+                case 5:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+
+        } while (choice != 5);
+
+        scanner.close();
+
+    }
 
 
     public void ListOfCustomers() {

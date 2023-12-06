@@ -2,6 +2,7 @@ package USERS;
 import java.io.Serializable;
 import java.util.Scanner;
 
+import GYM.GYM;
 import org.jetbrains.annotations.*;
 public abstract class USER implements Serializable{
     private String address;
@@ -65,17 +66,23 @@ public abstract class USER implements Serializable{
     //@NotNull to indicate that a parameter or return value of a method should not be null
     //it  is a way to provide additional information to tools and other developers about the expected behavior of our code
     //to validate name:
-    public static boolean validateName(@NotNull String name){
+    public static boolean validateName(@NotNull String regName){
         //static: to be able to call wherever I want without the need to create an instance of that class
-        int count;
 
-        if(name.length() > 30){
+        for (USER user : GYM.userList) {
+            if (user.name.equals(regName)) {
+                return false;
+            }
+        }
+
+        if(regName.length() > 30){
             return false;
         }
         //to track invalid characters
-        count = 0;
-        for(int i =0; i < name.length(); i++)	{
-            if (!(Character.isLetter(name.charAt(i)) || name.charAt(i) == '.')){
+        int count=0;
+
+        for(int i =0; i < regName.length(); i++)	{
+            if (!(Character.isLetter(regName.charAt(i)) || regName.charAt(i) == '.')){
                 count++;
                 break;
             }
@@ -87,9 +94,14 @@ public abstract class USER implements Serializable{
     }
 
     //to validate phone number:
-    public static boolean validatePhone(int contactNumber){
+    public static boolean validatePhone(int regNumber){
         //convert the integer to a string for further checks (3shan a3rf astkhdm .length() w .charAt())
-        String contactNumberStr = Integer.toString(contactNumber);
+        String contactNumberStr = Integer.toString(regNumber);
+        for (USER user : GYM.userList) {
+            if (user.pass.equals(regNumber)) {
+                return false;
+            }
+        }
         if (!((contactNumberStr.length() == 11 && contactNumberStr.charAt(0) == '0'
                 && contactNumberStr.charAt(1) == '1') && (contactNumberStr.charAt(2) == '0' || contactNumberStr.charAt(2) == '1' ||
                 contactNumberStr.charAt(2) == '2' || contactNumberStr.charAt(2) == '5'))){
@@ -99,19 +111,26 @@ public abstract class USER implements Serializable{
     }
 
     //to validate email:
-    public static boolean validateEmail(@NotNull String email) {
-        if (!email.endsWith(".com")) {
+    public static boolean validateEmail(@NotNull String regEmail) {
+
+        for (USER user : GYM.userList) {
+            if (user.email.equals(regEmail)) {
+                return false;
+            }
+        }
+
+        if (!regEmail.endsWith(".com")) {
             return false;
         }
-        int atIndex = email.indexOf('@');
+        int atIndex = regEmail.indexOf('@');
 
         //check if @ is present and comes before the last dot
-        if (atIndex == -1 || atIndex >= email.length() - 5) {
+        if (atIndex == -1 || atIndex >= regEmail.length() - 5) {
             return false;
         }
 
         //check if there is at least one character before @ and after it
-        if (atIndex == 0 || atIndex == email.length() - 1) {
+        if (atIndex == 0 || atIndex == regEmail.length() - 1) {
             return false;
         }
         return true;
@@ -125,6 +144,7 @@ public abstract class USER implements Serializable{
         }
         return true;
     }
+
 
 
     //default 3shan de info visible lely f nfs el package bs

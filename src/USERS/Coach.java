@@ -1,6 +1,7 @@
 package USERS;
 
 import DATABASE.GymDataBase;
+import GYM.GYM;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -9,6 +10,7 @@ public class Coach extends USER {
     int workingHours;
     int coachID;
     Customer[] customersArray=new Customer[10];
+    int customerCounter;
     public int getWorkingHrs() {
         return workingHours;
     }
@@ -20,23 +22,25 @@ public class Coach extends USER {
         return coachID;
     }
 
-    public Coach(String address, String email, String name, String pass, char gender, int phoneNO,int workingHours, ArrayList<Coach> coachlist){
+    public Coach(String address, String email, String name, String pass, char gender, int phoneNO,int workingHours){
         super(address, email, name, pass, gender, phoneNO);
         this.workingHours=workingHours;
-        coachID=generateAutoIdForCoach(coachlist);
+        coachID=generateAutoIdForCoach();
     }
-    public static int generateAutoIdForCoach(ArrayList<Coach> coachlist) {
+    public static int generateAutoIdForCoach() {
         while (true) {
             int autoCoachId = (int)(100 + Math.random() * 110);
-
             boolean idExists = false;
-            for (Coach c : coachlist) {
-                if (c.getCoachID() == autoCoachId) {
-                    idExists = true;
-                    break; //exit the loop since the ID already exists w yrg3 y-generate bc it's a while(true) loop
+
+            for (USER user : GYM.userList) {
+                if (user instanceof Coach) {
+                    Coach coach = (Coach) user; //downcasting
+                    if (coach.getCoachID() == autoCoachId) {
+                        idExists = true;
+                        break; //exit the loop since the ID already exists w yrg3 y-generate bc it's a while(true) loop
+                    }
                 }
             }
-
             if (!idExists) {
                 return autoCoachId; //return the ID if it doesn't exist in the list
             }
@@ -46,13 +50,18 @@ public class Coach extends USER {
     public void ListOfCustomers() {
         System.out.println("\nCustomers for Coach " + name + " :\n");
         for (int i = 0; i < 10; i++) {
-            System.out.println("- " + customersArray[i].getName() + "\t" + customersArray[i].getCustomerID() + "\n");
+            if (customersArray[i]!=null){
+                System.out.println("- " + customersArray[i].getName() + "\t" + customersArray[i].getCustomerID() + "\n");
+            }
         }
     } /*checked*/
-    public static Coach getCoachByID(ArrayList<Coach> coachList, int coachId) {
-        for (Coach coach : coachList) {
-            if (coach.getCoachID() == coachId) {
-                return coach; // Return the coach if ID matches
+    public static Coach getCoachByID(int coachId) {
+        for (USER user : GYM.userList) {
+            if (user instanceof Coach) {
+                Coach coach = (Coach) user; //downcasting
+                if (coach.getCoachID()==(coachId)) {
+                    return coach; // Return the coach if ID matches
+                }
             }
         }
         return null; // Return null if coach with given ID is not found
@@ -64,10 +73,10 @@ public class Coach extends USER {
                 + "\n\n> Id : " + getCoachID() + "\n\n> Email : " + getEmail() + "\n\n> Name : " + getName() + "\n\n> Gender : " + getGender()
                 + "\n\n> Phone Number : " + getPhoneNO() + "\n\n> Working Hours : " + workingHours +"\n---------------------------------------------------------------\n" ;
     } /*checked*/
-    public String searchCustomerByName(ArrayList<Customer> customerList,String customerName){
+    public String searchCustomerByName(String customerName){
         for (int i=0; i<10;i++){ //to check if the typed name is HIS customer or not
             if(customersArray[i].getName().equals(customerName)) {
-                Customer customer = Customer.getCustomerByName(customerList, customerName);
+                Customer customer = Customer.getCustomerByName(customerName);
                 if (customer != null) {
                     return customer.displayInfo();
                 }
@@ -115,15 +124,16 @@ public class Coach extends USER {
 
     @Override
     public boolean login(String username, String password){
-        String fileName = "COACH";
-        ArrayList<Coach> coachList = GymDataBase.loadData(fileName); //da msh mkanha
-
-        for (Coach c : coachList) {
-            if (c.getName().equals(username))
-                if (c.getPass().equals(password)) {
-                    System.out.println("\nLogin successful!\n");
-                    return true;
+        for (USER user : GYM.userList) {
+            if (user instanceof Coach) {
+                Coach coach = (Coach) user; //downcasting
+                if (coach.getName().equals(username)){
+                    if (coach.getPass().equals(password)) {
+                        System.out.println("\nLogin successful!\n");
+                        return true;
+                    }
                 }
+            }
         }
         //msh 3rfa a3ml system clear :(
         System.out.println("\nLogin failed. Invalid username or password.\n");
@@ -190,5 +200,10 @@ public class Coach extends USER {
 
         scanner.close();
 
-    } /*checked*/
+    }
+
+    public String displayInfoForCustomer(){
+        return "\n\t\tYour Coach's Details : " + "\n---------------------------------------------------------------\n" + "\n\n> Name : " + getName() + "\n\n> Phone Number : " + getPhoneNO() + "\n\n> Working Hours : " + getWorkingHrs() +"\n---------------------------------------------------------------\n" ;
+
+    }
 }

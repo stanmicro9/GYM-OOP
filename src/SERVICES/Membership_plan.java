@@ -49,11 +49,11 @@ public class Membership_plan {
     }
 
     public void displayPlan() {
-        System.out.println("Monthly Plan");
-        System.out.println("Start Date: " + getStartDate());
-        System.out.println("Number of Months: " + getNumOfMonths());
-        System.out.println("Days per week: " + getMonthlyPlan());
-        System.out.println("Price: $" + getPrice());
+        System.out.println("\nMonthly Plan\n\n");
+        System.out.println("\nStart Date: " + getStartDate());
+        System.out.println("\nNumber of Months: " + getNumOfMonths());
+        System.out.println("\nDays per week: " + getMonthlyPlan());
+        System.out.println("\nPrice: " + getPrice() + "$");
     }
 
     public static void main(String[] args) {

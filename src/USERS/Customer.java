@@ -2,6 +2,7 @@ package USERS;
 
 import DATABASE.GymDataBase;
 import GYM.Equipment;
+import GYM.GYM;
 import SERVICES.InBody;
 import SERVICES.Subscription;
 
@@ -13,9 +14,9 @@ public class Customer extends USER {
     Subscription[] subs=new Subscription[12]; //lih eshtrak sana, w b3d kda el admin hyfdy el array w ybda2 mn el awl, to calculate income properly
     private int age;
     private int customerID;
-    public Customer(String address, String email, String name, String pass, char gender, int phoneNO,int age,ArrayList<Customer> customerList){
+    public Customer(String address, String email, String name, String pass, char gender, int phoneNO,int age){
         super(address, email, name, pass, gender, phoneNO);
-        customerID=generateAutoIdForCustomer(customerList);
+        customerID=generateAutoIdForCustomer();
         this.age=age;
     }
 
@@ -94,18 +95,20 @@ public class Customer extends USER {
         return startDates;
     }
 
-    public int generateAutoIdForCustomer(ArrayList<Customer> customerlist) {
+    public int generateAutoIdForCustomer() {
         while (true) {
             int autoCusId = (int)(10000 + Math.random() * 11000);
-
             boolean idExists = false;
-            for (Customer C : customerlist) {
-                if (C.getCustomerID() == autoCusId) {
-                    idExists = true;
-                    break; //exit the loop since the ID already exists w yrg3 y-generate bc it's a while(true) loop
+
+            for (USER user : GYM.userList) {
+                if (user instanceof Customer) {
+                    Customer customer = (Customer) user; //downcasting
+                    if (customer.getCustomerID() == autoCusId) {
+                        idExists = true;
+                        break; //exit the loop since the ID already exists w yrg3 y-generate bc it's a while(true) loop
+                    }
                 }
             }
-
             if (!idExists) {
                 return autoCusId; //return the ID if it doesn't exist in the list
             }
@@ -120,25 +123,31 @@ public class Customer extends USER {
     }
 
     //for admin to edit customer
-    public static Customer getCustomerById( ArrayList<Customer> customerList,int id) {
-        for (Customer customer : customerList) {
-            if (customer.getCustomerID() == id) {
-                return customer;
+    public static Customer getCustomerById(int id) {
+        for (USER user : GYM.userList) {
+            if (user instanceof Customer) {
+                Customer customer = (Customer) user; //downcasting
+                if (customer.getCustomerID()==(id)) {
+                    return customer; // Return the coach if ID matches
+                }
             }
         }
-        return null;
+        return null; // Return null if coach with given ID is not found
     }
     //for coach
-    public static Customer getCustomerByName(ArrayList<Customer> customerList,String name) {
-        for (Customer customer : customerList) {
-            if (customer.getName().equals(name)) {
-                return customer;
+    public static Customer getCustomerByName(String name) {
+        for (USER user : GYM.userList) {
+            if (user instanceof Customer) {
+                Customer customer = (Customer) user; //downcasting
+                if (customer.getName().equals(name)) {
+                    return customer; // Return the coach if ID matches
+                }
             }
         }
         return null;
     }
-    public void displayEquips(ArrayList<Equipment> equipmentList){
-        Equipment.displayEquipmentNames(equipmentList);
+    public void displayEquips(){
+        Equipment.displayEquipmentNames();
     } //asheel el list mn el parameters
 
     //customer displaying his own history at a specific date
@@ -156,19 +165,37 @@ public class Customer extends USER {
 
     @Override
     public boolean login(String username, String password){
-        String fileName = "CUSTOMER";
-        ArrayList<Customer> customerList = GymDataBase.loadData(fileName); //da msh mkanha
-
-        for (Customer c : customerList) {
-            if (c.getName().equals(username))
-                if (c.getPass().equals(password)) {
-                    System.out.println("\nLogin successful!\n");
-                    return true;
+        for (USER user : GYM.userList) {
+            if (user instanceof Customer) {
+                Customer customer = (Customer) user; //downcasting
+                if (customer.getName().equals(username)){
+                    if (customer.getPass().equals(password)) {
+                        System.out.println("\nLogin successful!\n");
+                        return true;
+                    }
                 }
+            }
         }
+
         //msh 3rfa a3ml system clear :(
         System.out.println("\nLogin failed. Invalid username or password.\n");
         return false;
-    } /*checked*/
+    }
+
+    public void displayYourCoachInfo(){
+        int index=-1;
+
+        for(int i=0;i<12;i++){
+            if(subs[i+1]==null){
+                index=i;
+            }
+        }
+
+        int coachID=subs[index].getCoachID();
+        Coach myCoach=Coach.getCoachByID(coachID);
+        myCoach.displayInfoForCustomer();
+    }
+
+
 }
 

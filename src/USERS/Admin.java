@@ -1,8 +1,8 @@
 package USERS;
 import GYM.*;
-import GYM.Equipment;
 import java.util.*;
 import DATABASE.*;
+import SERVICES.*;
 import java.time.LocalDate;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,7 +23,7 @@ public class Admin  implements Serializable{
 
 
     Scanner scanner = new Scanner(System.in);
-    public  void AdminMainMenu(Admin admin,ArrayList<Customer>customerList,ArrayList<Coach> coachlist,ArrayList<Equipment> equips) {
+    public  void AdminMainMenu(Admin admin) {
         Scanner scanner = new Scanner(System.in);
         int c;
 
@@ -50,17 +50,17 @@ public class Admin  implements Serializable{
                     System.out.println("3.Add Equipment\n");
                     int c2=scanner.nextInt();
                     if(c2==1){
-                        admin.addCustomer(customerList);
+                        admin.addCustomer();
                     } else if (c2==2) {
-                        admin.addCoach(coachlist);
+                        admin.addCoach();
                     }
                     else if(c2==3){
-                        admin.addEquip(equips);
+                        admin.addEquip();
                     }
                     else
                     {
                         System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
-                        AdminMainMenu(admin,customerList,coachlist,equips);
+                        AdminMainMenu(admin);
                     }
                     break;
                 case 2:
@@ -70,19 +70,19 @@ public class Admin  implements Serializable{
                     int c3=scanner.nextInt();
                     if(c3==1){
                         int id=scanner.nextInt();
-                        admin.deleteCustomer(customerList,id);
+                        admin.deleteCustomer(id);
                     } else if (c3==2) {
                         int id=scanner.nextInt();
-                        admin.deleteCoach(coachlist,id);
+                        admin.deleteCoach(id);
                     }
                     else if(c3==3){
                         int code=scanner.nextInt();
-                        admin.deleteEquip(equips,code);
+                        admin.deleteEquip(code);
                     }
                     else
                     {
                         System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
-                        AdminMainMenu(admin,customerList,coachlist,equips);
+                        AdminMainMenu(admin);
                     }
                     break;
                 case 3:
@@ -94,23 +94,23 @@ public class Admin  implements Serializable{
                     if(c4==1){
 
                         int id=scanner.nextInt();
-                        admin.editCustomer(customerList);
+                        admin.editCustomer();
 
                     } else if (c4==2) {
 
                         int id=scanner.nextInt();
-                        admin.editCoach(coachlist);
+                        admin.editCoach();
 
                     }
                     else if(c4==3){
 
                         int code=scanner.nextInt();
-                        admin.editEquip(equips);
+                        admin.editEquip();
                     }
                     else
                     {
                         System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
-                        AdminMainMenu(admin,customerList,coachlist,equips);
+                        AdminMainMenu(admin);
                     }
                     break;
                 case 4:
@@ -127,7 +127,7 @@ public class Admin  implements Serializable{
                 case 6:
 
                     int m=scanner.nextInt();
-                    admin.gymIncome(customerList,m);
+                    admin.gymIncome(m);
                     break;
 
                 case 7:
@@ -162,7 +162,7 @@ public class Admin  implements Serializable{
     }
 
 
-    public void addCoach(ArrayList<Coach> coachlist){
+    public void addCoach(){
         Scanner input=new Scanner(System.in);
         System.out.println("\nEnter Coach's address: ");
         String Caddress=input.next();
@@ -181,12 +181,12 @@ public class Admin  implements Serializable{
         int CworkingHours=input.nextInt();
         input.close();
 
-        Coach newCoach=new Coach(Caddress,Cemail,Cpass,Cname,Cgender,CphoneNo,CworkingHours,coachlist);
-        coachlist.add(newCoach);
+        Coach newCoach=new Coach(Caddress,Cemail,Cpass,Cname,Cgender,CphoneNo,CworkingHours);
 
+        GYM.userList.add(newCoach);
     }
     //lesa 3leha shwyt updates 3shan 7war el return
-    public static void addCustomer(ArrayList<Customer>customerList){ //static 3shan htt7t fl customer's register
+    public static void addCustomer(){ //static 3shan htt7t fl customer's register
         Scanner input=new Scanner(System.in);
 
         System.out.println("\nEnter Customer's address: ");
@@ -213,11 +213,11 @@ public class Admin  implements Serializable{
         int CusAge=input.nextInt();
         input.close();
 
-        Customer c=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge,customerList);
-        customerList.add(c);
+        Customer newcustomer=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
+        GYM.userList.add(newcustomer);
     }
     //checker 3al name gwa add w edit equip eno msh mwgud abl kda
-    public void addEquip(ArrayList<Equipment> equips){ //equipmentList
+    public void addEquip(){ //equipmentList
         Scanner input=new Scanner(System.in);
         System.out.println("Enter equipment's name: ");
         String newEquipName=input.next();
@@ -225,16 +225,17 @@ public class Admin  implements Serializable{
         int newEquipQuantity=input.nextInt();
         input.close();
 
-        Equipment newEquipment=new Equipment(newEquipName,newEquipQuantity,equips);
-        equips.add(newEquipment);
+
+        Equipment newEquipment=new Equipment(newEquipName,newEquipQuantity);
+        GYM.equipmentList.add(newEquipment);
     }
 
     //enter to skip bdal switch cases
-    public static void editCoach(ArrayList<Coach> coachList) {
+    public static void editCoach() {
         System.out.println("\nPlease enter the coach's id: ");
         Scanner input = new Scanner(System.in);
         int id = input.nextInt();
-        Coach specificCoach = Coach.getCoachByID(coachList, id);
+        Coach specificCoach = Coach.getCoachByID(id);
         if (specificCoach != null) {
             System.out.println("Enter new address (press Enter to skip): ");
             String newAddress = input.nextLine();
@@ -293,11 +294,11 @@ public class Admin  implements Serializable{
             System.out.println("Invalid coach ID.");
         }
     }
-    public void editCustomer(ArrayList<Customer> customerList){
+    public void editCustomer(){
         System.out.println("\nPlease enter the customer's id: ");
         Scanner input = new Scanner(System.in);
         int id = input.nextInt();
-        Customer specificCustomer = Customer.getCustomerById(customerList, id);
+        Customer specificCustomer = Customer.getCustomerById(id);
         if (specificCustomer != null) {
             System.out.println("Enter new address (press Enter to skip): ");
             String newAddress = input.nextLine();
@@ -355,14 +356,12 @@ public class Admin  implements Serializable{
         } else {
             System.out.println("Invalid customer ID.");
         }
-
-
     }
-    public void editEquip(ArrayList<Equipment> equipmentList) {
+    public void editEquip() {
         System.out.println("\nEnter the equipment code you want to edit: ");
         Scanner input = new Scanner(System.in);
         int equcode = input.nextInt();
-        Equipment specificequ = Equipment.getEquipByCode(equipmentList, equcode);
+        Equipment specificequ = Equipment.getEquipByCode(equcode);
         if (specificequ != null) {
             System.out.println("Enter new Name (press Enter to skip) ");
             String newName = input.nextLine();
@@ -370,7 +369,7 @@ public class Admin  implements Serializable{
             String inputQuantity = input.nextLine();
             int newQuantity = inputQuantity.isEmpty() ? specificequ.getQuantity() : Integer.parseInt(inputQuantity);
             if (!newName.isEmpty()) {
-                for (Equipment equipment : equipmentList) {
+                for (Equipment equipment : GYM.equipmentList) {
                     if (equipment.equipName.equals(newName)) {
                         System.out.println("THE EQUIPMENT IS ALREADY EXIST ");
                     } else {
@@ -389,68 +388,102 @@ public class Admin  implements Serializable{
         }
     }
 
-    public String deleteCoach(@NotNull ArrayList<Coach> coachlist, int coachID){
-        for(Coach c: coachlist){
-            if(coachID == c.getCoachID()){
-                coachlist.remove(c);
-                return "\n\nCoach's -with ID "+ coachID+"- Data Removed\n\n";
+    public String deleteCoach(int coachID) {
+        for (USER user : GYM.userList) {
+            if (user instanceof Coach) {
+                Coach coach = (Coach) user; //downcasting
+                if (coach.getCoachID()==coachID) {
+                    GYM.userList.remove(coach);
+                    return "\n\nCoach's -with ID " + coachID + "- Data Removed\n\n";
+                }
             }
+
+
         }
         return "\n\nCoach with ID " + coachID + " was not found in gym.\n\n";
     }
-    public String  deleteCustomer(@NotNull ArrayList<Customer> customerList, int customerID){
-        for(Customer C: customerList){
-            if(customerID == C.getCustomerID()){
-                customerList.remove(C);
-                return "\n\nCustomer's -with ID "+ customerID+"- Data Removed\n\n";
+    public String  deleteCustomer(int customerID){
+        for (USER user : GYM.userList) {
+            if (user instanceof Customer) {
+                Customer customer = (Customer) user; //downcasting
+                if (customer.getCustomerID()==customerID) {
+                    GYM.userList.remove(customer);
+                    return "\n\nCoach's -with ID " + customerID + "- Data Removed\n\n";
+                }
             }
+
+
         }
-        return "\n\nCustomer with ID " + customerID + " was not found in gym.\n\n";
-    }
-    public String  deleteEquip(@NotNull ArrayList<Equipment> equipmentList, int equipCode){
-        for(Equipment e: equipmentList){
-            if(equipCode == e.getEquipCode()){
-                equipmentList.remove(e);
+        return "\n\nCoach with ID " + customerID + " was not found in gym.\n\n";
+        }
+    public String  deleteEquip(int equipCode){
+        for(Equipment e: GYM.equipmentList){
+            if(e.getEquipCode()==equipCode){
+                GYM.equipmentList.remove(e);
                 return "\n\nEquipment's -with ID "+ equipCode+"- Data Removed\n\n";
             }
         }
         return "\n\nEquipment with code " + equipCode + " was not found in gym.\n\n";
     }
 
-    private String gymIncome(@NotNull ArrayList<Customer> customerList, int month){
+    private String gymIncome(int month){
         LocalDate currentDate = LocalDate.now();
         String lines = "--------------------------------";
         StringBuilder Income = new StringBuilder("\n Date : " + currentDate + "\n"+lines+ "\n");
-        for(Customer C : customerList){
-            Income.append(C.subs[month].plan.getPrice());
+        for (USER user : GYM.userList) {
+            if (user instanceof Customer) {
+                Customer customer = (Customer) user; //downcasting
+                Income.append(customer.subs[month].plan.getPrice());
+            }
         }
         return Income.toString();
     }
-    public void displayCustomersForCoach(ArrayList<Coach> coachList) {
+    public void displayCustomersForCoach() { //display coaches ids and names to choose one
         System.out.println("\nPlease enter the coach's ID you want to view his customers: ");
         Scanner input = new Scanner(System.in);
         int id = input.nextInt();
-        Coach specificCoach = Coach.getCoachByID(coachList, id);
+        Coach specificCoach = Coach.getCoachByID(id);
 
         if (specificCoach!=null){
             specificCoach.ListOfCustomers(); //exception handling?
         }
         else System.out.println("\nThis coach doesn't exist! Please enter a valid ID.\n");
-    } /*checked*/
-    public void customersSubscribedInGivenDate(ArrayList<Customer>customerList){
+    }
+    public void customersSubscribedInGivenDate() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Please enter specific date:");
+        System.out.println("Please enter specific date: ");
         String date = input.next();
         System.out.println("\nCustomers who subscribed on " + date + " :\n\n");
 
-        for(Customer customer:customerList) {
-            ArrayList<String> subscriptionSD = customer.getSubscriptionsStartDate();
-            for (String startDate : subscriptionSD) {
-                if (startDate.equals(date)) {
-                    System.out.println(customer.getName() + "\n");
-                    break;
+        for (USER user : GYM.userList) {
+            if (user instanceof Customer) {
+                Customer customer = (Customer) user; //downcasting
+                ArrayList<String> subscriptionSD = customer.getSubscriptionsStartDate();
+                for (String startDate : subscriptionSD) {
+                    if (startDate.equals(date)) {
+                        System.out.println(customer.getName() + "\n");
+                        break;
+                    }
                 }
             }
         }
-    } /*checked*/
+    }
+
+    public void historySubscription(int id){
+        Customer customer=Customer.getCustomerById(id);
+        // Check if customer exists
+        if (customer != null) {
+            if (customer.subs.length == 0) {
+                System.out.println("No subscriptions found for customer with ID: " + id);
+            } else {
+                // Iterate over subscriptions and display them
+                for (Subscription subscription : customer.subs) {
+                    subscription.displaySubscription();
+                }
+            }
+        } else {
+            System.out.println("Customer not found with ID: " + id);
+        }
+
+    }
 }

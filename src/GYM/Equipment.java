@@ -7,17 +7,17 @@ public class Equipment {
     public String equipName;
     protected int equipCode;
     protected int quantity;
-    public Equipment(String equipName,int quantity, ArrayList<Equipment> equipmentList){
+    public Equipment(String equipName,int quantity){
         this.equipName=equipName;
-        equipCode=generateAutoEquipsCode(equipmentList);
+        equipCode=generateAutoEquipsCode();
         this.quantity=quantity;
     }
-    public static int generateAutoEquipsCode(ArrayList<Equipment> equipmentlist) {
+    public static int generateAutoEquipsCode() {
         while (true) {
             int autoECode = (int)(0 + Math.random() * 100);
 
             boolean idExists = false;
-            for (Equipment e : equipmentlist) {
+            for (Equipment e : GYM.equipmentList) {
                 if (e.getEquipCode() == autoECode) {
                     idExists = true;
                     break; //exit the loop since the ID already exists w yrg3 y-generate bc it's a while(true) loop
@@ -48,23 +48,23 @@ public class Equipment {
     }
 
     //for admin
-    void displayInfo(ArrayList<Equipment> equipmentList){
-        for (Equipment equips: equipmentList){
+    void displayInfo(){
+        for (Equipment equips: GYM.equipmentList){
             System.out.println("\n\t\tEQUIPMENTS DETAILS : " + "\n---------------------------------------------------------------\n"
                     + "\n> Name : " + equips.equipName +"\n> Code : " + equips.getEquipCode()+ "\n> Quantity : " + equips.getQuantity() +
                     "\n---------------------------------------------------------------\n");
         }
     }
     //for customer
-    public static void displayEquipmentNames(ArrayList<Equipment> equipmentList) {
+    public static void displayEquipmentNames() {
         System.out.println("\n\t\tEQUIPMENTS LIST : " + "\n---------------------------------------------------------------\n");
-        for (Equipment equipment : equipmentList) {
+        for (Equipment equipment : GYM.equipmentList) {
             System.out.println(equipment.equipName);
         }
     }
 
-    public static Equipment getEquipByCode(ArrayList<Equipment> equipmentList, int equcode){
-        for (Equipment equips: equipmentList){
+    public static Equipment getEquipByCode(int equcode){
+        for (Equipment equips: GYM.equipmentList){
             if (equips.getEquipCode()==equcode)
                 return equips;
         }

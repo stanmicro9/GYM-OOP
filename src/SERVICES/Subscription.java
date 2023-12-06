@@ -8,8 +8,17 @@ public class Subscription {
     protected int coachID;
     public Membership_plan plan;
 
-    public Membership_plan getPlan() {
-        return plan;
+    public int getCustomerID() {
+        return customerID;
+    }
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
+    }
+    public int getCoachID() {
+        return coachID;
+    }
+    public void setCoachID(int coachID) {
+        this.coachID = coachID;
     }
 
     public Subscription(int customerID, int coachID, Membership_plan plan){
@@ -17,8 +26,9 @@ public class Subscription {
         this.coachID=coachID;
         this.plan=plan;
     }
+    public void displaySubscription(){
+        System.out.println("Customer id : "+getCustomerID()+"\nCoach id : "+getCoachID()+"\nMembership_plan: ");
+        plan.displayPlan();
 
-    public int getCoachID() {
-        return coachID;
     }
 }

@@ -5,6 +5,7 @@ import java.io.*;
 import javax.swing.*; //for GUI
 import DATABASE.GymDataBase;
 import GYM.Equipment;
+import GYM.GYM;
 import USERS.*;
 
 public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
@@ -24,10 +25,13 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
         return choice;
     }
     public static void main(String[] args) {
-        ArrayList<Customer> customerList = new ArrayList<>();
-        ArrayList<Coach> coachList = new ArrayList<>();
-        ArrayList<Equipment> equipmentList=new ArrayList<>();
+
+       // ArrayList<Customer> customerList = new ArrayList<>();
+      //  ArrayList<Coach> coachList = new ArrayList<>();
+       // ArrayList<Equipment> equipmentList=new ArrayList<>();
         Admin admin = new Admin();
+        GYM gym=new GYM();
+
       /*  Coach newCoach = new Coach("Address", "Email", "Name", "Password", 'M', 123456789, 40, coachList);
         coachList.add(newCoach);
         Customer newCustomer = new Customer("Address2", "Email2", "Name2", "Password2", 'M', 123456789, 40, customerList);

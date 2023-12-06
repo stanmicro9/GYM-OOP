@@ -209,11 +209,9 @@ public class Admin  implements Serializable{
         int CusPhoneNo=input.nextInt();
         boolean validPN=USER.validatePhone(CusPhoneNo);
         if (!validPN) return;
-        System.out.println("\nEnter Customer's age: "); //mmkn tb2a list of ages ranging from 12 to 100 and he chooses
-        int CusAge=input.nextInt();
         input.close();
 
-        Customer newcustomer=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo,CusAge);
+        Customer newcustomer=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo);
         GYM.userList.add(newcustomer);
     }
     //checker 3al name gwa add w edit equip eno msh mwgud abl kda
@@ -321,8 +319,6 @@ public class Admin  implements Serializable{
             int newPhonenum = phoneInput.isEmpty() ? specificCustomer.getPhoneNO() : Integer.parseInt(phoneInput);
 
             System.out.println("Enter new working hours (press Enter to skip): ");
-            String ageInput = input.nextLine();
-            int newAge = ageInput.isEmpty() ? specificCustomer.getAge() : Integer.parseInt(ageInput);
 
             // Update attributes if values were provided
             if (!newAddress.isEmpty()) {
@@ -348,10 +344,6 @@ public class Admin  implements Serializable{
             if(!phoneInput.isEmpty()) {
                 specificCustomer.setPhoneNO(newPhonenum);
                 System.out.println("Phone number updated successfully.");
-            }
-            if(!ageInput.isEmpty()){
-                specificCustomer.setAge(newAge);
-                System.out.println("Age updated successfully.");
             }
         } else {
             System.out.println("Invalid customer ID.");

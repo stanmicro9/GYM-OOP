@@ -12,12 +12,10 @@ import java.util.Scanner;
 public class Customer extends USER {
     InBody[] inbodies= new InBody[12];//12 nfs fkrt el subscription
     Subscription[] subs=new Subscription[12]; //lih eshtrak sana, w b3d kda el admin hyfdy el array w ybda2 mn el awl, to calculate income properly
-    private int age;
     private int customerID;
-    public Customer(String address, String email, String name, String pass, char gender, int phoneNO,int age){
+    public Customer(String address, String email, String name, String pass, char gender, int phoneNO){
         super(address, email, name, pass, gender, phoneNO);
         customerID=generateAutoIdForCustomer();
-        this.age=age;
     }
 
     public void CustomerMainMenu(){
@@ -71,12 +69,6 @@ public class Customer extends USER {
 
     }
 
-    public int getAge(){
-        return age;
-    }
-    public void setAge(int age){
-        this.age=age;
-    }
     public int getCustomerID() {
         return customerID;
     }
@@ -196,6 +188,24 @@ public class Customer extends USER {
         myCoach.displayInfoForCustomer();
     }
 
+    public void DisplayWeightLoss(int desiredWeight) {
+        int lastindex=0;
+        int weightLossPercentage;
+        int weightLossKilos;
+        for (int j = 0; j <= 12; j++) {
+            if (inbodies[j] != null) {
+                lastindex++;
+
+            } else {
+                break;
+            }
+        }
+        weightLossPercentage = Math.abs((desiredWeight- inbodies[lastindex].getTotalWeightKG())/(desiredWeight*100));
+        weightLossKilos= inbodies[lastindex].getTotalWeightKG()*weightLossPercentage;
+
+        System.out.println("\nThe Percentage of weight loss to reach Desired Weight: "+weightLossPercentage);
+        System.out.println("\nThe amount of kilos for Weight Loss: "+weightLossKilos);
+    }
 
 }
 

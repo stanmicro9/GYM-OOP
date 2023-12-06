@@ -49,7 +49,7 @@ public class GYM {
 
         if(USER.validateName(regName) && USER.validateEmail(regEmail) && USER.validatePhone(regNumber) && USER.validatePassword(regPassword))
         {
-            USER u=new Customer(regAddress,regEmail,regName,regPassword,regGender,regNumber,regAge);
+            USER u=new Customer(regAddress,regEmail,regName,regPassword,regGender,regNumber);
             userList.add(u);
             System.out.println("registered successfully");
         }

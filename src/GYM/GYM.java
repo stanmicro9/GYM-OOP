@@ -28,7 +28,7 @@ public class GYM {
     public static ArrayList<USER> userList = new ArrayList<>();
     public static ArrayList<Equipment> equipmentList = new ArrayList<>();
 
-    public void regCustomer(ArrayList<USER> userList){
+    public void regCustomer(){
         Scanner input=new Scanner(System.in);
 
         System.out.println("\nEnter Your Name: ");
@@ -72,7 +72,7 @@ public class GYM {
 
 
 
-    public void regCoach(ArrayList<USER> userList){
+    public void regCoach(){
         Scanner input=new Scanner(System.in);
 
         System.out.println("\nEnter Your Name: ");

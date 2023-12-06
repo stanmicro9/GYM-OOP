@@ -189,30 +189,51 @@ public class Admin  implements Serializable{
     public static void addCustomer(){ //static 3shan htt7t fl customer's register
         Scanner input=new Scanner(System.in);
 
-        System.out.println("\nEnter Customer's address: ");
-        String CusAddress=input.next();
-        System.out.println("\nEnter Customer's email: ");
-        String CusEmail=input.next();
-        boolean validE=USER.validateEmail(CusEmail);
-        if (!validE) return;
-        System.out.println("\nEnter Customer's pass: ");
-        String CusPass=input.next();
-        boolean validP=USER.validatePassword(CusPass);
-        if (!validP) return;
         System.out.println("\nEnter Customer's name: ");
         String CusName=input.next();
-        boolean validN=USER.validateName(CusName);
-        if (!validN) return;
-        System.out.println("\nEnter Customer's gender (F/M): ");
-        char CusGender=input.next().charAt(0);
+        System.out.println("\nEnter Customer's email: ");
+        String CusEmail=input.next();
         System.out.println("\nEnter Customer's phone number: ");
         int CusPhoneNo=input.nextInt();
-        boolean validPN=USER.validatePhone(CusPhoneNo);
-        if (!validPN) return;
+        System.out.println("\nEnter Customer's pass: ");
+        String CusPass=input.next();
+        System.out.println("\nEnter Customer's address: ");
+        String CusAddress=input.next();
+        System.out.println("\nEnter Customer's gender (F/M): ");
+        char CusGender=input.next().charAt(0);
         input.close();
-
-        Customer newcustomer=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo);
-        GYM.userList.add(newcustomer);
+        if(USER.validateName(CusName) && USER.validateEmail(CusEmail) && USER.validatePhone(CusPhoneNo) && USER.validatePassword(CusPass))
+        {
+            Customer newcustomer=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo);
+            GYM.userList.add(newcustomer);
+            int index=-1;
+            for(USER c:GYM.userList){
+                if(c instanceof Coach){
+                    if(((Coach) c).customersArray.length<10){
+                        int CoachID=((Coach) c).getCoachID();
+                        newcustomer.subs[0].setCustomerID(CoachID);
+                        for(int i=0;i<10;i++){
+                            if(((Coach) c).customersArray[i+1]==null){
+                                index=i;
+                            }
+                        }
+                        ((Coach) c).customersArray[index]=newcustomer;
+                    }
+                }
+            }
+        }
+        else if(!USER.validateName(CusName)){
+            System.out.println("invalid name please register again");
+        }
+        else if(!USER.validateEmail(CusEmail)){
+            System.out.println("invalid email please register again");
+        }
+        else if(!USER.validatePhone(CusPhoneNo)){
+            System.out.println("invalid number please register again");
+        }
+        else if(!USER.validatePassword(CusPass)){
+            System.out.println("invalid password please register again");
+        }
     }
     //checker 3al name gwa add w edit equip eno msh mwgud abl kda
     public void addEquip(){ //equipmentList
@@ -389,8 +410,6 @@ public class Admin  implements Serializable{
                     return "\n\nCoach's -with ID " + coachID + "- Data Removed\n\n";
                 }
             }
-
-
         }
         return "\n\nCoach with ID " + coachID + " was not found in gym.\n\n";
     }
@@ -450,8 +469,8 @@ public class Admin  implements Serializable{
         for (USER user : GYM.userList) {
             if (user instanceof Customer) {
                 Customer customer = (Customer) user; //downcasting
-                ArrayList<String> subscriptionSD = customer.getSubscriptionsStartDate();
-                for (String startDate : subscriptionSD) {
+                ArrayList<LocalDate> subscriptionSD = customer.getSubscriptionsStartDate();
+                for (LocalDate startDate : subscriptionSD) {
                     if (startDate.equals(date)) {
                         System.out.println(customer.getName() + "\n");
                         break;
@@ -477,5 +496,70 @@ public class Admin  implements Serializable{
             System.out.println("Customer not found with ID: " + id);
         }
 
+    }
+
+    public void displaySortedCoaches(){
+        ArrayList<Integer> counterList = new ArrayList<>();
+        ArrayList<Coach> newCoachList = new ArrayList<>();
+        ArrayList<Coach> onlyCoachesList = new ArrayList<>();
+        for (USER user : GYM.userList) {
+            if (user instanceof Coach) {
+                Coach coach = (Coach) user; //downcasting
+                onlyCoachesList.add(coach);
+            }
+        }
+        //-----------------------------------------------------
+
+        for (USER user : GYM.userList) {
+            if (user instanceof Coach) {
+                Coach coach = (Coach) user; //downcasting
+                for (int j = 0; j <= 10; j++)
+                {
+                    if (coach.customersArray[j] != null)
+                    {
+                        coach.customerCounter++;
+
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                counterList.add(coach.customerCounter);
+            }
+        }
+        //-----------------------------------------------------
+        counterList.sort(Collections.reverseOrder());
+        //-----------------------------------------------------
+        Outerloop: for (Integer integer : counterList)
+        {
+            for (USER user : GYM.userList) {
+                if (user instanceof Coach) {
+                    Coach coach = (Coach) user; //downcasting
+                    if (integer == coach.customerCounter)
+                    {
+                        newCoachList.add(coach);
+                        if (newCoachList.size()==onlyCoachesList.size())
+                        {
+                            break Outerloop;
+                        }
+                    }
+                    else
+                    {
+                        continue ;
+                    }
+                }
+            }
+
+        }
+        //-------------------------------------------------------------
+        int display;
+        for (Coach CO:newCoachList)
+        {
+            display= newCoachList.indexOf(CO);
+            display++;
+            System.out.println(display+"-"+CO.getName());
+
+        }
     }
 }

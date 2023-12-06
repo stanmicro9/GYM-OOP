@@ -1,21 +1,30 @@
 package SERVICES;
 
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 
 public class Membership_plan {
-    protected String startDate;
+    protected LocalDate startDate;
+    protected LocalDate endDate;
     protected int monthlyPlan;
     protected int numOfMonths;
     protected int price = 0;
 
     public Membership_plan(String startDate, int monthlyPlan, int numOfMonths) {
-        this.startDate = startDate;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.startDate = LocalDate.parse(startDate, formatter);
         this.monthlyPlan = monthlyPlan;
         this.numOfMonths = numOfMonths;
+        calculateEndDate();
     }
 
-    public String  getStartDate() {
+    public LocalDate  getStartDate() {
         return startDate;
+    }
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
     public int getMonthlyPlan() {
@@ -56,6 +65,19 @@ public class Membership_plan {
         System.out.println("\nPrice: " + getPrice() + "$");
     }
 
+
+
+    private void calculateEndDate() {
+        if (numOfMonths > 0) {
+            endDate = startDate.plusMonths(numOfMonths);
+        } else {
+            throw new IllegalArgumentException("Invalid number of months. Please enter a positive value.");
+        }
+    }
+
+    // Getter for endDate
+    // Other methods and attributes remain the same
+
     public static void main(String[] args) {
         Membership_plan plan = new Membership_plan("1 december", 0, 0);
         Scanner scanner = new Scanner(System.in);
@@ -77,7 +99,7 @@ public class Membership_plan {
         System.out.println("Selected Plan:");
         plan.displayPlan();
     }
-}
-//ana katba el main hena 3shan khoft ahotaha hnak ma3 el zahma//
+    //ana katba el main hena 3shan khoft ahotaha hnak ma3 el zahma//
 //seboha f halha law smahto//
 //okay babe enty bra7tek <3
+}

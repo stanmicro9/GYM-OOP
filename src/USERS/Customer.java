@@ -6,7 +6,9 @@ import GYM.GYM;
 import SERVICES.InBody;
 import SERVICES.Subscription;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Customer extends USER {
@@ -77,8 +79,8 @@ public class Customer extends USER {
     }
 
     //for admin, btgm3 start date for that customer in the iteration
-    public ArrayList<String> getSubscriptionsStartDate(){
-        ArrayList<String> startDates = new ArrayList<>();
+    public ArrayList<LocalDate> getSubscriptionsStartDate(){
+        ArrayList<LocalDate> startDates = new ArrayList<>();
         for(int i=0;i<12;i++){
             if(subs[i]!=null){
                 startDates.add(subs[i].plan.getStartDate());
@@ -205,6 +207,16 @@ public class Customer extends USER {
 
         System.out.println("\nThe Percentage of weight loss to reach Desired Weight: "+weightLossPercentage);
         System.out.println("\nThe amount of kilos for Weight Loss: "+weightLossKilos);
+    }
+
+    public void displayPlan(){
+        int index=-1;
+        for(int i=0;i<12;i++){
+            if(subs[i+1]==null){
+                index=i;
+            }
+        }
+        subs[index].plan.displayPlan();
     }
 
 }

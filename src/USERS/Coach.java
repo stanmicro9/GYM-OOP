@@ -11,6 +11,7 @@ public class Coach extends USER {
     int coachID;
     Customer[] customersArray=new Customer[10];
     int customerCounter;
+
     public int getWorkingHrs() {
         return workingHours;
     }

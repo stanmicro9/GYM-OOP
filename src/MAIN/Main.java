@@ -1,17 +1,37 @@
 package MAIN;
-import java.util.ArrayList;
-import java.util.*;
-import java.io.*;
-import javax.swing.*; //for GUI
+
 import DATABASE.GymDataBase;
-import GYM.Equipment;
 import GYM.GYM;
-import USERS.*;
+import USERS.Admin;
+import USERS.Customer;
+
+import java.util.Scanner;
 
 public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
-    static Scanner in=new Scanner(System.in);
-    public static int menu()
-    {
+
+    public static void clearConsole() {
+        try {
+            final String os = System.getProperty("os.name");
+            if (os.contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                // For non-Windows operating systems
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        GymDataBase.loadData("");  //file el users
+        GymDataBase.loadData(""); //file el equipments
+        Scanner in=new Scanner(System.in);
+
+        Admin admin = new Admin();
+        GYM gym=new GYM();
+
         int choice;
         System.out.println("WELCOME TO GYM SYSTEM!\n");
         System.out.println("---------------------------\n");
@@ -22,36 +42,18 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
         System.out.println("Your choice: ");
         choice = in.nextInt();
 
-        return choice;
-    }
-    public static void main(String[] args) {
-
-       // ArrayList<Customer> customerList = new ArrayList<>();
-      //  ArrayList<Coach> coachList = new ArrayList<>();
-       // ArrayList<Equipment> equipmentList=new ArrayList<>();
-        Admin admin = new Admin();
-        GYM gym=new GYM();
-
-      /*  Coach newCoach = new Coach("Address", "Email", "Name", "Password", 'M', 123456789, 40, coachList);
-        coachList.add(newCoach);
-        Customer newCustomer = new Customer("Address2", "Email2", "Name2", "Password2", 'M', 123456789, 40, customerList);
-        customerList.add(newCustomer);
-        Equipment newEquipment = new Equipment("Address",  123456789, equipmentList);
-        equipmentList.add(newEquipment);
-*/
 
 
-      int choice= menu();
         switch (choice){
             case 1:
                 System.out.println("1. REGISTER AS COACH\n");
                 System.out.println("2. REGISTER AS CUSTOMER\n");
-                int choice2=in.nextInt();
-                if(choice2==1){
-                    //call l register as coach
+                int c2=in.nextInt();
+                if(c2==1){
+                    gym.regCoach();
                 }
-                else if (choice2==2){
-                    //call  register customer
+                else if (c2==2){
+                    gym.regCustomer();
                 }
                 else{
                     System.out.println("INVALID CHOICE....\n please try again");
@@ -60,7 +62,29 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
                 break;
 
             case 2:
-                System.out.println("");
+                System.out.println("1.LOG IN AS A CUSTOMER\n");
+                System.out.println("1.LOG IN AS A COACH\n");
+                System.out.println("1.LOG IN AS AN ADMIN\n");
+                int c3=in.nextInt();
+                if(c3==1){
+                    Customer newcustomer=new Customer();
+                    String username=in.next();
+                    String pass=in.next();
+                    newcustomer.login(username,pass);
+
+                }
+                else if(c3==2){
+
+
+                }
+                else if(c3==3){
+
+                }
+                else{
+                    System.out.println("INVALID CHOICE....\n please try again");
+                    //3ayza arg3o y5tar tanyy
+                }
+
 
         }
 
@@ -68,6 +92,13 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
 
 
 
+ /*  Coach newCoach = new Coach("Address", "Email", "Name", "Password", 'M', 123456789, 40, coachList);
+        coachList.add(newCoach);
+        Customer newCustomer = new Customer("Address2", "Email2", "Name2", "Password2", 'M', 123456789, 40, customerList);
+        customerList.add(newCustomer);
+        Equipment newEquipment = new Equipment("Address",  123456789, equipmentList);
+        equipmentList.add(newEquipment);
+*/
 
 
 
@@ -164,6 +195,10 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
             }
         }*/
 
+        GymDataBase.saveData(GYM.userList,"");
+        GymDataBase.saveData(GYM.equipmentList,"");
     }
+
+
 
     }

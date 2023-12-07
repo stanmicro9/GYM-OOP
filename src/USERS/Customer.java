@@ -1,6 +1,5 @@
 package USERS;
 
-import DATABASE.GymDataBase;
 import GYM.Equipment;
 import GYM.GYM;
 import SERVICES.InBody;
@@ -8,7 +7,6 @@ import SERVICES.Subscription;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Customer extends USER {
@@ -40,23 +38,23 @@ public class Customer extends USER {
             switch (choice) {
                 case 1:
                     System.out.println("Your coach's information: \n");
-                    //coach info method
+                    displayYourCoachInfo();
                     break;
                 case 2:
                     System.out.println("Gym equipments: \n");
-                    // gym equip method
+                    displayEquips();
                     break;
                 case 3:
                     System.out.println("Your membership plan: \n");
-                    // plan details method
+                    displayPlan();
                     break;
                 case 4:
                     System.out.println("Your inbody info: \n");
-                    // inbody info method
+                    displayInbodyByDate();
                     break;
                 case 5:
                     System.out.println("Kilos to be reduced: \n");
-                    // kilo to reduce method
+                    DisplayWeightLoss();
                     break;
                 case 6:
                     System.out.println("Exiting...");
@@ -145,7 +143,10 @@ public class Customer extends USER {
     } //asheel el list mn el parameters
 
     //customer displaying his own history at a specific date
-    public void displayInbodyByDate(String date) {
+    public void displayInbodyByDate() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Please enter specific date: ");
+        String date = input.next();
         System.out.println("\nYour InBody history for " + date + "\n------------------------------------\n\n");
         boolean exist=false;
         for (int i=0;i<12;i++){
@@ -190,7 +191,10 @@ public class Customer extends USER {
         myCoach.displayInfoForCustomer();
     }
 
-    public void DisplayWeightLoss(int desiredWeight) {
+    public void DisplayWeightLoss() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Please enter your desired weight: ");
+        int desiredWeight = input.nextInt();
         int lastindex=0;
         int weightLossPercentage;
         int weightLossKilos;

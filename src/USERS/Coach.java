@@ -179,14 +179,13 @@ public class Coach extends USER {
                     System.out.println("Details of customer: \n");
                     System.out.println("Please enter the customer name: "); //+validate
                     String chosenCustomerName=input.next();
-                   // searchCustomerByName(customerList,chosenCustomerName); //hnsheel el list asln
-                    //method
+                    searchCustomerByName(chosenCustomerName); //hnsheel el list asln
 
                     break;
                 case 4:
                     System.out.println("The list of female/male customers: \n");
                     displayFMCustomer();
-                    //method
+
 
                     break;
 

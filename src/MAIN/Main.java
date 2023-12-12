@@ -9,20 +9,6 @@ import java.util.Scanner;
 
 public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
 
-    public static void clearConsole() {
-        try {
-            final String os = System.getProperty("os.name");
-            if (os.contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                // For non-Windows operating systems
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public static void main(String[] args) {
         GymDataBase.loadData("");  //file el users

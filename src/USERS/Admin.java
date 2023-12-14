@@ -14,6 +14,7 @@ public class Admin  implements Serializable{
         username="admin";
         pass="admin";
     }
+
     public String getUsername() {
         return username;
     }
@@ -21,46 +22,60 @@ public class Admin  implements Serializable{
         return pass;
     }
 
+    //@NotNull to indicate that a parameter or return value of a method should not be null
+    //it  is a way to provide additional information to tools and other developers about the expected behavior of our code
+    public boolean adminLogin(@NotNull String name, String password){
+        boolean loginSuccessful = false;
+        boolean validateName=USER.validateName(name);
+        boolean validatePass=USER.validatePassword(password);
+        if(validateName && validatePass){
+            if(name.equals(username)){
+                if(password.equals(pass)){
+                    loginSuccessful= true;
+                }
+            }
+        }
+        return loginSuccessful;
+    }
 
-    Scanner scanner = new Scanner(System.in);
-    public  void AdminMainMenu(Admin admin) {
+    public  void AdminMainMenu() {
+        System.out.println("\n\nLogged in successfully!\n\n");
         Scanner scanner = new Scanner(System.in);
-        int c;
+        int choice;
 
         do{
-            System.out.println("logged in !");
-            System.out.println("Admin Main Menu");
-            System.out.println("1. Add ");
-            System.out.println("2. Remove ");
-            System.out.println("3. edit ");
-            System.out.println("4. View Customers subscription"); //hya5od id el customer w ytl3 el subs bta3o
-            System.out.println("5. View subscriptions //in a day or month");
-            System.out.println("6. View a coach's customer"); //hayd5ol 3nd coach mo3yn yshof el customers bto3o
-            System.out.println("7. View gym's income"); //in a month
-            System.out.println("8. View coaches"); //sorted 3la 7sb 3adad el customers 3nd kol coach
-            System.out.println("9. Exit");
+            System.out.println("Admin Main Menu\n---------------------------\n\n");
+            System.out.println("1. Add\n");
+            System.out.println("2. Remove\n");
+            System.out.println("3. Edit\n");
+            System.out.println("4. View a Customer Subscription\n"); //hya5od id el customer w ytl3 el subs bta3o
+            System.out.println("5. View Subscriptions //in a day or month\n");
+            System.out.println("6. View a Coach's Customers\n"); //hayd5ol 3nd coach mo3yn yshof el customers bto3o
+            System.out.println("7. View Gym's Income\n"); //in a month
+            System.out.println("8. View Top Coaches\n"); //sorted 3la 7sb 3adad el customers 3nd kol coach
+            System.out.println("9. Log Out\n\n");
             System.out.print("Enter your choice: ");
-            c = scanner.nextInt();
+            choice = scanner.nextInt();
 
 
-            switch (c) {
+            switch (choice) {
                 case 1:
                     System.out.println("1.Add Customer\n");
                     System.out.println("2.Add Coach\n");
                     System.out.println("3.Add Equipment\n");
                     int c2=scanner.nextInt();
                     if(c2==1){
-                        admin.addCustomer();
+                        addCustomer();
                     } else if (c2==2) {
-                        admin.addCoach();
+                        addCoach();
                     }
                     else if(c2==3){
-                        admin.addEquip();
+                        addEquip();
                     }
                     else
                     {
                         System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
-                        AdminMainMenu(admin);
+                        AdminMainMenu();
                     }
                     break;
                 case 2:
@@ -70,19 +85,19 @@ public class Admin  implements Serializable{
                     int c3=scanner.nextInt();
                     if(c3==1){
                         int id=scanner.nextInt();
-                        admin.deleteCustomer(id);
+                        deleteCustomer(id);
                     } else if (c3==2) {
                         int id=scanner.nextInt();
-                        admin.deleteCoach(id);
+                        deleteCoach(id);
                     }
                     else if(c3==3){
                         int code=scanner.nextInt();
-                        admin.deleteEquip(code);
+                        deleteEquip(code);
                     }
                     else
                     {
                         System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
-                        AdminMainMenu(admin);
+                        AdminMainMenu();
                     }
                     break;
                 case 3:
@@ -94,23 +109,23 @@ public class Admin  implements Serializable{
                     if(c4==1){
 
                         int id=scanner.nextInt();
-                        admin.editCustomer();
+                        editCustomer();
 
                     } else if (c4==2) {
 
                         int id=scanner.nextInt();
-                        admin.editCoach();
+                        editCoach();
 
                     }
                     else if(c4==3){
 
                         int code=scanner.nextInt();
-                        admin.editEquip();
+                        editEquip();
                     }
                     else
                     {
                         System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
-                        AdminMainMenu(admin);
+                        AdminMainMenu();
                     }
                     break;
                 case 4:
@@ -127,7 +142,7 @@ public class Admin  implements Serializable{
                 case 6:
 
                     int m=scanner.nextInt();
-                    admin.gymIncome(m);
+                    gymIncome(m);
                     break;
 
                 case 7:
@@ -139,59 +154,25 @@ public class Admin  implements Serializable{
                     System.out.println("Invalid choice. Please enter a valid option.");
             }
 
-        } while (c != 9);
+        } while (choice != 9);
 
         // Close the scanner to prevent resource leak
         scanner.close();
     }
 
-    //@NotNull to indicate that a parameter or return value of a method should not be null
-    //it  is a way to provide additional information to tools and other developers about the expected behavior of our code
-    public boolean adminLogin( @NotNull String name, String password){
-        boolean loginSuccessful = false;
-        boolean validateName=USER.validateName(name);
-        boolean validatePass=USER.validatePassword(password);
-        if(validateName && validatePass){
-            if(name.equals(username)){
-                if(password.equals(pass)){
-                    loginSuccessful= true;
-                }
-            }
-        }
-        return loginSuccessful;
-    }
-
 
     public void addCoach(){
-        Scanner input=new Scanner(System.in);
-        System.out.println("\nEnter Coach's address: ");
-        String Caddress=input.next();
-        System.out.println("\nEnter Coach's email: ");
-        String Cemail=input.next();
-        System.out.println("\nEnter Coach's pass: ");
-        String Cpass=input.next();
-        System.out.println("\nEnter Coach's name: ");
-        String Cname=input.next();
-        System.out.println("\nEnter Coach's gender (F/M): ");
-        char Cgender=input.next().charAt(0);
-        System.out.println("\nEnter Coach's phone number: ");
-        int CphoneNo=input.nextInt();
-        System.out.println("\nEnter Coach's working hours (max 10): "); //check 3al hour enha msh akbr mn 10 w msh 0
-        //nfs el check fl reg
-        int CworkingHours=input.nextInt();
-        input.close();
-
-        Coach newCoach=new Coach(Caddress,Cemail,Cpass,Cname,Cgender,CphoneNo,CworkingHours);
-
-        GYM.userList.add(newCoach);
+        GYM.regCoach();
     }
+
+
     //lesa 3leha shwyt updates 3shan 7war el return
-    public static void addCustomer(){ //static 3shan htt7t fl customer's register
+    public void addCustomer(){
         Scanner input=new Scanner(System.in);
 
         System.out.println("\nEnter Customer's name: ");
         String CusName=input.next();
-        System.out.println("\nEnter Customer's email: ");
+        System.out.println("Enter Customer's email: ");
         String CusEmail=input.next();
         System.out.println("\nEnter Customer's phone number: ");
         int CusPhoneNo=input.nextInt();
@@ -205,6 +186,7 @@ public class Admin  implements Serializable{
         if(USER.validateName(CusName) && USER.validateEmail(CusEmail) && USER.validatePhone(CusPhoneNo) && USER.validatePassword(CusPass))
         {
             Customer newcustomer=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo);
+
             GYM.userList.add(newcustomer);
             int index=-1;
             for(USER c:GYM.userList){
@@ -444,7 +426,7 @@ public class Admin  implements Serializable{
         for (USER user : GYM.userList) {
             if (user instanceof Customer) {
                 Customer customer = (Customer) user; //downcasting
-                Income.append(customer.subs[month].plan.getPrice());
+                Income.append(customer.subs[month-1].plan.getPrice());
             }
         }
         return Income.toString();

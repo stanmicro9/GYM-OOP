@@ -61,7 +61,20 @@ public abstract class USER implements Serializable{
     }
 
 
-    public abstract boolean login(String username, String password);
+    public static USER login(String username, String password){
+        for (USER user : GYM.userList) {
+            if (user.getName().equals(username)){
+                if (user.getPass().equals(password)) {
+                    System.out.println("\nLogin successful!\n");
+                    return user;
+                }
+            }
+        }
+
+        //msh 3rfa a3ml system clear :(
+        System.out.println("\nLogin failed. Invalid username or password.\n");
+        return null;
+    }
 
     //@NotNull to indicate that a parameter or return value of a method should not be null
     //it  is a way to provide additional information to tools and other developers about the expected behavior of our code
@@ -95,6 +108,7 @@ public abstract class USER implements Serializable{
 
     //to validate phone number:
     public static boolean validatePhone(int regNumber){
+        //check for it
         //convert the integer to a string for further checks (3shan a3rf astkhdm .length() w .charAt())
         String contactNumberStr = Integer.toString(regNumber);
         for (USER user : GYM.userList) {

@@ -20,6 +20,22 @@ public class Customer extends USER {
         customerID=generateAutoIdForCustomer();
     }
 
+    public Subscription[] getSubs() {
+        return subs;
+    }
+
+    public void setSubs(Subscription[] subs) {
+        this.subs = subs;
+    }
+
+
+    public int getCustomerID() {
+        return customerID;
+    }
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
+    }
+
     public void CustomerMainMenu(){
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -71,14 +87,8 @@ public class Customer extends USER {
 
     }
 
-    public int getCustomerID() {
-        return customerID;
-    }
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
-    }
-
     //for admin, btgm3 start date for that customer in the iteration
+    //de eh shoghletha ya mariam?
     public ArrayList<LocalDate> getSubscriptionsStartDate(){
         ArrayList<LocalDate> startDates = new ArrayList<>();
         for(int i=0;i<12;i++){
@@ -157,25 +167,6 @@ public class Customer extends USER {
         if (!exist) System.out.println("There is no InBody history for such date\n\n");
     } /*checked*/
 
-    @Override
-    public boolean login(String username, String password){
-        for (USER user : GYM.userList) {
-            if (user instanceof Customer) {
-                Customer customer = (Customer) user; //downcasting
-                if (customer.getName().equals(username)){
-                    if (customer.getPass().equals(password)) {
-                        System.out.println("\nLogin successful!\n");
-                        return true;
-                    }
-                }
-            }
-        }
-
-        //msh 3rfa a3ml system clear :(
-        System.out.println("\nLogin failed. Invalid username or password.\n");
-        return false;
-    }
-
     public void displayYourCoachInfo(){
         int index=-1;
 
@@ -190,7 +181,7 @@ public class Customer extends USER {
         myCoach.displayInfoForCustomer();
     }
 
-    public void DisplayWeightLoss(int desiredWeight) {
+    public void displayWeightLoss(int desiredWeight) {
         int lastindex=0;
         int weightLossPercentage;
         int weightLossKilos;
@@ -209,7 +200,7 @@ public class Customer extends USER {
         System.out.println("\nThe amount of kilos for Weight Loss: "+weightLossKilos);
     }
 
-    public void displayPlan(){
+    public void displayPlan(){ //to display CURRENT plan
         int index=-1;
         for(int i=0;i<12;i++){
             if(subs[i+1]==null){

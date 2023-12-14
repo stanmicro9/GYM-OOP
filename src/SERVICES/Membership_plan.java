@@ -10,7 +10,7 @@ public class Membership_plan {
     protected LocalDate endDate;
     protected int monthlyPlan;
     protected int numOfMonths;
-    protected int price = 0;
+    protected double price = 0;
 
     public Membership_plan(String startDate, int monthlyPlan, int numOfMonths) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -18,6 +18,7 @@ public class Membership_plan {
         this.monthlyPlan = monthlyPlan;
         this.numOfMonths = numOfMonths;
         calculateEndDate();
+        price=calculatePlanPrice(numOfMonths,monthlyPlan);
     }
 
     public LocalDate  getStartDate() {
@@ -43,18 +44,28 @@ public class Membership_plan {
         this.numOfMonths = numOfMonths;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public void displayPlanOptions() {
-        System.out.println("Choose a plan duration:");
-        System.out.println("1. 3 months");
-        System.out.println("2. 6 months");
+    public static int planOptions() {
+        Scanner choice=new Scanner(System.in);
+        int planChoice;
+        do {
+            System.out.println("\n\nChoose a plan Bundle:");
+            System.out.println("1. BUNDLE1---> 3 days/months");
+            System.out.println("2. BUNDLE2---> 6 days/months");
+            planChoice=choice.nextInt();
+            if (planChoice==1) return 3;
+            else if (planChoice==2) return 6;
+
+        } while (!(planChoice==1 || planChoice==2));
+
+        return -1; //would never happen
     }
 
     public void displayPlan() {
@@ -65,8 +76,6 @@ public class Membership_plan {
         System.out.println("\nPrice: " + getPrice() + "$");
     }
 
-
-
     private void calculateEndDate() {
         if (numOfMonths > 0) {
             endDate = startDate.plusMonths(numOfMonths);
@@ -75,6 +84,57 @@ public class Membership_plan {
         }
     }
 
+    public double calculatePlanPrice(int months,int Bundle){
+        if (Bundle==3){
+            setPrice(months*800);
+            for (int i=1;i<13;i++){
+                if (i==months){
+                    if (i>=3 && i<=6)
+                        setPrice(i*(800-(0.15 * 800)));
+
+                    else if (i>6 && i<=9)
+                        setPrice(i*(800-(0.25 * 800)));
+
+                    else if (i>9 && i<=12)
+                        setPrice(i*(800-(0.50 * 800)));
+                }
+            }
+            if (months>12) {
+                setNumOfMonths(12);
+                setPrice(12*(800-(0.50 * 800)));
+            }
+            else if (months<1) {
+                setNumOfMonths(1);
+            }
+        }
+
+        else if (Bundle==6){
+            setPrice(months*1600);
+            for (int i=1;i<13;i++){
+                if (i==months){
+                    if (i>=3 && i<=6)
+                        setPrice(i*(1600-(0.15 * 1600)));
+
+                    else if (i>6 && i<=9)
+                        setPrice(i*(1600-(0.25 * 1600)));
+
+                    else if (i>9 && i<=12)
+                        setPrice(i*(1600-(0.50 * 1600)));
+                }
+            }
+            if (months>12) {
+                setNumOfMonths(12);
+                setPrice(12*(1600-(0.50 * 1600)));
+            }
+            else if (months<1) {
+                setNumOfMonths(1);
+            }
+        }
+        return getPrice();
+    }
+
+
+
     // Getter for endDate
     // Other methods and attributes remain the same
 
@@ -82,7 +142,7 @@ public class Membership_plan {
         Membership_plan plan = new Membership_plan("1 december", 0, 0);
         Scanner scanner = new Scanner(System.in);
 
-        plan.displayPlanOptions();
+        //plan.PlanOptions();
         int choice = scanner.nextInt();
 
         if (choice == 1) {

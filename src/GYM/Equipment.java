@@ -59,7 +59,7 @@ public class Equipment {
     public static void displayEquipmentNames() {
         System.out.println("\n\t\tEQUIPMENTS LIST : " + "\n---------------------------------------------------------------\n");
         for (Equipment equipment : GYM.equipmentList) {
-            System.out.println(equipment.equipName);
+            System.out.println(equipment.equipName + "\n");
         }
     }
 

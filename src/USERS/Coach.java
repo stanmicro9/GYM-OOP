@@ -10,7 +10,7 @@ public class Coach extends USER {
     int workingHours;
     int coachID;
     Customer[] customersArray=new Customer[10];
-    int customerCounter;
+    int customerCounter; //for the method of sorting coaches in Admin class
 
     public int getWorkingHrs() {
         return workingHours;
@@ -121,24 +121,6 @@ public class Coach extends USER {
             }
         }
         else System.out.println("\nThere are no customers registered to your account.\n");
-    } /*checked*/
-
-    @Override
-    public boolean login(String username, String password){
-        for (USER user : GYM.userList) {
-            if (user instanceof Coach) {
-                Coach coach = (Coach) user; //downcasting
-                if (coach.getName().equals(username)){
-                    if (coach.getPass().equals(password)) {
-                        System.out.println("\nLogin successful!\n");
-                        return true;
-                    }
-                }
-            }
-        }
-        //msh 3rfa a3ml system clear :(
-        System.out.println("\nLogin failed. Invalid username or password.\n");
-        return false;
     } /*checked*/
 
     public void CoachMainMenu(){

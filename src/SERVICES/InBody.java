@@ -28,12 +28,35 @@ InBody {
     public int getTotalBodyWater() {
         return totalBodyWater;
     }
-
+    public int getProteinKG() {
+        return proteinKG;
+    }
+    public void setHeightM(int heightM) {
+        this.heightM = heightM;
+    }
+    public void setTotalWeightKG(int totalWeightKG) {
+        this.totalWeightKG = totalWeightKG;
+    }
+    public void setBodyFatMassKG(int bodyFatMassKG) {
+        this.bodyFatMassKG = bodyFatMassKG;
+    }
+    public void setMineralsKG(int mineralsKG) {
+        MineralsKG = mineralsKG;
+    }
+    public void setTotalBodyWater(int totalBodyWater) {
+        this.totalBodyWater = totalBodyWater;
+    }
+    public void setProteinKG(int proteinKG) {
+        this.proteinKG = proteinKG;
+    }
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public void displayInbody() {
         System.out.println("\n\t\tInbody's Details : " + "\n---------------------------------------------------------------\n"
                 + "\n> Date : " + getDate() + "\n> Height (m) : " + getHeightM() + "\n> Total Weight (KG) : " + getTotalWeightKG() + "\n> Body Fat Mass (KG) : " + getBodyFatMassKG() + "\n> Minerals (KG): " + getMineralsKG()
-                + "\n> Total Body Water : " + getTotalBodyWater() + "\n> Protein (KG) : " + "\n---------------------------------------------------------------\n");
+                + "\n> Total Body Water : " + getTotalBodyWater() + "\n> Protein (KG) : " + getProteinKG() + "\n---------------------------------------------------------------\n");
     }
 
 }

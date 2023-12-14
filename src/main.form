@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="main">
+  <grid id="27dc6" binding="panelMain" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="579" height="400"/>
+    </constraints>
+    <properties>
+      <background color="-13815486"/>
+      <foreground color="-2005531"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="e3dfe" class="javax.swing.JButton" binding="REGISTERButton" default-binding="true">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1080492"/>
+          <borderPainted value="false"/>
+          <doubleBuffered value="false"/>
+          <enabled value="false"/>
+          <focusCycleRoot value="false"/>
+          <focusable value="true"/>
+          <font name="Arial Black" size="20" style="1"/>
+          <hideActionText value="false"/>
+          <horizontalAlignment value="0"/>
+          <horizontalTextPosition value="0"/>
+          <opaque value="true"/>
+          <text value="REGISTER"/>
+        </properties>
+      </component>
+      <component id="a1d79" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1080492"/>
+          <enabled value="true"/>
+          <font name="Eras Bold ITC" size="28" style="1"/>
+          <foreground color="-4210496"/>
+          <text value="Welcome To Gym System"/>
+        </properties>
+      </component>
+      <component id="653af" class="javax.swing.JButton" binding="LOGINButton" default-binding="true">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <alignmentX value="0.0"/>
+          <alignmentY value="0.5"/>
+          <background color="-1080492"/>
+          <borderPainted value="false"/>
+          <enabled value="false"/>
+          <font name="Arial Black" size="20" style="1"/>
+          <inheritsPopupMenu value="false"/>
+          <margin top="0" left="0" bottom="0" right="0"/>
+          <text value="LOGIN"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

@@ -23,7 +23,15 @@ public class Coach extends USER {
         return coachID;
     }
 
-    public Coach(String address, String email, String name, String pass, char gender, int phoneNO,int workingHours){
+    public void setCustomersArray(int index,Customer customer) {
+        customersArray[index] =customer ;
+    }
+
+    public Customer[] getCustomersArray() {
+        return customersArray;
+    }
+
+    public Coach(String address, String email, String name, String pass, char gender, int phoneNO, int workingHours){
         super(address, email, name, pass, gender, phoneNO);
         this.workingHours=workingHours;
         coachID=generateAutoIdForCoach();
@@ -161,13 +169,14 @@ public class Coach extends USER {
                     System.out.println("Details of customer: \n");
                     System.out.println("Please enter the customer name: "); //+validate
                     String chosenCustomerName=input.next();
-                    searchCustomerByName(chosenCustomerName); //hnsheel el list asln
+                    // searchCustomerByName(customerList,chosenCustomerName); //hnsheel el list asln
+                    //method
 
                     break;
                 case 4:
                     System.out.println("The list of female/male customers: \n");
                     displayFMCustomer();
-
+                    //method
 
                     break;
 

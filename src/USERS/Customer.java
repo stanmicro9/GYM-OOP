@@ -24,8 +24,10 @@ public class Customer extends USER {
         return subs;
     }
 
-    public void setSubs(Subscription[] subs) {
-        this.subs = subs;
+    public void setSubs(Subscription subs) {
+        for (int i=0;i<12;i++){
+            if (this.subs[i]==null) this.subs[i] = subs;
+        }
     }
 
 
@@ -211,4 +213,3 @@ public class Customer extends USER {
     }
 
 }
-

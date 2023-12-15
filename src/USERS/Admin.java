@@ -1,10 +1,14 @@
 package USERS;
 import GYM.*;
+
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import DATABASE.*;
 import SERVICES.*;
 import java.time.LocalDate;
 import org.jetbrains.annotations.NotNull;
+import java.time.Month; //fl gymIncome method
 
 import java.io.Serializable;
 public class Admin  implements Serializable{
@@ -164,58 +168,8 @@ public class Admin  implements Serializable{
     public void addCoach(){
         GYM.regCoach();
     }
-
-
-    //lesa 3leha shwyt updates 3shan 7war el return
     public void addCustomer(){
-        Scanner input=new Scanner(System.in);
-
-        System.out.println("\nEnter Customer's name: ");
-        String CusName=input.next();
-        System.out.println("Enter Customer's email: ");
-        String CusEmail=input.next();
-        System.out.println("\nEnter Customer's phone number: ");
-        int CusPhoneNo=input.nextInt();
-        System.out.println("\nEnter Customer's pass: ");
-        String CusPass=input.next();
-        System.out.println("\nEnter Customer's address: ");
-        String CusAddress=input.next();
-        System.out.println("\nEnter Customer's gender (F/M): ");
-        char CusGender=input.next().charAt(0);
-        input.close();
-        if(USER.validateName(CusName) && USER.validateEmail(CusEmail) && USER.validatePhone(CusPhoneNo) && USER.validatePassword(CusPass))
-        {
-            Customer newcustomer=new Customer(CusAddress,CusEmail,CusPass,CusName,CusGender,CusPhoneNo);
-
-            GYM.userList.add(newcustomer);
-            int index=-1;
-            for(USER c:GYM.userList){
-                if(c instanceof Coach){
-                    if(((Coach) c).customersArray.length<10){
-                        int CoachID=((Coach) c).getCoachID();
-                        newcustomer.subs[0].setCustomerID(CoachID);
-                        for(int i=0;i<10;i++){
-                            if(((Coach) c).customersArray[i+1]==null){
-                                index=i;
-                            }
-                        }
-                        ((Coach) c).customersArray[index]=newcustomer;
-                    }
-                }
-            }
-        }
-        else if(!USER.validateName(CusName)){
-            System.out.println("invalid name please register again");
-        }
-        else if(!USER.validateEmail(CusEmail)){
-            System.out.println("invalid email please register again");
-        }
-        else if(!USER.validatePhone(CusPhoneNo)){
-            System.out.println("invalid number please register again");
-        }
-        else if(!USER.validatePassword(CusPass)){
-            System.out.println("invalid password please register again");
-        }
+        GYM.regCustomer();
     }
     //checker 3al name gwa add w edit equip eno msh mwgud abl kda
     public void addEquip(){ //equipmentList
@@ -231,7 +185,6 @@ public class Admin  implements Serializable{
         GYM.equipmentList.add(newEquipment);
     }
 
-    //enter to skip bdal switch cases
     public static void editCoach() {
         System.out.println("\nPlease enter the coach's id: ");
         Scanner input = new Scanner(System.in);
@@ -408,7 +361,7 @@ public class Admin  implements Serializable{
 
         }
         return "\n\nCoach with ID " + customerID + " was not found in gym.\n\n";
-        }
+    }
     public String  deleteEquip(int equipCode){
         for(Equipment e: GYM.equipmentList){
             if(e.getEquipCode()==equipCode){
@@ -426,7 +379,11 @@ public class Admin  implements Serializable{
         for (USER user : GYM.userList) {
             if (user instanceof Customer) {
                 Customer customer = (Customer) user; //downcasting
-                Income.append(customer.subs[month-1].plan.getPrice());
+                for (int i = 0; i < 12; i++) {
+                    if (customer.subs[i].plan.getStartDate().getMonth()== Month.of(month)) {
+                        Income.append(customer.subs[i].plan.getPrice());
+                    }
+                }
             }
         }
         return Income.toString();
@@ -444,21 +401,27 @@ public class Admin  implements Serializable{
     }
     public void customersSubscribedInGivenDate() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Please enter specific date: ");
+        System.out.println("Please enter specific date (yyyy-MM-dd): ");
         String date = input.next();
         System.out.println("\nCustomers who subscribed on " + date + " :\n\n");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        for (USER user : GYM.userList) {
-            if (user instanceof Customer) {
-                Customer customer = (Customer) user; //downcasting
-                ArrayList<LocalDate> subscriptionSD = customer.getSubscriptionsStartDate();
-                for (LocalDate startDate : subscriptionSD) {
-                    if (startDate.equals(date)) {
-                        System.out.println(customer.getName() + "\n");
-                        break;
+        try {
+            LocalDate Date = LocalDate.parse(date, formatter);
+            for (USER user : GYM.userList) {
+                if (user instanceof Customer) {
+                    Customer customer = (Customer) user; //downcasting
+                    ArrayList<LocalDate> subscriptionSD = customer.getSubscriptionsStartDate();
+                    for (LocalDate startDate : subscriptionSD) {
+                        if (startDate.equals(Date)) {
+                            System.out.println(customer.getName() + "\n");
+                            break;
+                        }
                     }
                 }
             }
+        } catch (DateTimeParseException e){
+            System.out.println("\nInvalid date format. Please register again.\n");
         }
     }
 

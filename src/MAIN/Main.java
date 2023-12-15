@@ -3,7 +3,9 @@ package MAIN;
 import DATABASE.GymDataBase;
 import GYM.GYM;
 import USERS.Admin;
+import USERS.Coach;
 import USERS.Customer;
+import USERS.USER;
 
 import java.util.Scanner;
 
@@ -13,72 +15,88 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
     public static void main(String[] args) {
         GymDataBase.loadData("");  //file el users
         GymDataBase.loadData(""); //file el equipments
-        Scanner in=new Scanner(System.in);
+        Scanner in = new Scanner(System.in);
 
         Admin admin = new Admin();
-        GYM gym=new GYM();
+        GYM gym = new GYM();
 
-        int choice;
+        int choice1;
         System.out.println("WELCOME TO GYM SYSTEM!\n");
         System.out.println("---------------------------\n");
-        System.out.println("Main Menu\n");
-        System.out.println("---------------------------\n");
-        System.out.println("1-Register\n");
-        System.out.println("2-Login\n\n" );
-        System.out.println("Your choice: ");
-        choice = in.nextInt();
+
+        outerloop:
+        while (true) {
+            System.out.println("Main Menu\n");
+            System.out.println("---------------------------\n");
+            System.out.println("1- Register\n");
+            System.out.println("2- Login\n");
+            System.out.println("3- Exit Program\n\n");
+            System.out.println("Your choice: ");
+            choice1 = in.nextInt();
 
 
+            switch (choice1) {
+                case 1:
+                    System.out.println("\n1. REGISTER AS COACH");
+                    System.out.println("2. REGISTER AS CUSTOMER");
+                    int choiceR = in.nextInt();
+                    if (choiceR == 1) {
+                        gym.regCoach();
+                    } else if (choiceR == 2) {
+                        gym.regCustomer();
+                    } else {
+                        System.out.println("INVALID CHOICE....\nPlease try again\n\n");
+                    }
+                    break;
 
-        switch (choice){
-            case 1:
-                System.out.println("1. REGISTER AS COACH\n");
-                System.out.println("2. REGISTER AS CUSTOMER\n");
-                int c2=in.nextInt();
-                if(c2==1){
-                    gym.regCoach();
-                }
-                else if (c2==2){
-                    gym.regCustomer();
-                }
-                else{
-                    System.out.println("INVALID CHOICE....\n please try again");
-                    //3ayza arg3o y5tar tanyy
-                }
-                break;
+                case 2:
+                    System.out.println("1.LOG IN AS A USER");
+                    System.out.println("2.LOG IN AS AN ADMIN");
+                    int choiceL = in.nextInt();
 
-            case 2:
-                System.out.println("1.LOG IN AS A CUSTOMER\n");
-                System.out.println("1.LOG IN AS A COACH\n");
-                System.out.println("1.LOG IN AS AN ADMIN\n");
-                int c3=in.nextInt();
-                if(c3==1){
-                    Customer newcustomer=new Customer();
-                    String username=in.next();
-                    String pass=in.next();
-                    newcustomer.login(username,pass);
+                    if (choiceL == 1) {
+                        System.out.println("\nUSERNAME: ");
+                        String enteredUsername = in.next();
+                        System.out.println("PASSWORD: ");
+                        String enteredPassword = in.next();
+                        USER enteredUser = USER.login(enteredUsername, enteredPassword);
+                        if (enteredUser instanceof Customer) {
+                            Customer enteredCustomer = (Customer) enteredUser; //down-casting
+                            System.out.println("\n\nWelcome " + enteredUsername + "\n");
+                            enteredCustomer.CustomerMainMenu();
+                        } else if (enteredUser instanceof Coach) {
+                            Coach enteredCoach = (Coach) enteredUser; //down-casting
+                            System.out.println("\n\nWelcome " + enteredUsername + "\n");
+                            enteredCoach.CoachMainMenu();
+                        }
+                        continue;
+                    } else if (choiceL == 2) {
+                        String enteredUsername = in.next();
+                        String enteredPassword = in.next();
+                        boolean checked = admin.adminLogin(enteredUsername, enteredPassword);
+                        if (checked) admin.AdminMainMenu();
+                        else {
+                            System.out.println("\nIncorrect username or password, please try again.\n\n\n");
+                        }
+                    } else {
+                        System.out.println("INVALID CHOICE....\n please try again\n\n\n");
+                    }
 
-                }
-                else if(c3==2){
+                    break;
 
-
-                }
-                else if(c3==3){
-
-                }
-                else{
-                    System.out.println("INVALID CHOICE....\n please try again");
-                    //3ayza arg3o y5tar tanyy
-                }
-
-
+                case 3:
+                    GymDataBase.saveData(GYM.userList, "");
+                    GymDataBase.saveData(GYM.equipmentList, "");
+                    in.close();
+                    System.out.println("\n\nExiting program...\n\n");
+                    break outerloop;
+            }
+            //continue;
         }
+    }
 
-
-
-
-
- /*  Coach newCoach = new Coach("Address", "Email", "Name", "Password", 'M', 123456789, 40, coachList);
+ /*testing
+   Coach newCoach = new Coach("Address", "Email", "Name", "Password", 'M', 123456789, 40, coachList);
         coachList.add(newCoach);
         Customer newCustomer = new Customer("Address2", "Email2", "Name2", "Password2", 'M', 123456789, 40, customerList);
         customerList.add(newCustomer);
@@ -181,10 +199,6 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
             }
         }*/
 
-        GymDataBase.saveData(GYM.userList,"");
-        GymDataBase.saveData(GYM.equipmentList,"");
-    }
 
 
-
-    }
+}

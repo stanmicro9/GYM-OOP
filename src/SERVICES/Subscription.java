@@ -2,11 +2,13 @@ package SERVICES;
 
 import USERS.*;
 import SERVICES.Membership_plan;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import static GYM.GYM.input;
 
-public class Subscription {
+public class Subscription implements Serializable {
     protected int customerID;
     protected int coachID;
     public Membership_plan plan;
@@ -38,7 +40,6 @@ public class Subscription {
         LocalDate currentDate = LocalDate.now();
 
         if (currentDate.isAfter(plan.getEndDate())) {
-            Scanner input = new Scanner(System.in);
             System.out.println("Your subscription has expired. Do you want to renew? (yes/no): ");
             String renewChoice = input.next();
 

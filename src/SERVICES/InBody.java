@@ -1,5 +1,6 @@
 package SERVICES;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 public class
 InBody {
     protected int heightM;
@@ -8,9 +9,9 @@ InBody {
     protected int MineralsKG;
     protected int totalBodyWater;
     protected int proteinKG;
-    protected String date;
-
-    public String getDate() {
+    protected LocalDate date;
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public LocalDate getDate() {
         return date;
     }
     public int getHeightM() {
@@ -50,7 +51,7 @@ InBody {
         this.proteinKG = proteinKG;
     }
     public void setDate(String date) {
-        this.date = date;
+        this.date = LocalDate.parse(date, formatter);
     }
 
     public void displayInbody() {

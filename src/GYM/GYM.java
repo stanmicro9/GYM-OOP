@@ -1,43 +1,37 @@
 package GYM;
+
 import USERS.*;
 import SERVICES.*;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import USERS.Customer;
 
 public class GYM {
-    public String name="";
+    public String name="GYM EL MOR3BEEEN";
     public String address;
     public int phoneNumber;
-    //  ArrayList<Coach> coachList = new ArrayList<>();
-    private Subscription[] subs=new Subscription[50];
+    private static Subscription[] gymSubscriptions=new Subscription[100];
 
-    public Subscription[] getSubs() {
-        return subs;
+    public static Subscription[] getGymSubscriptions() {
+        return gymSubscriptions;
     }
 
-    public void setSubs(Subscription[] subs) {
-        this.subs = subs;
+    public void setGymSubscriptions(Subscription[] gymSubscriptions) {
+        this.gymSubscriptions = gymSubscriptions;
     }
-    //lists methods register w login
-    //object mno fl main
 
-    //pass ll array list, hnkhli el lists static
-    //upcasting lists ll customer and coach
-    //
     public static ArrayList<USER> userList = new ArrayList<>();
     public static ArrayList<Equipment> equipmentList = new ArrayList<>();
 
+    public static Scanner input = new Scanner(System.in);
     public static void regCustomer(){
-        Scanner input=new Scanner(System.in);
-
         System.out.println("\nName: ");
-        String regName=input.next();
+        String regName=input.nextLine();
         System.out.println("Address: ");
-        String regAddress=input.next();
+        String regAddress=input.nextLine();
+        //--------------
+        input.nextLine();
+        //--------------
         System.out.println("Phone Number: ");
         int regNumber=input.nextInt();
         System.out.println("Gender (F/M): ");
@@ -48,38 +42,13 @@ public class GYM {
         String regEmail=input.next();
         System.out.println("Password: ");
         String regPassword=input.next();
-        input.close();
 
         if(USER.validateName(regName) && USER.validateEmail(regEmail) && USER.validatePhone(regNumber) && USER.validatePassword(regPassword))
         {
-            Scanner subsInput=new Scanner(System.in);
+            Customer newCustomer=new Customer(regAddress,regEmail,regName,regPassword,regGender,regNumber);
+            userList.add(newCustomer);
+            System.out.println("Registration complete");
 
-            System.out.println("\n\nEnter Subscription and Plan Details\n");
-            System.out.println("\nEnter plan start date (yyyy-MM-dd): ");
-            String inputStartDate = subsInput.next();
-
-            // Define a DateTimeFormatter for the expected date format
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-            try {
-                Customer newCustomer=new Customer(regAddress,regEmail,regName,regPassword,regGender,regNumber);
-                int assignedCoachID=addCustomerToSpecificCoach(newCustomer);
-                int chosenBundle=Membership_plan.planOptions();
-                System.out.println("\nEnter the number of months (1-12): m7dsh ydkhal 13, mt2rfonash b2a");
-                int chosenMonths=subsInput.nextInt();
-                Membership_plan chosenPlan=new Membership_plan(inputStartDate, chosenBundle, chosenMonths);
-                Subscription newSubs=new Subscription(newCustomer.getCustomerID(), assignedCoachID, chosenPlan);
-                int month = chosenPlan.getStartDate().getMonthValue();
-                newCustomer.setSubs(newSubs);
-
-                userList.add(newCustomer);
-                System.out.println("\nRegistered successfully!\n");
-
-            } catch (DateTimeParseException e) { //loop 3shan mdtarosh y3ml register mn awl w gdid?
-                System.out.println("\nInvalid date format. Please register again.\n");
-            }
-
-            subsInput.close();
         }
         else if(!USER.validateName(regName)){
             System.out.println("\nInvalid name please try again.\nName must not contain special characters and nor exceed 29 characters in length.\n");
@@ -97,29 +66,31 @@ public class GYM {
     } //shaklaha 7lww awyyyyy <3, proud of myself walahy
 
     public static void regCoach(){
-        Scanner input=new Scanner(System.in);
-
         System.out.println("\nName: ");
-        String regName=input.next();
+        String regName=input.nextLine();
+        input.nextLine();
         System.out.println("Address: ");
-        String regAddress=input.next();
+        String regAddress=input.nextLine();
         System.out.println("Phone Number: ");
         int regNumber=input.nextInt();
-        System.out.println("Gender (F/M): "); //radio button..?
+        System.out.println("Gender (F/M): ");
         char regGender=input.next().charAt(0);
+        System.out.println("Age: ");
+        int regAge=input.nextInt();
         System.out.println("Working hours (maximum 10): ");
         int regWorkingHr=input.nextInt();
         System.out.println("Email: ");
         String regEmail=input.next();
         System.out.println("Password: ");
         String regPassword=input.next();
-        input.close();
 
         if(USER.validateName(regName) && USER.validateEmail(regEmail) && USER.validatePhone(regNumber) && USER.validatePassword(regPassword))
         {
             Coach newCoach=new Coach(regAddress,regEmail,regName,regPassword,regGender,regNumber,regWorkingHr);
             userList.add(newCoach);
             System.out.println("\nOperation Done Successfully!\n");
+
+            //System.out.println(userList);
         }
         else if(!USER.validateName(regName)){
             System.out.println("\nInvalid name please try again.\nName must not contain special characters and nor exceed 29 characters in length.\n");
@@ -135,6 +106,7 @@ public class GYM {
         }
     }
 
+
     public static void coachesList(){
         for (USER user : GYM.userList) {
             if (user instanceof Coach){
@@ -145,13 +117,12 @@ public class GYM {
     }
 
     public static int addCustomerToSpecificCoach(Customer Customer){
-        Scanner subsInput=new Scanner(System.in);
         int assignedCoachID;
 
         while (true){
             GYM.coachesList();
             System.out.println("\nChoose a coach ID to get assigned to: ");
-            assignedCoachID=subsInput.nextInt();
+            assignedCoachID=input.nextInt();
             Coach assignedCoach=Coach.getCoachByID(assignedCoachID);
             Customer[] customersArray = assignedCoach.getCustomersArray();
             for (int i=0;i<10;i++){
@@ -161,10 +132,65 @@ public class GYM {
                 }
                 else if (customersArray[i]==null){
                     assignedCoach.setCustomersArray(i,Customer);
-                    subsInput.close();
                     return assignedCoachID;
                 }
             }
         }
     }
+
+    public static void Subscription(Customer customer, String inputStartDate){
+        int chosenCoachID=GYM.addCustomerToSpecificCoach(customer);
+        int chosenBundle= Membership_plan.planOptions();
+        System.out.println("\nEnter the number of months (1-12): m7dsh ydkhal 13, mt2rfonash b2a");
+        int chosenMonths=input.nextInt();
+        Membership_plan chosenPlan=new Membership_plan(inputStartDate, chosenBundle, chosenMonths);
+        Subscription newSubs=new Subscription(customer.getCustomerID(), chosenCoachID, chosenPlan);
+        customer.setSubs(newSubs);
+    }
+
+    public static void storeGymSubscriptions(){
+        int subscriptionsCount = 0;
+        for (USER user : GYM.userList) {
+            if (user instanceof Customer) {
+                Customer customer = (Customer) user;
+                Subscription[] customerSubs = customer.getSubs();
+
+                for (int i = 0; i < customerSubs.length; i++) {
+                    if (subscriptionsCount < gymSubscriptions.length) {
+                        gymSubscriptions[subscriptionsCount++] = customerSubs[i];
+                    } else {
+                        System.out.println("Gym subscriptions array is full. Cannot add more subscriptions to the system.");
+                        break;
+                    }
+                }
+
+            }
+        }
+    }
+
+
+//de hya hyaha el subscription bs feha checker zyada for indexing, h7tagha? idk yet
+//    public static void chosenSubscription(Customer customer, String inputStartDate){
+//        Scanner subsInput=new Scanner(System.in);
+//
+//        int index=-1;
+//
+//        int chosenCoachID=GYM.addCustomerToSpecificCoach(customer);
+//        for(int i=0;i<12;i++){
+//            if(customer.subs[i+1]==null){
+//                index=i;
+//            }
+//        }
+//        customer.subs[index+1].setCoachID(chosenCoachID);
+//
+//        int chosenBundle= Membership_plan.planOptions();
+//        System.out.println("\nEnter the number of months (1-12): m7dsh ydkhal 13, mt2rfonash b2a");
+//        int chosenMonths=subsInput.nextInt();
+//        Membership_plan chosenPlan=new Membership_plan(inputStartDate, chosenBundle, chosenMonths);
+//        Subscription newSubs=new Subscription(customer.getCustomerID(), chosenCoachID, chosenPlan);
+//        customer.setSubs(newSubs);
+//
+//        subsInput.close();
+//
+//    }
 }

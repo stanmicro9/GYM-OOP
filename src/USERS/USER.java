@@ -116,11 +116,11 @@ public abstract class USER implements Serializable{
                 return false;
             }
         }
-        if (!((contactNumberStr.length() == 11 && contactNumberStr.charAt(0) == '0'
-                && contactNumberStr.charAt(1) == '1') && (contactNumberStr.charAt(2) == '0' || contactNumberStr.charAt(2) == '1' ||
-                contactNumberStr.charAt(2) == '2' || contactNumberStr.charAt(2) == '5'))){
-            return false;
-        }
+//        if (!((contactNumberStr.length() == 11 && contactNumberStr.charAt(0) == '0'
+//                && contactNumberStr.charAt(1) == '1') && (contactNumberStr.charAt(2) == '0' || contactNumberStr.charAt(2) == '1' ||
+//                contactNumberStr.charAt(2) == '2' || contactNumberStr.charAt(2) == '5'))){
+//            return false;
+//        }
         return true;
     }
 

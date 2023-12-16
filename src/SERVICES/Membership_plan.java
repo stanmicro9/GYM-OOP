@@ -1,11 +1,12 @@
 package SERVICES;
 
+import java.io.Serializable;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import static GYM.GYM.input;
 
-
-public class Membership_plan {
+public class Membership_plan implements Serializable{
     protected LocalDate startDate;
     protected LocalDate endDate;
     protected int monthlyPlan;
@@ -21,19 +22,16 @@ public class Membership_plan {
         price=calculatePlanPrice(numOfMonths,monthlyPlan);
     }
 
-    public LocalDate  getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
-    }
-    public LocalDate getEndDate() {
-        return endDate;
     }
 
     public int getMonthlyPlan() {
         return monthlyPlan;
     }
 
-    public void setMonthlyPlan(int monthlyPlan) {
-        this.monthlyPlan = monthlyPlan;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
     public int getNumOfMonths() {
@@ -53,13 +51,13 @@ public class Membership_plan {
     }
 
     public static int planOptions() {
-        Scanner choice=new Scanner(System.in);
         int planChoice;
         do {
             System.out.println("\n\nChoose a plan Bundle:");
             System.out.println("1. BUNDLE1---> 3 days/months");
             System.out.println("2. BUNDLE2---> 6 days/months");
-            planChoice=choice.nextInt();
+            planChoice=input.nextInt();
+
             if (planChoice==1) return 3;
             else if (planChoice==2) return 6;
 
@@ -138,27 +136,26 @@ public class Membership_plan {
     // Getter for endDate
     // Other methods and attributes remain the same
 
-    public static void main(String[] args) {
-        Membership_plan plan = new Membership_plan("1 december", 0, 0);
-        Scanner scanner = new Scanner(System.in);
-
-        //plan.PlanOptions();
-        int choice = scanner.nextInt();
-
-        if (choice == 1) {
-            plan.setNumOfMonths(3);
-            plan.setMonthlyPlan(3);
-        } else if (choice == 2) {
-            plan.setNumOfMonths(6);
-            plan.setMonthlyPlan(6);
-        } else {
-            System.out.println("Invalid choice. Exiting...");
-            return;
-        }
-
-        System.out.println("Selected Plan:");
-        plan.displayPlan();
-    }
+//    public static void main(String[] args) {
+//        Membership_plan plan = new Membership_plan("1 december", 0, 0);
+//
+//        //plan.PlanOptions();
+//        int choice = scanner.nextInt();
+//
+//        if (choice == 1) {
+//            plan.setNumOfMonths(3);
+//            plan.setMonthlyPlan(3);
+//        } else if (choice == 2) {
+//            plan.setNumOfMonths(6);
+//            plan.setMonthlyPlan(6);
+//        } else {
+//            System.out.println("Invalid choice. Exiting...");
+//            return;
+//        }
+//
+//        System.out.println("Selected Plan:");
+//        plan.displayPlan();
+//    }
     //ana katba el main hena 3shan khoft ahotaha hnak ma3 el zahma//
 //seboha f halha law smahto//
 //okay babe enty bra7tek <3

@@ -9,8 +9,8 @@ import SERVICES.*;
 import java.time.LocalDate;
 import org.jetbrains.annotations.NotNull;
 import java.time.Month; //fl gymIncome method
-
 import java.io.Serializable;
+import static GYM.GYM.input;
 public class Admin  implements Serializable{
     private final String username;
     private final String pass;
@@ -44,7 +44,6 @@ public class Admin  implements Serializable{
 
     public  void AdminMainMenu() {
         System.out.println("\n\nLogged in successfully!\n\n");
-        Scanner scanner = new Scanner(System.in);
         int choice;
 
         do{
@@ -59,7 +58,7 @@ public class Admin  implements Serializable{
             System.out.println("8. View Top Coaches\n"); //sorted 3la 7sb 3adad el customers 3nd kol coach
             System.out.println("9. Log Out\n\n");
             System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
+            choice = input.nextInt();
 
 
             switch (choice) {
@@ -67,91 +66,104 @@ public class Admin  implements Serializable{
                     System.out.println("1.Add Customer\n");
                     System.out.println("2.Add Coach\n");
                     System.out.println("3.Add Equipment\n");
-                    int c2=scanner.nextInt();
+                    //System.out.println("4. Return to the menu\n"); (ttzbt fl gui?)
+                    int c2=input.nextInt();
                     if(c2==1){
                         addCustomer();
+
                     } else if (c2==2) {
                         addCoach();
                     }
                     else if(c2==3){
                         addEquip();
                     }
+//                    else if(c2==4){
+//                        AdminMainMenu();
+//                    }
                     else
                     {
                         System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
-                        AdminMainMenu();
+                        AdminMainMenu(); //httzbt fl gui eno y-go back br7to mn gher ma a-call el method gwa nfsaha?
                     }
                     break;
                 case 2:
                     System.out.println("1.Remove Customer\n");
                     System.out.println("2.Remove Coach\n");
                     System.out.println("3.Remove Equipment\n");
-                    int c3=scanner.nextInt();
+                    int c3=input.nextInt();
                     if(c3==1){
-                        int id=scanner.nextInt();
+                        int id=input.nextInt();
                         deleteCustomer(id);
                     } else if (c3==2) {
-                        int id=scanner.nextInt();
+                        int id=input.nextInt();
                         deleteCoach(id);
                     }
                     else if(c3==3){
-                        int code=scanner.nextInt();
+                        int code=input.nextInt();
                         deleteEquip(code);
                     }
+//                    else if(c3==4){
+//                        AdminMainMenu();
+//                    }
                     else
                     {
                         System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
-                        AdminMainMenu();
+                        AdminMainMenu(); //httzbt fl gui eno y-go back br7to mn gher ma a-call el method gwa nfsaha?
                     }
                     break;
                 case 3:
                     System.out.println("1.Edit Customer\n");
                     System.out.println("2.Edit Coach\n");
                     System.out.println("3.Edit Equipment\n");
-                    int c4=scanner.nextInt();
+                    int c4=input.nextInt();
 
                     if(c4==1){
 
-                        int id=scanner.nextInt();
+                        int id=input.nextInt();
                         editCustomer();
 
                     } else if (c4==2) {
 
-                        int id=scanner.nextInt();
+                        int id=input.nextInt();
                         editCoach();
 
                     }
                     else if(c4==3){
 
-                        int code=scanner.nextInt();
+                        int code=input.nextInt();
                         editEquip();
                     }
+//                    else if(c4==4){
+//                        AdminMainMenu();
+//                    }
                     else
                     {
                         System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
-                        AdminMainMenu();
+                        AdminMainMenu(); //msh 3yzeen kda, ttzbt fl gui isa
                     }
                     break;
                 case 4:
 
                     System.out.println("ENTER CUSTOMER'S ID");
-                    int id=scanner.nextInt();
-                    // call method el view subs
+                    int id=input.nextInt();
+                    historySubscription(id);
                     break;
                 case 5:
 
-                    //call method el subs in day/month
+                    customersSubscribedInGivenDate();
                     break;
 
                 case 6:
-
-                    int m=scanner.nextInt();
-                    gymIncome(m);
+                    displayCustomersForCoach();
                     break;
 
                 case 7:
+                    int m=input.nextInt();
+                    gymIncome(m);
+                    break;
 
-                    //sorted insah'allah yehia hy3mlha
+                case 8:
+                    displaySortedCoaches();
                     break;
 
                 default:
@@ -159,9 +171,6 @@ public class Admin  implements Serializable{
             }
 
         } while (choice != 9);
-
-        // Close the scanner to prevent resource leak
-        scanner.close();
     }
 
 
@@ -173,12 +182,10 @@ public class Admin  implements Serializable{
     }
     //checker 3al name gwa add w edit equip eno msh mwgud abl kda
     public void addEquip(){ //equipmentList
-        Scanner input=new Scanner(System.in);
         System.out.println("Enter equipment's name: ");
         String newEquipName=input.next();
         System.out.println("Enter equipment's quantity: ");
         int newEquipQuantity=input.nextInt();
-        input.close();
 
 
         Equipment newEquipment=new Equipment(newEquipName,newEquipQuantity);
@@ -187,7 +194,6 @@ public class Admin  implements Serializable{
 
     public static void editCoach() {
         System.out.println("\nPlease enter the coach's id: ");
-        Scanner input = new Scanner(System.in);
         int id = input.nextInt();
         Coach specificCoach = Coach.getCoachByID(id);
         if (specificCoach != null) {
@@ -250,7 +256,6 @@ public class Admin  implements Serializable{
     }
     public void editCustomer(){
         System.out.println("\nPlease enter the customer's id: ");
-        Scanner input = new Scanner(System.in);
         int id = input.nextInt();
         Customer specificCustomer = Customer.getCustomerById(id);
         if (specificCustomer != null) {
@@ -307,7 +312,6 @@ public class Admin  implements Serializable{
     }
     public void editEquip() {
         System.out.println("\nEnter the equipment code you want to edit: ");
-        Scanner input = new Scanner(System.in);
         int equcode = input.nextInt();
         Equipment specificequ = Equipment.getEquipByCode(equcode);
         if (specificequ != null) {
@@ -357,8 +361,6 @@ public class Admin  implements Serializable{
                     return "\n\nCoach's -with ID " + customerID + "- Data Removed\n\n";
                 }
             }
-
-
         }
         return "\n\nCoach with ID " + customerID + " was not found in gym.\n\n";
     }
@@ -373,24 +375,20 @@ public class Admin  implements Serializable{
     }
 
     private String gymIncome(int month){
+        GYM.storeGymSubscriptions();
         LocalDate currentDate = LocalDate.now();
         String lines = "--------------------------------";
         StringBuilder Income = new StringBuilder("\n Date : " + currentDate + "\n"+lines+ "\n");
-        for (USER user : GYM.userList) {
-            if (user instanceof Customer) {
-                Customer customer = (Customer) user; //downcasting
-                for (int i = 0; i < 12; i++) {
-                    if (customer.subs[i].plan.getStartDate().getMonth()== Month.of(month)) {
-                        Income.append(customer.subs[i].plan.getPrice());
-                    }
-                }
+        Subscription[] gymSubs=GYM.getGymSubscriptions();
+        for (int i = 0; i < 12; i++) {
+            if (gymSubs[i].plan.getStartDate().getMonth()== Month.of(month)) {
+                Income.append(gymSubs[i].plan.getPrice());
             }
         }
         return Income.toString();
     }
     public void displayCustomersForCoach() { //display coaches ids and names to choose one
         System.out.println("\nPlease enter the coach's ID you want to view his customers: ");
-        Scanner input = new Scanner(System.in);
         int id = input.nextInt();
         Coach specificCoach = Coach.getCoachByID(id);
 
@@ -400,28 +398,36 @@ public class Admin  implements Serializable{
         else System.out.println("\nThis coach doesn't exist! Please enter a valid ID.\n");
     }
     public void customersSubscribedInGivenDate() {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Please enter specific date (yyyy-MM-dd): ");
-        String date = input.next();
-        System.out.println("\nCustomers who subscribed on " + date + " :\n\n");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        Subscription[] subsarray = GYM.getGymSubscriptions();
 
-        try {
-            LocalDate Date = LocalDate.parse(date, formatter);
-            for (USER user : GYM.userList) {
-                if (user instanceof Customer) {
-                    Customer customer = (Customer) user; //downcasting
-                    ArrayList<LocalDate> subscriptionSD = customer.getSubscriptionsStartDate();
-                    for (LocalDate startDate : subscriptionSD) {
-                        if (startDate.equals(Date)) {
-                            System.out.println(customer.getName() + "\n");
-                            break;
-                        }
+        System.out.println("Please enter specific date:");
+        System.out.print("Enter the month (1-12): ");
+        int month = input.nextInt();
+        System.out.print("Press Enter to skip, or enter the day: ");
+        String dayInput = input.next();
+
+        if (dayInput != null) {
+            int day = Integer.parseInt(dayInput);
+            for (int i = 0; i < 100; i++) {
+                if (subsarray[i] != null) {
+                    if (day == subsarray[i].plan.getStartDate().getDayOfMonth() && month == subsarray[i].plan.getStartDate().getMonthValue()) {
+                        Customer customer = Customer.getCustomerById(subsarray[i].getCustomerID());
+                        customer.displayInfo();
+                    }
+                }
+
+            }
+
+        } else {
+            for (int i = 0; i < 100; i++) {
+                if (subsarray[i] != null) {
+                    if (month == subsarray[i].plan.getStartDate().getMonthValue()) {
+                        Customer customer = Customer.getCustomerById(subsarray[i].getCustomerID());
+                        customer.displayInfo();
+
                     }
                 }
             }
-        } catch (DateTimeParseException e){
-            System.out.println("\nInvalid date format. Please register again.\n");
         }
     }
 

@@ -2,11 +2,13 @@ package USERS;
 
 import DATABASE.GymDataBase;
 import GYM.GYM;
-
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+import static GYM.GYM.input;
 
-public class Coach extends USER {
+public class Coach extends USER implements Serializable {
     int workingHours;
     int coachID;
     Customer[] customersArray=new Customer[10];
@@ -56,6 +58,21 @@ public class Coach extends USER {
         }
     }
 
+//    public void ListOfCustomers() {
+//        System.out.println("\nCustomers for Coach " + name + " :\n");
+//        LocalDate currentdate= LocalDate.now();
+//        for (int i = 0; i < 10; i++) {
+//            for (int j=0;j<12 && customersArray[i].subs[j]!=null;j++){
+//                if (currentdate.isAfter(customersArray[i].subs[j].plan.getEndDate())){
+//                    GYM.userList.remove(customersArray[i]);
+//                }
+//            }
+//            if (customersArray[i]!=null){
+//                System.out.println("- " + customersArray[i].getName() + "\t" + customersArray[i].getCustomerID() + "\n");
+//            }
+//        }
+//    }
+
     public void ListOfCustomers() {
         System.out.println("\nCustomers for Coach " + name + " :\n");
         for (int i = 0; i < 10; i++) {
@@ -63,7 +80,10 @@ public class Coach extends USER {
                 System.out.println("- " + customersArray[i].getName() + "\t" + customersArray[i].getCustomerID() + "\n");
             }
         }
-    } /*checked*/
+        System.out.println("Press enter to continue.....");
+        input.nextLine();
+        //CoachMainMenu();
+    }
     public static Coach getCoachByID(int coachId) {
         for (USER user : GYM.userList) {
             if (user instanceof Coach) {
@@ -81,7 +101,7 @@ public class Coach extends USER {
         return "\n\t\tCoach's Details : " + "\n---------------------------------------------------------------\n"
                 + "\n\n> Id : " + getCoachID() + "\n\n> Email : " + getEmail() + "\n\n> Name : " + getName() + "\n\n> Gender : " + getGender()
                 + "\n\n> Phone Number : " + getPhoneNO() + "\n\n> Working Hours : " + workingHours +"\n---------------------------------------------------------------\n" ;
-    } /*checked*/
+    }
     public String searchCustomerByName(String customerName){
         for (int i=0; i<10;i++){ //to check if the typed name is HIS customer or not
             if(customersArray[i].getName().equals(customerName)) {
@@ -93,7 +113,7 @@ public class Coach extends USER {
             }
         }
         return "\n\nThis Customer is not a listed one of yours.\n\n";
-    } /*checked*/
+    }
     public void displayFMCustomer() {
         if (customersArray[0]!=null){
             System.out.println("\nHere's your female customers list:\n\n");
@@ -112,7 +132,7 @@ public class Coach extends USER {
             }
         }
         else System.out.println("\nYou don't have customer's registered to your account.\n");
-    } /*checked*/
+    }
 
     //for one of HIS customerS
     public void displayCustomersInbodyHistory(int customerID) {
@@ -129,67 +149,54 @@ public class Coach extends USER {
             }
         }
         else System.out.println("\nThere are no customers registered to your account.\n");
-    } /*checked*/
+    }
 
     public void CoachMainMenu(){
-        Scanner scanner = new Scanner(System.in);
         int choice;
 
         do{
-            System.out.println("\n\t You logged in successfully !\t\n\n");
-            System.out.println("Main Menu\n\n");
+            System.out.println("\n\t You logged in successfully !\t\n");
+            System.out.println("Main Menu\n...........");
             System.out.println("1. List of your customers\n");
-            System.out.println("2. Inbody history for a customer\n");
+            System.out.println("2. InBody history for a customer\n");
             System.out.println("3. Details of a specific customer\n");
             System.out.println("4. list of your female/male customers\n");
             System.out.println("5. Exit\n\n");
             System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            Scanner input = new Scanner(System.in);
+            choice = input.nextInt();
 
 
             switch (choice) {
                 case 1:
                     System.out.println("\nYour customers: \n");
                     ListOfCustomers();
-                    //method to get back ely hwa press kaza to go back
-
-
                     break;
                 case 2:
-                    System.out.println("\nInbody history for a customer: \n");
+                    System.out.println("\nInBody history for a customer: \n");
                     ListOfCustomers();
                     System.out.println("Enter the customer ID for an InBody history: ");
                     int chosenCustomerID = input.nextInt();
                     displayCustomersInbodyHistory(chosenCustomerID);
-                    //method
-
                     break;
                 case 3:
-                    System.out.println("Details of customer: \n");
+                    System.out.println("Details of customer: ");
                     System.out.println("Please enter the customer name: "); //+validate
                     String chosenCustomerName=input.next();
-                    // searchCustomerByName(customerList,chosenCustomerName); //hnsheel el list asln
-                    //method
-
+                    searchCustomerByName(chosenCustomerName);
                     break;
                 case 4:
                     System.out.println("The list of female/male customers: \n");
                     displayFMCustomer();
-                    //method
-
                     break;
-
                 case 5:
                     System.out.println("Exiting...");
                     break;
+
                 default:
                     System.out.println("Invalid choice. Please enter a valid option.");
             }
 
-        } while (choice != 5); //y3ni eh?
-
-        scanner.close();
+        } while (choice != 5);
 
     }
 

@@ -2,20 +2,22 @@ package MAIN;
 
 import DATABASE.GymDataBase;
 import GYM.GYM;
+import SERVICES.Membership_plan;
 import USERS.Admin;
 import USERS.Coach;
 import USERS.Customer;
 import USERS.USER;
-
 import java.util.Scanner;
+import static GYM.GYM.input;
+import static GYM.GYM.userList;
+import static GYM.GYM.equipmentList;
 
-public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
+public class Main extends JForm{
 
 
     public static void main(String[] args) {
-        GymDataBase.loadData("");  //file el users
-        GymDataBase.loadData(""); //file el equipments
-        Scanner in = new Scanner(System.in);
+        userList=GymDataBase.loadData("Users");
+        equipmentList=GymDataBase.loadData("Equipments");
 
         Admin admin = new Admin();
         GYM gym = new GYM();
@@ -24,41 +26,43 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
         System.out.println("WELCOME TO GYM SYSTEM!\n");
         System.out.println("---------------------------\n");
 
+
         outerloop:
         while (true) {
-            System.out.println("Main Menu\n");
-            System.out.println("---------------------------\n");
-            System.out.println("1- Register\n");
-            System.out.println("2- Login\n");
-            System.out.println("3- Exit Program\n\n");
+            System.out.println("Main Menu");
+            System.out.println("---------------------------");
+            System.out.println("1- Register");
+            System.out.println("2- Login");
+            System.out.println("3- Exit Program\n");
             System.out.println("Your choice: ");
-            choice1 = in.nextInt();
-
+            choice1 = input.nextInt();
 
             switch (choice1) {
                 case 1:
                     System.out.println("\n1. REGISTER AS COACH");
                     System.out.println("2. REGISTER AS CUSTOMER");
-                    int choiceR = in.nextInt();
+                    int choiceR = input.nextInt();
                     if (choiceR == 1) {
                         gym.regCoach();
+
                     } else if (choiceR == 2) {
                         gym.regCustomer();
                     } else {
                         System.out.println("INVALID CHOICE....\nPlease try again\n\n");
+
                     }
                     break;
 
                 case 2:
                     System.out.println("1.LOG IN AS A USER");
                     System.out.println("2.LOG IN AS AN ADMIN");
-                    int choiceL = in.nextInt();
+                    int choiceL = input.nextInt();
 
                     if (choiceL == 1) {
                         System.out.println("\nUSERNAME: ");
-                        String enteredUsername = in.next();
+                        String enteredUsername = input.next();
                         System.out.println("PASSWORD: ");
-                        String enteredPassword = in.next();
+                        String enteredPassword = input.next();
                         USER enteredUser = USER.login(enteredUsername, enteredPassword);
                         if (enteredUser instanceof Customer) {
                             Customer enteredCustomer = (Customer) enteredUser; //down-casting
@@ -69,10 +73,9 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
                             System.out.println("\n\nWelcome " + enteredUsername + "\n");
                             enteredCoach.CoachMainMenu();
                         }
-                        continue;
                     } else if (choiceL == 2) {
-                        String enteredUsername = in.next();
-                        String enteredPassword = in.next();
+                        String enteredUsername = input.next();
+                        String enteredPassword = input.next();
                         boolean checked = admin.adminLogin(enteredUsername, enteredPassword);
                         if (checked) admin.AdminMainMenu();
                         else {
@@ -85,13 +88,15 @@ public class Main extends JForm{ //mlkosh d3wa leha 3laqa bl GUI
                     break;
 
                 case 3:
-                    GymDataBase.saveData(GYM.userList, "");
-                    GymDataBase.saveData(GYM.equipmentList, "");
-                    in.close();
-                    System.out.println("\n\nExiting program...\n\n");
+                    GymDataBase.saveData(userList, "Users");
+                    GymDataBase.saveData(equipmentList, "Equipments");
+                    System.out.println("Exiting program...");
                     break outerloop;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
             }
-            //continue;
         }
     }
 

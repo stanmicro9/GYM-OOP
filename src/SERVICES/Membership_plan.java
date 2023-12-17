@@ -1,7 +1,6 @@
 package SERVICES;
 
 import java.io.Serializable;
-import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import static GYM.GYM.input;
@@ -64,7 +63,7 @@ public class Membership_plan implements Serializable{
         } while (!(planChoice==1 || planChoice==2));
 
         return -1; //would never happen
-    }
+    } //checked
 
     public void displayPlan() {
         System.out.println("\nMonthly Plan\n\n");
@@ -74,7 +73,7 @@ public class Membership_plan implements Serializable{
         System.out.println("\nPrice: " + getPrice() + "$");
     }
 
-    private void calculateEndDate() {
+    public void calculateEndDate() {
         if (numOfMonths > 0) {
             endDate = startDate.plusMonths(numOfMonths);
         } else {
@@ -131,32 +130,4 @@ public class Membership_plan implements Serializable{
         return getPrice();
     }
 
-
-
-    // Getter for endDate
-    // Other methods and attributes remain the same
-
-//    public static void main(String[] args) {
-//        Membership_plan plan = new Membership_plan("1 december", 0, 0);
-//
-//        //plan.PlanOptions();
-//        int choice = scanner.nextInt();
-//
-//        if (choice == 1) {
-//            plan.setNumOfMonths(3);
-//            plan.setMonthlyPlan(3);
-//        } else if (choice == 2) {
-//            plan.setNumOfMonths(6);
-//            plan.setMonthlyPlan(6);
-//        } else {
-//            System.out.println("Invalid choice. Exiting...");
-//            return;
-//        }
-//
-//        System.out.println("Selected Plan:");
-//        plan.displayPlan();
-//    }
-    //ana katba el main hena 3shan khoft ahotaha hnak ma3 el zahma//
-//seboha f halha law smahto//
-//okay babe enty bra7tek <3
 }

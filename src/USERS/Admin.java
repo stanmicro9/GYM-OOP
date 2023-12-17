@@ -1,16 +1,15 @@
 package USERS;
 import GYM.*;
 
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.*;
-import DATABASE.*;
 import SERVICES.*;
 import java.time.LocalDate;
 import org.jetbrains.annotations.NotNull;
-import java.time.Month; //fl gymIncome method
+import java.time.Month;
 import java.io.Serializable;
 import static GYM.GYM.input;
+import GYM.Equipment.*;
+
 public class Admin  implements Serializable{
     private final String username;
     private final String pass;
@@ -31,8 +30,7 @@ public class Admin  implements Serializable{
     public boolean adminLogin(@NotNull String name, String password){
         boolean loginSuccessful = false;
         boolean validateName=USER.validateName(name);
-        boolean validatePass=USER.validatePassword(password);
-        if(validateName && validatePass){
+        if(validateName){
             if(name.equals(username)){
                 if(password.equals(pass)){
                     loginSuccessful= true;
@@ -48,24 +46,24 @@ public class Admin  implements Serializable{
 
         do{
             System.out.println("Admin Main Menu\n---------------------------\n\n");
-            System.out.println("1. Add\n");
-            System.out.println("2. Remove\n");
-            System.out.println("3. Edit\n");
-            System.out.println("4. View a Customer Subscription\n"); //hya5od id el customer w ytl3 el subs bta3o
-            System.out.println("5. View Subscriptions //in a day or month\n");
-            System.out.println("6. View a Coach's Customers\n"); //hayd5ol 3nd coach mo3yn yshof el customers bto3o
-            System.out.println("7. View Gym's Income\n"); //in a month
-            System.out.println("8. View Top Coaches\n"); //sorted 3la 7sb 3adad el customers 3nd kol coach
-            System.out.println("9. Log Out\n\n");
+            System.out.println("1. Add");
+            System.out.println("2. Remove");
+            System.out.println("3. Edit");
+            System.out.println("4. View a Customer Subscription"); //hya5od id el customer w ytl3 el subs bta3o
+            System.out.println("5. View Subscriptions //in a day or month");
+            System.out.println("6. View a Coach's Customers"); //hayd5ol 3nd coach mo3yn yshof el customers bto3o
+            System.out.println("7. View Gym's Income"); //in a month
+            System.out.println("8. View Top Coaches"); //sorted 3la 7sb 3adad el customers 3nd kol coach
+            System.out.println("9. Log Out\n");
             System.out.print("Enter your choice: ");
             choice = input.nextInt();
 
 
             switch (choice) {
                 case 1:
-                    System.out.println("1.Add Customer\n");
-                    System.out.println("2.Add Coach\n");
-                    System.out.println("3.Add Equipment\n");
+                    System.out.println("1.Add Customer");
+                    System.out.println("2.Add Coach");
+                    System.out.println("3.Add Equipment");
                     //System.out.println("4. Return to the menu\n"); (ttzbt fl gui?)
                     int c2=input.nextInt();
                     if(c2==1){
@@ -77,79 +75,73 @@ public class Admin  implements Serializable{
                     else if(c2==3){
                         addEquip();
                     }
-//                    else if(c2==4){
-//                        AdminMainMenu();
-//                    }
                     else
                     {
                         System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
-                        AdminMainMenu(); //httzbt fl gui eno y-go back br7to mn gher ma a-call el method gwa nfsaha?
                     }
                     break;
                 case 2:
-                    System.out.println("1.Remove Customer\n");
-                    System.out.println("2.Remove Coach\n");
-                    System.out.println("3.Remove Equipment\n");
+                    System.out.println("1.Remove Customer");
+                    System.out.println("2.Remove Coach");
+                    System.out.println("3.Remove Equipment");
                     int c3=input.nextInt();
                     if(c3==1){
+                        displayCustomersForViewing();
+                        System.out.println("Enter the customer ID: ");
                         int id=input.nextInt();
                         deleteCustomer(id);
                     } else if (c3==2) {
+                        displayCoachesForViewing();
+                        System.out.println("Enter the coach ID: ");
                         int id=input.nextInt();
                         deleteCoach(id);
                     }
                     else if(c3==3){
+                        for (Equipment equipment : GYM.equipmentList) {
+                            System.out.println(equipment.equipName + equipment.getEquipCode());
+                        }
+                        System.out.println("Enter the equipment code: ");
                         int code=input.nextInt();
                         deleteEquip(code);
                     }
-//                    else if(c3==4){
-//                        AdminMainMenu();
-//                    }
                     else
                     {
                         System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
-                        AdminMainMenu(); //httzbt fl gui eno y-go back br7to mn gher ma a-call el method gwa nfsaha?
                     }
                     break;
                 case 3:
-                    System.out.println("1.Edit Customer\n");
-                    System.out.println("2.Edit Coach\n");
-                    System.out.println("3.Edit Equipment\n");
+                    System.out.println("1.Edit Customer");
+                    System.out.println("2.Edit Coach");
+                    System.out.println("3.Edit Equipment");
                     int c4=input.nextInt();
 
                     if(c4==1){
-
-                        int id=input.nextInt();
+                        displayCustomersForViewing();
                         editCustomer();
 
                     } else if (c4==2) {
-
-                        int id=input.nextInt();
+                        displayCoachesForViewing();
                         editCoach();
 
                     }
                     else if(c4==3){
-
-                        int code=input.nextInt();
+                        for (Equipment equipment : GYM.equipmentList) {
+                            System.out.println(equipment.equipName + equipment.getEquipCode());
+                        }
                         editEquip();
                     }
-//                    else if(c4==4){
-//                        AdminMainMenu();
-//                    }
                     else
                     {
                         System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
-                        AdminMainMenu(); //msh 3yzeen kda, ttzbt fl gui isa
                     }
                     break;
                 case 4:
-
+                    displayCustomersForViewing();
                     System.out.println("ENTER CUSTOMER'S ID");
                     int id=input.nextInt();
                     historySubscription(id);
                     break;
                 case 5:
-
                     customersSubscribedInGivenDate();
                     break;
 
@@ -158,12 +150,18 @@ public class Admin  implements Serializable{
                     break;
 
                 case 7:
+                    System.out.println("Enter the month: ");
                     int m=input.nextInt();
-                    gymIncome(m);
+                    String income=gymIncome(m);
+                    System.out.println("Gym Income for this month is: " + income);
                     break;
 
                 case 8:
+                    System.out.println("\t\tTop Coaches\t\t");
                     displaySortedCoaches();
+                    break;
+                case 9:
+                    System.out.println("Exiting...");
                     break;
 
                 default:
@@ -180,24 +178,33 @@ public class Admin  implements Serializable{
     public void addCustomer(){
         GYM.regCustomer();
     }
-    //checker 3al name gwa add w edit equip eno msh mwgud abl kda
     public void addEquip(){ //equipmentList
+        boolean checker=false;
         System.out.println("Enter equipment's name: ");
-        String newEquipName=input.next();
+        input.nextLine();
+        String newEquipName=input.nextLine();
         System.out.println("Enter equipment's quantity: ");
         int newEquipQuantity=input.nextInt();
 
-
+//        for (Equipment equipment : GYM.equipmentList) {
+//            if (equipment.equipName.equals(newEquipName)) {
+//                checker=true;
+//                System.out.println("THE EQUIPMENT ALREADY EXISTS! PLEASE TRY AGAIN.");
+//                break;
+//            }
+//        }
         Equipment newEquipment=new Equipment(newEquipName,newEquipQuantity);
         GYM.equipmentList.add(newEquipment);
+        System.out.println("Equipment added successfully!");
     }
 
     public static void editCoach() {
-        System.out.println("\nPlease enter the coach's id: ");
+        System.out.println("\nEnter the coach ID you want to edit: ");
         int id = input.nextInt();
         Coach specificCoach = Coach.getCoachByID(id);
         if (specificCoach != null) {
             System.out.println("Enter new address (press Enter to skip): ");
+            input.nextLine();
             String newAddress = input.nextLine();
 
             System.out.println("Enter new email (press Enter to skip): ");
@@ -227,12 +234,19 @@ public class Admin  implements Serializable{
                 System.out.println("Address updated successfully.");
             }
             if (!newEmail.isEmpty()) {
-                specificCoach.setEmail(newEmail);
-                System.out.println("Email updated successfully.");
+                if (USER.validateEmail(newEmail)){
+                    specificCoach.setEmail(newEmail);
+                    System.out.println("Email updated successfully.");
+                }
+                else System.out.println("This email already exists! Please try again.");
+
             }
             if (!newName.isEmpty()) {
-                specificCoach.setName(newName);
-                System.out.println("Name updated successfully.");
+                if (USER.validateName(newName)){
+                    specificCoach.setName(newName);
+                    System.out.println("Name updated successfully.");
+                }
+                else System.out.println("This name already exists! Please try again.");
             }
             if (!newPassword.isEmpty()) {
                 specificCoach.setPass(newPassword);
@@ -243,8 +257,11 @@ public class Admin  implements Serializable{
                 System.out.println("Gender updated successfully.");
             }
             if(!phoneInput.isEmpty()) {
-                specificCoach.setPhoneNO(newPhonenum);
-                System.out.println("Phone number updated successfully.");
+                if (USER.validatePhone(newPhonenum)){
+                    specificCoach.setPhoneNO(newPhonenum);
+                    System.out.println("Phone number updated successfully.");
+                }
+                else System.out.println("This phone number already exists! Please try again.");
             }
             if(!workingHoursInput.isEmpty()){
                 specificCoach.setWorkingHrs(newWorkinghours);
@@ -255,11 +272,12 @@ public class Admin  implements Serializable{
         }
     }
     public void editCustomer(){
-        System.out.println("\nPlease enter the customer's id: ");
+        System.out.println("\nEnter the customer ID you want to edit: ");
         int id = input.nextInt();
-        Customer specificCustomer = Customer.getCustomerById(id);
+        Customer specificCustomer = getCustomerById(id);
         if (specificCustomer != null) {
             System.out.println("Enter new address (press Enter to skip): ");
+            input.nextLine();
             String newAddress = input.nextLine();
 
             System.out.println("Enter new email (press Enter to skip): ");
@@ -279,7 +297,6 @@ public class Admin  implements Serializable{
             String phoneInput = input.nextLine();
             int newPhonenum = phoneInput.isEmpty() ? specificCustomer.getPhoneNO() : Integer.parseInt(phoneInput);
 
-            System.out.println("Enter new working hours (press Enter to skip): ");
 
             // Update attributes if values were provided
             if (!newAddress.isEmpty()) {
@@ -287,12 +304,20 @@ public class Admin  implements Serializable{
                 System.out.println("Address updated successfully.");
             }
             if (!newEmail.isEmpty()) {
-                specificCustomer.setEmail(newEmail);
-                System.out.println("Email updated successfully.");
+                if (USER.validateEmail(newEmail)) {
+                    specificCustomer.setEmail(newEmail);
+                    System.out.println("Email updated successfully.");
+                }
+                else System.out.println("This email already exists! Please try again.");
+
             }
             if (!newName.isEmpty()) {
-                specificCustomer.setName(newName);
-                System.out.println("Name updated successfully.");
+                if (USER.validateName(newName)) {
+                    specificCustomer.setName(newName);
+                    System.out.println("Name updated successfully.");
+                }
+                else System.out.println("This name already exists! Please try again.");
+
             }
             if (!newPassword.isEmpty()) {
                 specificCustomer.setPass(newPassword);
@@ -303,8 +328,12 @@ public class Admin  implements Serializable{
                 System.out.println("Gender updated successfully.");
             }
             if(!phoneInput.isEmpty()) {
-                specificCustomer.setPhoneNO(newPhonenum);
-                System.out.println("Phone number updated successfully.");
+                if (USER.validatePhone(newPhonenum)){
+                    specificCustomer.setPhoneNO(newPhonenum);
+                    System.out.println("Phone number updated successfully.");
+                }
+                else System.out.println("This phone number already exists! Please try again.");
+
             }
         } else {
             System.out.println("Invalid customer ID.");
@@ -316,16 +345,19 @@ public class Admin  implements Serializable{
         Equipment specificequ = Equipment.getEquipByCode(equcode);
         if (specificequ != null) {
             System.out.println("Enter new Name (press Enter to skip) ");
+            input.nextLine();
             String newName = input.nextLine();
+
             System.out.println("Enter new quantity  (press Enter to skip) ");
             String inputQuantity = input.nextLine();
             int newQuantity = inputQuantity.isEmpty() ? specificequ.getQuantity() : Integer.parseInt(inputQuantity);
+
             if (!newName.isEmpty()) {
                 for (Equipment equipment : GYM.equipmentList) {
                     if (equipment.equipName.equals(newName)) {
-                        System.out.println("THE EQUIPMENT IS ALREADY EXIST ");
+                        System.out.println("THE EQUIPMENT ALREADY EXISTS! PLEASE TRY AGAIN.");
                     } else {
-                        specificequ.equipName = newName;
+                        specificequ.setEquipName(newName);
                     }
                 }
                 System.out.println(" Equipment name updated successfully.");
@@ -340,55 +372,59 @@ public class Admin  implements Serializable{
         }
     }
 
-    public String deleteCoach(int coachID) {
+    public void deleteCoach(int coachID) {
         for (USER user : GYM.userList) {
             if (user instanceof Coach) {
                 Coach coach = (Coach) user; //downcasting
                 if (coach.getCoachID()==coachID) {
                     GYM.userList.remove(coach);
-                    return "\n\nCoach's -with ID " + coachID + "- Data Removed\n\n";
+                    System.out.println("Coach's -with ID " + coachID + "- Data Removed");
                 }
             }
         }
-        return "\n\nCoach with ID " + coachID + " was not found in gym.\n\n";
+        System.out.println("Coach with ID " + coachID + " was not found in gym.");
     }
-    public String  deleteCustomer(int customerID){
+    public void  deleteCustomer(int customerID){
         for (USER user : GYM.userList) {
             if (user instanceof Customer) {
                 Customer customer = (Customer) user; //downcasting
                 if (customer.getCustomerID()==customerID) {
                     GYM.userList.remove(customer);
-                    return "\n\nCoach's -with ID " + customerID + "- Data Removed\n\n";
+                    System.out.println("Coach's -with ID " + customerID + "- Data Removed");
                 }
             }
         }
-        return "\n\nCoach with ID " + customerID + " was not found in gym.\n\n";
+        System.out.println("Coach with ID " + customerID + " was not found in gym.");
     }
-    public String  deleteEquip(int equipCode){
+    public void  deleteEquip(int equipCode){
         for(Equipment e: GYM.equipmentList){
             if(e.getEquipCode()==equipCode){
                 GYM.equipmentList.remove(e);
-                return "\n\nEquipment's -with ID "+ equipCode+"- Data Removed\n\n";
+                System.out.println("Equipment's -with ID "+ equipCode+"- Data Removed");
             }
         }
-        return "\n\nEquipment with code " + equipCode + " was not found in gym.\n\n";
+        System.out.println("Equipment with code " + equipCode + " was not found in gym.");
     }
 
     private String gymIncome(int month){
         GYM.storeGymSubscriptions();
         LocalDate currentDate = LocalDate.now();
         String lines = "--------------------------------";
-        StringBuilder Income = new StringBuilder("\n Date : " + currentDate + "\n"+lines+ "\n");
+        StringBuilder Income = new StringBuilder("$");
         Subscription[] gymSubs=GYM.getGymSubscriptions();
-        for (int i = 0; i < 12; i++) {
-            if (gymSubs[i].plan.getStartDate().getMonth()== Month.of(month)) {
-                Income.append(gymSubs[i].plan.getPrice());
+        for (int i = 0; i < gymSubs.length; i++) {
+            if (gymSubs[i]!=null){
+                if (gymSubs[i].plan.getStartDate().getMonth()== Month.of(month)) {
+                    Income.append(gymSubs[i].plan.getPrice());
+                }
             }
+            else break;
         }
         return Income.toString();
     }
     public void displayCustomersForCoach() { //display coaches ids and names to choose one
-        System.out.println("\nPlease enter the coach's ID you want to view his customers: ");
+        displayCoachesForViewing();
+        System.out.println("Please enter the coach's ID you want to view his customers: ");
         int id = input.nextInt();
         Coach specificCoach = Coach.getCoachByID(id);
 
@@ -411,7 +447,7 @@ public class Admin  implements Serializable{
             for (int i = 0; i < 100; i++) {
                 if (subsarray[i] != null) {
                     if (day == subsarray[i].plan.getStartDate().getDayOfMonth() && month == subsarray[i].plan.getStartDate().getMonthValue()) {
-                        Customer customer = Customer.getCustomerById(subsarray[i].getCustomerID());
+                        Customer customer = getCustomerById(subsarray[i].getCustomerID());
                         customer.displayInfo();
                     }
                 }
@@ -422,7 +458,7 @@ public class Admin  implements Serializable{
             for (int i = 0; i < 100; i++) {
                 if (subsarray[i] != null) {
                     if (month == subsarray[i].plan.getStartDate().getMonthValue()) {
-                        Customer customer = Customer.getCustomerById(subsarray[i].getCustomerID());
+                        Customer customer = getCustomerById(subsarray[i].getCustomerID());
                         customer.displayInfo();
 
                     }
@@ -432,7 +468,7 @@ public class Admin  implements Serializable{
     }
 
     public void historySubscription(int id){
-        Customer customer=Customer.getCustomerById(id);
+        Customer customer=getCustomerById(id);
         // Check if customer exists
         if (customer != null) {
             if (customer.subs.length == 0) {
@@ -511,6 +547,40 @@ public class Admin  implements Serializable{
             display++;
             System.out.println(display+"-"+CO.getName());
 
+        }
+    }
+
+    public static Customer getCustomerById(int id) {
+        for (USER user : GYM.userList) {
+            if (user instanceof Customer) {
+                Customer customer = (Customer) user; //downcasting
+                if (customer.getCustomerID()==(id)) {
+                    return customer; // Return the coach if ID matches
+                }
+            }
+        }
+        return null; // Return null if coach with given ID is not found
+    }
+
+    void displayCoachesForViewing(){
+        System.out.println("Coaches List");
+        for (USER user : GYM.userList) {
+            if (user instanceof Coach) {
+                Coach coach = (Coach) user; //downcasting
+                System.out.println("---------------------------------------------------------------\n"
+                        + "\t\t> Id : " + coach.getCoachID() + "\t> Name : " + coach.getName());
+            }
+        }
+    }
+
+    void displayCustomersForViewing(){
+        System.out.println("Customers List");
+        for (USER user : GYM.userList) {
+            if (user instanceof Customer) {
+                Customer customer = (Customer) user; //downcasting
+                System.out.println("---------------------------------------------------------------\n"
+                        + "\t\t> Id : " + customer.getCustomerID() + "\t> Name : " + customer.getName());
+            }
         }
     }
 }

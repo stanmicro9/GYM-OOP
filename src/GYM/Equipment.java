@@ -1,9 +1,9 @@
 package GYM;
 
-import USERS.Customer;
-import java.util.ArrayList;
+import java.io.Serializable;
+import static GYM.GYM.input;
 
-public class Equipment {
+public class Equipment implements Serializable {
     public String equipName;
     protected int equipCode;
     protected int quantity;
@@ -37,6 +37,8 @@ public class Equipment {
         return quantity;
     }
 
+
+
     public void setEquipName(String equipName) {
         this.equipName = equipName;
     }
@@ -48,19 +50,25 @@ public class Equipment {
     }
 
     //for admin
-    void displayInfo(){
+    public void displayInfo(){
         for (Equipment equips: GYM.equipmentList){
             System.out.println("\n\t\tEQUIPMENTS DETAILS : " + "\n---------------------------------------------------------------\n"
-                    + "\n> Name : " + equips.equipName +"\n> Code : " + equips.getEquipCode()+ "\n> Quantity : " + equips.getQuantity() +
+                    + "\n> Name : " + equipName +"\n> Code : " + getEquipCode()+ "\n> Quantity : " + equips.getQuantity() +
                     "\n---------------------------------------------------------------\n");
         }
+        System.out.println("Press enter to continue.....");
+        input.nextLine();
+        input.nextLine();
     }
     //for customer
     public static void displayEquipmentNames() {
-        System.out.println("\n\t\tEQUIPMENTS LIST : " + "\n---------------------------------------------------------------\n");
+        System.out.println("\t\tEQUIPMENTS LIST : " + "\n---------------------------------------------------------------");
         for (Equipment equipment : GYM.equipmentList) {
-            System.out.println(equipment.equipName + "\n");
+            System.out.println(equipment.equipName);
         }
+        System.out.println("Press enter to continue.....");
+        input.nextLine();
+        input.nextLine();
     }
 
     public static Equipment getEquipByCode(int equcode){

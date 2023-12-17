@@ -1,7 +1,6 @@
 package USERS;
-import java.io.Serializable;
-import java.util.Scanner;
 
+import java.io.Serializable;
 import GYM.GYM;
 import org.jetbrains.annotations.*;
 public abstract class USER implements Serializable{
@@ -12,9 +11,7 @@ public abstract class USER implements Serializable{
     char gender;
     private int phoneNO;
 
-    public String getAddress() {
-        return address;
-    }
+
     public void setAddress(String address) {
         this.address = address;
     }
@@ -74,7 +71,7 @@ public abstract class USER implements Serializable{
         //msh 3rfa a3ml system clear :(
         System.out.println("\nLogin failed. Invalid username or password.\n");
         return null;
-    }
+    } //checked
 
     //@NotNull to indicate that a parameter or return value of a method should not be null
     //it  is a way to provide additional information to tools and other developers about the expected behavior of our code
@@ -104,7 +101,7 @@ public abstract class USER implements Serializable{
             return false;
         }
         return true;
-    }
+    } //checked
 
     //to validate phone number:
     public static boolean validatePhone(int regNumber){
@@ -148,20 +145,10 @@ public abstract class USER implements Serializable{
             return false;
         }
         return true;
-    }
-
-    //to validate a non-spaces password
-    public static boolean validatePassword(@NotNull String password) {
-        if (password.contains(" ")) {
-            System.out.println("\n\nPassword should not contain spaces.\n\n");
-            return false;
-        }
-        return true;
-    }
-
+    } //checked
 
 
     //default 3shan de info visible lely f nfs el package bs
-    abstract String displayInfo();
+    abstract void displayInfo(); //checked
 
 }

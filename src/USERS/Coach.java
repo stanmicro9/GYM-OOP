@@ -1,11 +1,7 @@
 package USERS;
 
-import DATABASE.GymDataBase;
 import GYM.GYM;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Scanner;
 import static GYM.GYM.input;
 
 public class Coach extends USER implements Serializable {
@@ -56,22 +52,7 @@ public class Coach extends USER implements Serializable {
                 return autoCoachId; //return the ID if it doesn't exist in the list
             }
         }
-    }
-
-//    public void ListOfCustomers() {
-//        System.out.println("\nCustomers for Coach " + name + " :\n");
-//        LocalDate currentdate= LocalDate.now();
-//        for (int i = 0; i < 10; i++) {
-//            for (int j=0;j<12 && customersArray[i].subs[j]!=null;j++){
-//                if (currentdate.isAfter(customersArray[i].subs[j].plan.getEndDate())){
-//                    GYM.userList.remove(customersArray[i]);
-//                }
-//            }
-//            if (customersArray[i]!=null){
-//                System.out.println("- " + customersArray[i].getName() + "\t" + customersArray[i].getCustomerID() + "\n");
-//            }
-//        }
-//    }
+    } //checked
 
     public void ListOfCustomers() {
         System.out.println("\nCustomers for Coach " + name + " :\n");
@@ -82,8 +63,7 @@ public class Coach extends USER implements Serializable {
         }
         System.out.println("Press enter to continue.....");
         input.nextLine();
-        //CoachMainMenu();
-    }
+    } //checked
     public static Coach getCoachByID(int coachId) {
         for (USER user : GYM.userList) {
             if (user instanceof Coach) {
@@ -94,45 +74,50 @@ public class Coach extends USER implements Serializable {
             }
         }
         return null; // Return null if coach with given ID is not found
-    }
+    } //checked
     //default 3shan de info lely f nfs el package bs
     @Override
-    String displayInfo(){
-        return "\n\t\tCoach's Details : " + "\n---------------------------------------------------------------\n"
+    void displayInfo(){
+        System.out.println("\n\t\tCoach's Details : " + "\n---------------------------------------------------------------\n"
                 + "\n\n> Id : " + getCoachID() + "\n\n> Email : " + getEmail() + "\n\n> Name : " + getName() + "\n\n> Gender : " + getGender()
-                + "\n\n> Phone Number : " + getPhoneNO() + "\n\n> Working Hours : " + workingHours +"\n---------------------------------------------------------------\n" ;
-    }
-    public String searchCustomerByName(String customerName){
+                + "\n\n> Phone Number : " + getPhoneNO() + "\n\n> Working Hours : " + workingHours +"\n---------------------------------------------------------------\n");
+    } //checked
+    public void searchCustomerByName(String customerName){
         for (int i=0; i<10;i++){ //to check if the typed name is HIS customer or not
             if(customersArray[i].getName().equals(customerName)) {
-                Customer customer = Customer.getCustomerByName(customerName);
+                Customer customer = getCustomerByName(customerName);
                 if (customer != null) {
-                    return customer.displayInfo();
+                    customer.displayInfo();
                 }
-                else return "\n\nCustomer with name " + customerName + " was not found in gym, please enter correct name\n\n";
+                else System.out.println("\n\nCustomer with name " + customerName + " was not found in gym, please enter correct name\n\n");
+                break;
             }
         }
-        return "\n\nThis Customer is not a listed one of yours.\n\n";
-    }
+        System.out.println("\n\nThis Customer is not a listed one of yours.\n\n");
+    } //checked
     public void displayFMCustomer() {
         if (customersArray[0]!=null){
-            System.out.println("\nHere's your female customers list:\n\n");
-            for (int i=0;i<10;i++) {
-                if (customersArray[i].getGender() == 'F') {
-                    System.out.println(customersArray[i].getName() + "\n");
+            System.out.println("\nHere's your female customers list:");
+            for (int i=0;i<customersArray.length;i++) {
+                if (customersArray[i]!=null){
+                    if (customersArray[i].getGender() == 'F' || customersArray[i].getGender() == 'f') {
+                        System.out.println(customersArray[i].getName());
+                    }
+                    else continue;
                 }
-                else continue;
             }
-            System.out.println("Here's your male customers list:\n\n");
+            System.out.println("Here's your male customers list:");
             for (int i=0;i<10;i++) {
-                if (customersArray[i].getGender() == 'M') {
-                    System.out.println(customersArray[i].getName() + "\n");
+                if (customersArray[i]!=null){
+                    if (customersArray[i].getGender() == 'M' || customersArray[i].getGender() == 'm') {
+                        System.out.println(customersArray[i].getName() + "\n");
+                    }
+                    else continue;
                 }
-                else continue;
             }
         }
         else System.out.println("\nYou don't have customer's registered to your account.\n");
-    }
+    } //checked
 
     //for one of HIS customerS
     public void displayCustomersInbodyHistory(int customerID) {
@@ -145,34 +130,35 @@ public class Coach extends USER implements Serializable {
                             customersArray[i].inbodies[j].displayInbody();
                         }
                     } else System.out.println("This customer hasn't done any inbodies yet.");
+                    break;
                 }
             }
         }
         else System.out.println("\nThere are no customers registered to your account.\n");
-    }
+    } //checked
 
     public void CoachMainMenu(){
+        System.out.println("\t You logged in successfully !\t");
         int choice;
 
         do{
-            System.out.println("\n\t You logged in successfully !\t\n");
             System.out.println("Main Menu\n...........");
-            System.out.println("1. List of your customers\n");
-            System.out.println("2. InBody history for a customer\n");
-            System.out.println("3. Details of a specific customer\n");
-            System.out.println("4. list of your female/male customers\n");
-            System.out.println("5. Exit\n\n");
+            System.out.println("1. List of your customers");
+            System.out.println("2. InBody history for a customer");
+            System.out.println("3. Details of a specific customer");
+            System.out.println("4. list of your female/male customers");
+            System.out.println("5. Exit\n");
             System.out.print("Enter your choice: ");
             choice = input.nextInt();
 
 
             switch (choice) {
                 case 1:
-                    System.out.println("\nYour customers: \n");
+                    System.out.println("Your customers:");
                     ListOfCustomers();
                     break;
                 case 2:
-                    System.out.println("\nInBody history for a customer: \n");
+                    System.out.println("InBody history for a customer:");
                     ListOfCustomers();
                     System.out.println("Enter the customer ID for an InBody history: ");
                     int chosenCustomerID = input.nextInt();
@@ -180,12 +166,13 @@ public class Coach extends USER implements Serializable {
                     break;
                 case 3:
                     System.out.println("Details of customer: ");
+                    ListOfCustomers();
                     System.out.println("Please enter the customer name: "); //+validate
                     String chosenCustomerName=input.next();
                     searchCustomerByName(chosenCustomerName);
                     break;
                 case 4:
-                    System.out.println("The list of female/male customers: \n");
+                    System.out.println("The list of female/male customers:\n.........................");
                     displayFMCustomer();
                     break;
                 case 5:
@@ -198,10 +185,24 @@ public class Coach extends USER implements Serializable {
 
         } while (choice != 5);
 
-    }
+    }//checked
 
-    public String displayInfoForCustomer(){
-        return "\n\t\tYour Coach's Details : " + "\n---------------------------------------------------------------\n" + "\n\n> Name : " + getName() + "\n\n> Phone Number : " + getPhoneNO() + "\n\n> Working Hours : " + getWorkingHrs() +"\n---------------------------------------------------------------\n" ;
+    public void displayInfoForCustomer(){
+        System.out.println("\n\t\tYour Coach's Details : " + "\n---------------------------------------------------------------\n" + "\n\n> " +
+                "Name : " + getName() + "\n\n> Phone Number : " + getPhoneNO() +
+                "\n\n> Working Hours : " + getWorkingHrs() +"\n---------------------------------------------------------------\n");
 
-    }
+    } //checked
+
+    public static Customer getCustomerByName(String name) {
+        for (USER user : GYM.userList) {
+            if (user instanceof Customer) {
+                Customer customer = (Customer) user; //downcasting
+                if (customer.getName().equals(name)) {
+                    return customer; // Return the coach if ID matches
+                }
+            }
+        }
+        return null;
+    } //checked
 }

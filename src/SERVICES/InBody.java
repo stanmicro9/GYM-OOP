@@ -1,53 +1,54 @@
 package SERVICES;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-public class
-InBody {
-    protected int heightM;
-    protected int totalWeightKG;
-    protected int bodyFatMassKG;
-    protected int MineralsKG;
-    protected int totalBodyWater;
-    protected int proteinKG;
+import java.io.Serializable;
+public class InBody implements Serializable{
+    protected double heightM;
+    protected double totalWeightKG;
+    protected double bodyFatMassKG;
+    protected double MineralsKG;
+    protected double totalBodyWater;
+    protected double proteinKG;
     protected LocalDate date;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private transient final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public LocalDate getDate() {
         return date;
     }
-    public int getHeightM() {
+    public double getHeightM() {
         return heightM;
     }
-    public int getTotalWeightKG() {
+    public double getTotalWeightKG() {
         return totalWeightKG;
     }
-    public int getBodyFatMassKG() {
+    public double getBodyFatMassKG() {
         return bodyFatMassKG;
     }
-    public int getMineralsKG() {
+    public double getMineralsKG() {
         return MineralsKG;
     }
-    public int getTotalBodyWater() {
+    public double getTotalBodyWater() {
         return totalBodyWater;
     }
-    public int getProteinKG() {
+    public double getProteinKG() {
         return proteinKG;
     }
-    public void setHeightM(int heightM) {
+    public void setHeightM(double heightM) {
         this.heightM = heightM;
     }
-    public void setTotalWeightKG(int totalWeightKG) {
+    public void setTotalWeightKG(double totalWeightKG) {
         this.totalWeightKG = totalWeightKG;
     }
-    public void setBodyFatMassKG(int bodyFatMassKG) {
+    public void setBodyFatMassKG(double bodyFatMassKG) {
         this.bodyFatMassKG = bodyFatMassKG;
     }
-    public void setMineralsKG(int mineralsKG) {
+    public void setMineralsKG(double mineralsKG) {
         MineralsKG = mineralsKG;
     }
-    public void setTotalBodyWater(int totalBodyWater) {
+    public void setTotalBodyWater(double totalBodyWater) {
         this.totalBodyWater = totalBodyWater;
     }
-    public void setProteinKG(int proteinKG) {
+    public void setProteinKG(double proteinKG) {
         this.proteinKG = proteinKG;
     }
     public void setDate(String date) {
@@ -58,6 +59,12 @@ InBody {
         System.out.println("\n\t\tInbody's Details : " + "\n---------------------------------------------------------------\n"
                 + "\n> Date : " + getDate() + "\n> Height (m) : " + getHeightM() + "\n> Total Weight (KG) : " + getTotalWeightKG() + "\n> Body Fat Mass (KG) : " + getBodyFatMassKG() + "\n> Minerals (KG): " + getMineralsKG()
                 + "\n> Total Body Water : " + getTotalBodyWater() + "\n> Protein (KG) : " + getProteinKG() + "\n---------------------------------------------------------------\n");
+    }
+
+    public static double calculateTargetWeight(double heightM) {
+        //Example: Target weight is BMI of 22
+        double targetBMI = 22.0;
+        return targetBMI * heightM * heightM;
     }
 
 }

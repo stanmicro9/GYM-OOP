@@ -9,6 +9,7 @@ import USERS.USER;
 import static GYM.GYM.input;
 import static GYM.GYM.userList;
 import static GYM.GYM.equipmentList;
+import GYM.Equipment;
 
 public class Main extends JForm{
 
@@ -26,6 +27,7 @@ public class Main extends JForm{
 
         outerloop:
         while (true) {
+
             System.out.println("Main Menu");
             System.out.println("---------------------------");
             System.out.println("1- Register");

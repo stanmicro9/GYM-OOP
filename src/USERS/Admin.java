@@ -1,6 +1,5 @@
 package USERS;
 import GYM.*;
-
 import java.util.*;
 import SERVICES.*;
 import java.time.LocalDate;
@@ -8,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 import java.time.Month;
 import java.io.Serializable;
 import static GYM.GYM.input;
-import GYM.Equipment.*;
 
 public class Admin  implements Serializable{
     private final String username;
@@ -16,13 +14,6 @@ public class Admin  implements Serializable{
     public Admin() {
         username="admin";
         pass="admin";
-    }
-
-    public String getUsername() {
-        return username;
-    }
-    public String getPass() {
-        return pass;
     }
 
     //@NotNull to indicate that a parameter or return value of a method should not be null
@@ -134,6 +125,7 @@ public class Admin  implements Serializable{
                     {
                         System.out.println("INVALID CHOICE\n TRY AGAIN LATER");
                     }
+                    //Equipment.displayInfo();
                     break;
                 case 4:
                     displayCustomersForViewing();
@@ -152,8 +144,8 @@ public class Admin  implements Serializable{
                 case 7:
                     System.out.println("Enter the month: ");
                     int m=input.nextInt();
-                    String income=gymIncome(m);
-                    System.out.println("Gym Income for this month is: " + income);
+                    System.out.println("Gym Income for this month is: ");
+                    gymIncome(m);
                     break;
 
                 case 8:
@@ -370,6 +362,7 @@ public class Admin  implements Serializable{
         else {
             System.out.println("Invalid Equipment code .");
         }
+        //Equipment.displayInfo();
     }
 
     public void deleteCoach(int coachID) {
@@ -406,21 +399,21 @@ public class Admin  implements Serializable{
         System.out.println("Equipment with code " + equipCode + " was not found in gym.");
     }
 
-    private String gymIncome(int month){
+    private void gymIncome(int month){
         GYM.storeGymSubscriptions();
         LocalDate currentDate = LocalDate.now();
-        String lines = "--------------------------------";
-        StringBuilder Income = new StringBuilder("$");
+        System.out.println("--------------------------------");
+        double Income=0;
         Subscription[] gymSubs=GYM.getGymSubscriptions();
         for (int i = 0; i < gymSubs.length; i++) {
             if (gymSubs[i]!=null){
                 if (gymSubs[i].plan.getStartDate().getMonth()== Month.of(month)) {
-                    Income.append(gymSubs[i].plan.getPrice());
+                    Income+=(gymSubs[i].plan.getPrice());
                 }
             }
             else break;
         }
-        return Income.toString();
+        System.out.println(Income + "$");
     }
     public void displayCustomersForCoach() { //display coaches ids and names to choose one
         displayCoachesForViewing();
